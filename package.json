@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "BROWSER='/Applications/Brave Browser' vite",
+    "dev": "vite",
     "dev:remote": "npm run dev",
     "dev:remote:mac": "npm run dev",
     
