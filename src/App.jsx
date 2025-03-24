@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { Routes, Route } from "react-router";
 import { StayIndex } from "./pages/stay/StayIndex";
 import { StayDetails } from "./pages/stay/StayDetails";
@@ -13,6 +13,9 @@ import { Host } from "./pages/host/Host";
 import { Dashboard } from "./pages/host/Dashboard";
 import { Listings } from "./pages/host/Listings";
 import { StayEdit } from "./pages/host/StayEdit";
+import { AppHeader } from "./cmps/layout/AppHeader";
+import { AppFooter } from "./cmps/layout/AppFooter";
+import { UserMsg } from "./cmps/general/UserMsg";
 
 export function App() {
   return (
