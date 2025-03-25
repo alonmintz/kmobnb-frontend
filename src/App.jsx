@@ -16,6 +16,7 @@ import { StayEdit } from "./pages/host/StayEdit";
 import { AppHeader } from "./cmps/layout/AppHeader";
 import { AppFooter } from "./cmps/layout/AppFooter";
 import { UserMsg } from "./cmps/general/UserMsg";
+import { NotFound } from "./pages/NotFound";
 
 export function App() {
   return (
@@ -33,11 +34,12 @@ export function App() {
           <Route path="user/:userId" element={<UserDetails />} />
           <Route path="trips/:userId" element={<Trips />} />
           <Route path="wishlists/:userId" element={<WishLists />} />
-          <Route path="host/:hostId" element={<Host />}>
+          <Route path="host/:userId" element={<Host />}>
             <Route index element={<Dashboard />} />
             <Route path="Listings" element={<Listings />} />
             <Route path="stay/edit" element={<StayEdit />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <AppFooter />
