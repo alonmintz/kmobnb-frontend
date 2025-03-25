@@ -1,7 +1,7 @@
 {
-  "name": "vite-react-proj",
+  "name": "kmobnb-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,9 @@
     
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sass-dev": "sass --watch --update --style=expanded src/assets/styles:src/assets/css.local",
+    "sass-prod": "sass --no-source-map --style=compressed src/assets/styles:src/assets/dist"
   },
   "dependencies": {
     "axios": "^1.5.0",

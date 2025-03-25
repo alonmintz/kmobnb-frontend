@@ -20,13 +20,14 @@ export function stayReducer(state = initialState, action) {
     case SET_STAY:
       newState = { ...state, stay: action.stay };
       break;
-    case REMOVE_STAY:
-      const lastRemovedStay = state.stays.find(
-        (stay) => stay._id === action.stayId
-      );
-      stays = state.stays.filter((stay) => stay._id !== action.stayId);
-      newState = { ...state, stays, lastRemovedStay };
-      break;
+    case REMOVE_STAY: {
+        const lastRemovedStay = state.stays.find(
+          (stay) => stay._id === action.stayId
+        );
+        stays = state.stays.filter((stay) => stay._id !== action.stayId);
+        newState = { ...state, stays, lastRemovedStay };
+        break;
+      }
     case ADD_STAY:
       newState = { ...state, stays: [...state.stays, action.stay] };
       break;
@@ -49,6 +50,7 @@ export function stayReducer(state = initialState, action) {
 
 // unitTestReducer()
 
+// eslint-disable-next-line no-unused-vars
 function unitTestReducer() {
   var state = initialState;
   const stay1 = {
