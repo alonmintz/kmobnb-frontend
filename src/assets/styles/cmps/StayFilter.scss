@@ -1,9 +1,10 @@
 .stay-filter {
     .stay-filter-list{
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(min-content, 7em)); //  TODO: match each button's width to content
-        align-items: center;
+        // display: grid;
+        // grid-template-columns: repeat(auto-fill, minmax(min-content, 7em)); //  TODO: match each button's width to content
+        // align-items: center;
+        display: flex;
         gap: 0 .5em;
     
         background-color: $clr4;
