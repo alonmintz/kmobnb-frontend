@@ -1,11 +1,33 @@
 .stay-filter {
-    display: grid;
-    grid-template-columns: 1fr 5em 5em auto;
-    align-items: center;
-    gap: 0 .5em;
+    .stay-filter-list{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min-content, 7em)); //  TODO: match each button's width to content
+        align-items: center;
+        gap: 0 .5em;
+    
+        background-color: $clr4;
+        padding: .5em;
 
-    background-color: $clr4;
-    padding: .5em;
+        .stay-type-button{
+            width: 100%;
+            margin: 0;
+            display: grid;
+            grid-template-rows: auto auto;  //  TODO: adjust row height when in hover
+            justify-items: center;
+            opacity: 0.5;
+            transition: 0.1s;
+    
+            img{
+                width: 2em;
+            }
+    
+            &:hover, &.selected{
+                opacity: 1;
+                border-bottom: 3px solid gray;
+            }
+        }
+    }
 
     h3 {
         grid-column: 1 / -1;
@@ -13,9 +35,9 @@
         margin: 0;
     }
 
-    & :not(h3) {
-        cursor: pointer;
-    }
+    // & :not(h3) {
+    //     cursor: pointer;
+    // }
 
     input:is([type="text"], [type="number"]){
         height: 1.8em;
