@@ -1,9 +1,6 @@
 .stay-filter {
     .stay-filter-list{
         width: 100%;
-        // display: grid;
-        // grid-template-columns: repeat(auto-fill, minmax(min-content, 7em)); //  TODO: match each button's width to content
-        // align-items: center;
         display: flex;
         gap: 0 .5em;
     
@@ -14,7 +11,7 @@
             width: 100%;
             margin: 0;
             display: grid;
-            grid-template-rows: auto auto;  //  TODO: adjust row height when in hover
+            grid-template-rows: auto auto;
             justify-items: center;
             opacity: 0.5;
             transition: 0.1s;
