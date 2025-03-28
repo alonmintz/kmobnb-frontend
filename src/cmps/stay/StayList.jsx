@@ -1,7 +1,9 @@
-
+import { StayPreview } from "./StayPreview";
 
 export function StayList() {
     return(
-        <section>StayList</section>
+        <section className="stay-list">
+            <StayPreview />
+        </section>
     )
 }
