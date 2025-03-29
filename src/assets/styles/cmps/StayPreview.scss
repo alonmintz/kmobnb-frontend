@@ -1,4 +1,9 @@
 .stay-preview {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    grid-template-rows: repeat(2, 20px);
+    grid-auto-flow: column;
+    
     a {
         color: $clr4;
         padding: 0;

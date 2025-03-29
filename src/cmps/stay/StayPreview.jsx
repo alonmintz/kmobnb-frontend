@@ -3,7 +3,7 @@
 export function StayPreview() {
     return (
         <div className="stay-preview">
-            <div className="stay-preview-gallery">image</div>
+            <div className="stay-preview-gallery">image gallery</div>
             <div>
                 <div className="stay-preview bold-text">City, Country</div>
                 <div className="stay-preview normal-text">Some fact (Distance or &quot;built in&quot;)</div>

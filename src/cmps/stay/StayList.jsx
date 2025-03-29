@@ -1,9 +1,13 @@
 import { StayPreview } from "./StayPreview";
 
 export function StayList() {
+    //TODO: logic to pull and render multiple StayPreviews
     return(
-        <section className="stay-list">
+        <div className="stay-list">
             <StayPreview />
-        </section>
+            <StayPreview />
+            <StayPreview />
+            <StayPreview />
+        </div>
     )
 }
