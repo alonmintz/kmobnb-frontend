@@ -26,7 +26,6 @@
 @import "cmps/list";
 @import "cmps/preview";
 
-@import "cmps/AppHeader";
 @import "cmps/AppFooter";
 @import "cmps/UserMsg";
 
@@ -36,4 +35,5 @@
 @import "cmps/ReviewPreview";
 // @import "cmps/StayList";
 // @import "cmps/StayPreview";
-@import "cmps/search-bar";
+@import "cmps/header-content/app-header";
+@import "cmps/header-content/search-bar";
