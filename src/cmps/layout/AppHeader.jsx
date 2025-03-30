@@ -3,50 +3,66 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
 import { logout } from "../../store/actions/user.actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { SearchBar } from "../stay/SearchBar";
+import { useEffect, useRef, useState } from "react";
 
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user);
-  const navigate = useNavigate();
+  const topDiv = useRef();
+  // const navigate = useNavigate();
+  const [isSearchBarShow, setIsSearchBarShow] = useState(true);
 
-  async function onLogout() {
-    try {
-      await logout();
-      navigate("/");
-      showSuccessMsg(`Bye now`);
-    } catch (err) {
-      showErrorMsg("Cannot logout");
-    }
-  }
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        console.log("shown");
+
+        setIsSearchBarShow(true);
+      } else {
+        console.log("not shown");
+
+        setIsSearchBarShow(false);
+      }
+    });
+
+    observer.observe(topDiv.current);
+    return () => observer.disconnect();
+  }, []);
+  // async function onLogout() {
+  //   try {
+  //     await logout();
+  //     navigate("/");
+  //     showSuccessMsg(`Bye now`);
+  //   } catch (err) {
+  //     showErrorMsg("Cannot logout");
+  //   }
+  // }
 
   return (
-    <header className="app-header full">
-      <nav>
-        <NavLink to="/" className="logo">
-          E2E Demo
-        </NavLink>
-        <NavLink to="about">About</NavLink>
-        <NavLink to="stay">Stays</NavLink>
-        <NavLink to="chat">Chat</NavLink>
-        <NavLink to="review">Review</NavLink>
-
-        {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
-
-        {!user && (
-          <NavLink to="login" className="login-link">
-            Login
-          </NavLink>
-        )}
-        {user && (
-          <div className="user-info">
-            <Link to={`user/${user._id}`}>
-              {/* {user.imgUrl && <img src={user.imgUrl} />} */}
-              {user.fullname}
-            </Link>
-            {/* <span className="score">{user.score?.toLocaleString()}</span> */}
-            <button onClick={onLogout}>logout</button>
+    <>
+      <div ref={topDiv} className="top-div"></div>
+      <header className="app-header full">
+        <section className="header-top flex">
+          <div className="logo-container">
+            <img className="logo" src="src\assets\img\logo.png" alt="logo" />
+            <h3>kmobnb</h3>
           </div>
-        )}
-      </nav>
-    </header>
+          <nav>
+            <NavLink>Bnb your home</NavLink>
+            <button className="user-info">
+              <FontAwesomeIcon icon={faBars} />
+              <img src="src\assets\img\guest-unknown.svg" alt="user-icon" />
+            </button>
+          </nav>
+        </section>
+        {isSearchBarShow && <SearchBar />}
+        {/* <section className="header-bottom flex">
+        <div className="search-bar-container"></div>
+      </section> */}
+      </header>
+    </>
   );
 }

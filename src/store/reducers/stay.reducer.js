@@ -4,7 +4,8 @@ export const REMOVE_STAY = "REMOVE_STAY";
 export const ADD_STAY = "ADD_STAY";
 export const UPDATE_STAY = "UPDATE_STAY";
 export const ADD_STAY_MSG = "ADD_STAY_MSG";
-//TODO: refactor to fit stay needs (only changed "stay" to "stay")
+export const SET_FILTER_BY = "SET_FILTER_BY";
+
 const initialState = {
   stays: [],
   stay: null,
