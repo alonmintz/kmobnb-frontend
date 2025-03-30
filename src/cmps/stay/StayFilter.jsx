@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
-import {Carousel, WithStyles} from "react-multi-carousel";
+import { Carousel, WithStyles } from "react-multi-carousel";
 
 export function StayFilter({ filterBy, onSetFilterBy }) {
   const IMG_URL_FORMAT = "../../src/assets/img/stay/type/";
