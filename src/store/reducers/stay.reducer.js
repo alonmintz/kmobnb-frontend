@@ -43,6 +43,12 @@ export function stayReducer(state = initialState, action) {
         stay: { ...state.stay, msgs: [...(state.stay.msgs || []), action.msg] },
       };
       break;
+      case SET_FILTER_BY:
+        newState = {
+          ...state,
+          filterBy: {...state.filterBy, ...action.filterBy}
+        };
+        break;
     default:
   }
   return newState;
