@@ -6,9 +6,13 @@ export const UPDATE_STAY = "UPDATE_STAY";
 export const ADD_STAY_MSG = "ADD_STAY_MSG";
 export const SET_FILTER_BY = "SET_FILTER_BY";
 
+//TODO: refactor to fit stay needs (only changed "stay" to "stay")
 const initialState = {
   stays: [],
   stay: null,
+  filterBy: {
+    type: null
+  }
 };
 
 export function stayReducer(state = initialState, action) {
@@ -44,12 +48,12 @@ export function stayReducer(state = initialState, action) {
         stay: { ...state.stay, msgs: [...(state.stay.msgs || []), action.msg] },
       };
       break;
-      case SET_FILTER_BY:
-        newState = {
-          ...state,
-          filterBy: {...state.filterBy, ...action.filterBy}
-        };
-        break;
+    case SET_FILTER_BY:
+      newState = {
+        ...state,
+        filterBy: {...state.filterBy, ...action.filterBy}
+      };
+      break;
     default:
   }
   return newState;

@@ -1,11 +1,66 @@
 .stay-filter {
-    display: grid;
-    grid-template-columns: 1fr 5em 5em auto;
-    align-items: center;
-    gap: 0 .5em;
+    .stay-filter-carousel{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+        box-sizing: border-box;
+        overscroll-behavior: none;
 
-    background-color: $clr4;
-    padding: .5em;
+        > button{
+            display: inline;
+            position: absolute;
+        }
+        button.back{
+            float: left;
+        }
+        button.forward{
+            float: right;
+            right: 0px;
+        }
+
+        .stay-filter-list{
+            width: 100%;
+            display: flex;
+            gap: 0 .5em;
+    
+            background-color: $clr4;
+            padding: .5em;
+    
+            // > li{
+            //     display: flex;
+            //     flex-shrink: 0;
+            // }
+    
+            .stay-type-button{
+                width: 100%;
+                margin: 0;
+                display: grid;
+                grid-template-rows: auto auto;
+                justify-items: center;
+                opacity: 0.5;
+                transition: 0.1s;
+                overflow: hidden;
+                white-space: nowrap;
+        
+                img{
+                    width: 2em;
+                }
+                
+                &:hover{
+                    border-bottom: 3px solid gray;
+                }
+                &.selected{
+                    border-bottom: 3px solid black;
+                }
+                &:hover, &.selected{
+                    opacity: 1;
+                    margin-bottom: -3px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 
     h3 {
         grid-column: 1 / -1;
@@ -13,9 +68,9 @@
         margin: 0;
     }
 
-    & :not(h3) {
-        cursor: pointer;
-    }
+    // & :not(h3) {
+    //     cursor: pointer;
+    // }
 
     input:is([type="text"], [type="number"]){
         height: 1.8em;
