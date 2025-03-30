@@ -1,29 +1,63 @@
 .stay-filter {
-    .stay-filter-list{
-        width: 100%;
-        display: flex;
-        gap: 0 .5em;
-    
-        background-color: $clr4;
-        padding: .5em;
+    .stay-filter-carousel{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+        box-sizing: border-box;
+        overscroll-behavior: none;
 
-        .stay-type-button{
+        > button{
+            display: inline;
+            position: absolute;
+        }
+        button.back{
+            float: left;
+        }
+        button.forward{
+            float: right;
+            right: 0px;
+        }
+
+        .stay-filter-list{
             width: 100%;
-            margin: 0;
-            display: grid;
-            grid-template-rows: auto auto;
-            justify-items: center;
-            opacity: 0.5;
-            transition: 0.1s;
+            display: flex;
+            gap: 0 .5em;
     
-            img{
-                width: 2em;
-            }
+            background-color: $clr4;
+            padding: .5em;
     
-            &:hover, &.selected{
-                opacity: 1;
-                border-bottom: 3px solid gray;
-                margin-bottom: -3px;
+            // > li{
+            //     display: flex;
+            //     flex-shrink: 0;
+            // }
+    
+            .stay-type-button{
+                width: 100%;
+                margin: 0;
+                display: grid;
+                grid-template-rows: auto auto;
+                justify-items: center;
+                opacity: 0.5;
+                transition: 0.1s;
+                overflow: hidden;
+                white-space: nowrap;
+        
+                img{
+                    width: 2em;
+                }
+                
+                &:hover{
+                    border-bottom: 3px solid gray;
+                }
+                &.selected{
+                    border-bottom: 3px solid black;
+                }
+                &:hover, &.selected{
+                    opacity: 1;
+                    margin-bottom: -3px;
+                    font-weight: bold;
+                }
             }
         }
     }

@@ -44,7 +44,7 @@ export function StayFilter({ filterBy, onSetFilterBy }) {
     setFilterByToEdit({ type });
   }
 
-  const {type: selectedType} = filterByToEdit
+  const { type: selectedType } = filterByToEdit //  extracting the currently selected stay type from filterBy
   return (
     <section className="stay-filter">
       <h3>StayFilter</h3>
@@ -55,16 +55,20 @@ export function StayFilter({ filterBy, onSetFilterBy }) {
         </fieldset>
       </form> */}
       {/* this code creates a list of simple buttons for each type */}
-      <ul className="stay-filter-list">
-        {typeList.map((type) => (
-          <li key={type} onClick={() => onClickType(type)}>
-            <button className={type === selectedType ? 'stay-type-button selected' : 'stay-type-button' }>
-              <img src={`${IMG_URL_FORMAT}${type}.jpg`} alt="" />
-              <span>{type}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="stay-filter-carousel">
+        <button className="back" aria-label="Scroll to previous stay types">back</button>
+        <ul className="stay-filter-list">
+          {typeList.map((type) => (
+            <li key={type} onClick={() => onClickType(type)}>
+              <button className={type === selectedType ? 'stay-type-button selected' : 'stay-type-button'}>
+                <img src={`${IMG_URL_FORMAT}${type}.jpg`} alt="" />
+                <span>{type}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <button className="forward" aria-label="Scroll to next stay types">forward</button>
+      </div>
     </section>
   );
 }
