@@ -66,6 +66,21 @@ export async function addStayMsg(stayId, txt) {
     }
 }
 
+export async function setFilterBy(filterBy){
+    try{
+        //  set is loading = true
+        await store.dispatch(getCmdSetFilterBy(filterBy))
+        return filterBy
+    }
+    catch(err){
+        console.log('cannot set filter by', err)
+        throw err
+    }
+    finally{
+        //  set is loading = false
+    }
+}
+
 // Command Creators:
 function getCmdSetStays(stays) {
     return {
@@ -101,6 +116,13 @@ function getCmdAddStayMsg(msg) {
     return {
         type: ADD_STAY_MSG,
         msg
+    }
+}
+
+function getCmdSetFilterBy(filterBy){
+    return{
+        type: SET_FILTER_BY,
+        filterBy
     }
 }
 
