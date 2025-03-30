@@ -12,28 +12,27 @@
 @import "basics/forms";
 
 // pages
-@import "RootCmp";
-
-@import "pages/AboutUs";
-@import "pages/HomePage";
-@import "pages/StayIndex";
-@import "pages/ReviewIndex";
-@import "pages/UserDetails";
-@import "pages/TaskDetails";
-@import "pages/LoginSignup";
+@import "pages/root-cmp";
+@import "pages/about-us";
+@import "pages/home-page";
+@import "pages/stay-index";
+@import "pages/review-index";
+@import "pages/user-details";
+@import "pages/task-details";
+@import "pages/login-signup";
 
 // Components
 @import "cmps/list";
 @import "cmps/preview";
 
-@import "cmps/AppFooter";
-@import "cmps/UserMsg";
+@import "cmps/app-header";
+@import "cmps/app-footer";
+@import "cmps/user-msg";
 
-@import "cmps/StayFilter";
-@import "cmps/ReviewEdit";
-@import "cmps/ReviewList";
-@import "cmps/ReviewPreview";
-// @import "cmps/StayList";
-// @import "cmps/StayPreview";
-@import "cmps/header-content/app-header";
-@import "cmps/header-content/search-bar";
+@import "cmps/stay-filter";
+@import "cmps/review-edit";
+@import "cmps/review-list";
+@import "cmps/review-preview";
+@import "cmps/stay-list";
+@import "cmps/stay-preview";
+@import "cmps/search-bar";

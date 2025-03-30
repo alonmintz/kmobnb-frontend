@@ -1,0 +1,121 @@
+.stay-filter {
+    .stay-filter-carousel{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+        box-sizing: border-box;
+        overscroll-behavior: none;
+
+        > button{
+            display: inline;
+            position: absolute;
+        }
+        button.back{
+            float: left;
+        }
+        button.forward{
+            float: right;
+            right: 0px;
+        }
+
+        .stay-filter-list{
+            width: 100%;
+            display: flex;
+            gap: 0 .5em;
+    
+            background-color: $clr4;
+            padding: .5em;
+    
+            // > li{
+            //     display: flex;
+            //     flex-shrink: 0;
+            // }
+    
+            .stay-type-button{
+                width: 100%;
+                margin: 0;
+                display: grid;
+                grid-template-rows: auto auto;
+                justify-items: center;
+                opacity: 0.5;
+                transition: 0.1s;
+                overflow: hidden;
+                white-space: nowrap;
+        
+                img{
+                    width: 2em;
+                }
+                
+                &:hover{
+                    border-bottom: 3px solid gray;
+                }
+                &.selected{
+                    border-bottom: 3px solid black;
+                }
+                &:hover, &.selected{
+                    opacity: 1;
+                    margin-bottom: -3px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    h3 {
+        grid-column: 1 / -1;
+        font-size: rem(14px);
+        margin: 0;
+    }
+
+    // & :not(h3) {
+    //     cursor: pointer;
+    // }
+
+    input:is([type="text"], [type="number"]){
+        height: 1.8em;
+        border: none;
+        border-block-end: 1px solid $gray1;
+    
+        &:focus {
+            outline: none;
+            background-color: $gray1;
+        }
+    }
+
+
+    .btn-clear {
+        grid-column: 4;
+    }
+
+    .sort-field, .sort-dir {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+
+        // margin-inline-start: .4em;
+
+        font-size: .8em;
+    }
+
+    .sort-dir {
+        grid-column: 2 / 3;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    label {
+        span {
+            font-size: .9em;
+            padding: 0.1em 0.3em;
+            outline: 1px solid $gray1;
+        }
+
+        &:has(:checked) span  {
+            background-color: $clr3;
+            color: $gray1;
+        }
+    }
+}
