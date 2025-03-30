@@ -1,0 +1,111 @@
+.top-div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.app-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.5rem;
+  background-color: white;
+
+  //   background-color: $clr4;
+  padding: rem(20px) 2rem;
+  border-bottom: 1px solid lightgray;
+  .header-top {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      & > * {
+        margin: 0;
+      }
+      h3 {
+        color: #ff385c;
+      }
+      .logo {
+        width: 38px;
+        // height: 32px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+      }
+    }
+    nav {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: end;
+      gap: 1em;
+
+      font-size: 0.8em;
+
+      //   .active {
+      //     color: $clr1;
+      //   }
+
+      //   .logo {
+      //     font-size: 1.4em;
+      //     font-weight: bold;
+      //     margin-inline-end: 2em;
+      //   }
+
+      //   .login-link {
+      //     margin-inline-start: auto;
+      //   }
+
+      button {
+        margin-inline-end: 0;
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      //   margin-inline-start: auto;
+      background-color: white;
+      color: black;
+      border: 1px solid lightgray;
+      border-radius: 2em;
+      transition: box-shadow 0.3s ease;
+      &:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      // color: $clr1;
+
+      //   .score {
+      //     padding: 8px;
+      //     background-color: $clr2;
+      //     border-radius: 50%;
+      //     margin: 10px;
+
+      //     color: $clr6;
+      //   }
+
+      img {
+        width: 32px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+      }
+
+      .btn-link {
+        color: $clr2;
+      }
+    }
+  }
+  //   .header-bottom {
+  //     width: 100%;
+  //     height: 3.5rem;
+  //     background-color: white;
+  //     border: 1px solid lightgrey;
+  //     border-radius: 2em;
+  //   }
+}
