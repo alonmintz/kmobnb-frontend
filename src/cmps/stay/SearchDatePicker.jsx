@@ -16,7 +16,7 @@ export function SearchDatePicker({ type, onSelect, ranges }) {
           editableDateInputs={true}
           onChange={(item) => onSelect({ type, item })}
           showSelectionPreview={true}
-          showPreview={false}
+          showPreview={true}
           moveRangeOnFirstSelection={false}
           months={2}
           ranges={ranges}

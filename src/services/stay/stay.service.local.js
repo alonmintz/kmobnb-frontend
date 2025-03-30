@@ -10,35 +10,38 @@ export const stayService = {
   getById,
   save,
   remove,
-  addStayMsg,
 };
 window.cs = stayService;
 
-async function query(filterBy = { txt: "", price: 0 }) {
+async function query(
+  filterBy = {
+    city: "",
+    startDate: null,
+    endDate: null,
+    capacity: 0,
+    isPetsAllowed: false,
+    type: "",
+  }
+) {
   var stays = await storageService.query(STORAGE_KEY);
   //TODO: refactor to stays logic
-  //   const { txt, minSpeed, maxPrice, sortField, sortDir } = filterBy;
+  const { city, startDate, endDate, capacity, isPetsAllowed, type } = filterBy;
 
-  //   if (txt) {
-  //     const regex = new RegExp(filterBy.txt, "i");
-  //     stays = stays.filter(
-  //       (stay) => regex.test(stay.vendor) || regex.test(stay.description)
-  //     );
-  //   }
-  //   if (minSpeed) {
-  //     stays = stays.filter((stay) => stay.speed >= minSpeed);
-  //   }
-  //   if (sortField === "vendor" || sortField === "owner") {
-  //     stays.sort(
-  //       (stay1, stay2) =>
-  //         stay1[sortField].localeCompare(stay2[sortField]) * +sortDir
-  //     );
-  //   }
-  //   if (sortField === "price" || sortField === "speed") {
-  //     stays.sort(
-  //       (stay1, stay2) => (stay1[sortField] - stay2[sortField]) * +sortDir
-  //     );
-  //   }
+  if (city) {
+    stays = stays.filter((stay) => stay.loc.city === city);
+  }
+  if (capacity > 0) {
+    stays = stays.filter((stay) => stay.capacity > capacity);
+  }
+  if (isPetsAllowed) {
+    stays = stays.filter((stay) => stay.amenities.includes("Pets allowed"));
+  }
+  if (startDate && endDate) {
+    stays = _filterStaysByDates(stays, startDate, endDate);
+  }
+  if (type) {
+    stays = stays.filter((stay) => stay.type === type);
+  }
 
   //   stays = stays.map(({ _id, vendor, price, speed, owner }) => ({
   //     _id,
@@ -84,17 +87,8 @@ async function save(stay) {
   return savedStay;
 }
 
-async function addStayMsg(stayId, txt) {
-  //TODO: refactor to stays logic
-  //   const stay = await getById(stayId);
+//private functions:
 
-  //   const msg = {
-  //     id: makeId(),
-  //     by: userService.getLoggedinUser(),
-  //     txt,
-  //   };
-  //   stay.msgs.push(msg);
-  //   await storageService.put(STORAGE_KEY, stay);
-
-  return msg;
+function _filterStaysByDates(stays, startDate, endDate) {
+  return;
 }

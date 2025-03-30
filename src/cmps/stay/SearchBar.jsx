@@ -23,8 +23,6 @@ export function SearchBar() {
       color: "#000",
     },
   ]);
-  //   const [checkInValue, setCheckInValue] = useState(null);
-  //   const [checkOutValue, setCheckOutValue] = useState(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -76,6 +74,9 @@ export function SearchBar() {
   }
 
   function handleDateSelection({ type, item }) {
+    console.log(item.selection.startDate);
+    // console.log({ item });
+
     setDatesRange([item.selection]);
     if (type === "check-in") {
       setActiveSearchControl("check-out");

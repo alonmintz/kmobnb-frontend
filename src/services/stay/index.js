@@ -7,20 +7,17 @@ import { stayService as remote } from "./stay.service.remote";
 
 function getEmptyStay() {
   //TODO: refactor to stay object
-  return {
-    // vendor: makeId(),
-    // speed: getRandomIntInclusive(80, 240),
-    // msgs: [],
-  };
+  return {};
 }
 
 function getDefaultFilter() {
-  //TODO: refactor to stay filter
   return {
-    // txt: "",
-    // minSpeed: "",
-    // sortField: "",
-    // sortDir: "",
+    city: "",
+    startDate: null,
+    endDate: null,
+    capacity: 0,
+    isPetsAllowed: false,
+    type: "",
   };
 }
 
