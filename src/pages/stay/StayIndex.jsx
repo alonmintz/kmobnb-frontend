@@ -59,6 +59,7 @@ export function StayIndex() {
     <section className="stay-index">
       <StayFilter />
       <StayList />
+      <div ref={bottomDiv} className="bottom-div"></div>
     </section>
   );
 }
