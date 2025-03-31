@@ -18,12 +18,8 @@ export function AppHeader() {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
       if (entry.isIntersecting) {
-        console.log("shown");
-
         setIsSearchBarShow(true);
       } else {
-        console.log("not shown");
-
         setIsSearchBarShow(false);
       }
     });
@@ -59,9 +55,6 @@ export function AppHeader() {
           </nav>
         </section>
         {isSearchBarShow && <SearchBar />}
-        {/* <section className="header-bottom flex">
-        <div className="search-bar-container"></div>
-      </section> */}
       </header>
     </>
   );
