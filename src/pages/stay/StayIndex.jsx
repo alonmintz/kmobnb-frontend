@@ -33,10 +33,10 @@ export function StayIndex() {
   }, []);
 
   useEffect(() => {
-    loadStays({ bulkIdxToSet: 0 });
+    loadStays(0);
   }, [filterBy]);
 
-  async function loadStays({ bulkIdxToSet }) {
+  async function loadStays(bulkIdxToSet) {
     try {
       if (bulkIdxToSet) {
         await stayActions.setBulkIndex(bulkIdxToSet);
