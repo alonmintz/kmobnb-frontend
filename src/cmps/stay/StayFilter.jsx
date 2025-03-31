@@ -1,40 +1,36 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css'
-import { useSelector } from "react-redux";
-import { setFilterBy } from "../../store/actions/stay.actions";
+import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 
-export function StayFilter() {
+export function StayFilter({filterBy, onSetFilterBy}) {
     const IMG_URL_PATH = "../../src/assets/img/stay/type/";
-    const typeList = ["OMG!", "Beachfront", "Amazing Views"]; //  list of stay types
+    const typeList = ["OMG!", "Beachfront", "Amazing Views", "Trending", "Design", "Camping", "Luxe", "Countryside", "Top cities", "Off-the-grid", "Historical homes", "Desert", "Cabins", "Surfing", "New", "National parks", "Rooms", "Amazing pools", "Camping", "Top of the world", "Skiing", "Tropical", "Creative spaces", "Castles"]; //  list of stay types
 
-    const filterBy = useSelector((storeState) => storeState.stayModule.filterBy)
+    const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
 
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    //    setting stay type filter on load only, according to search params
-    useEffect(() => {
-        const typeFromParams = searchParams.get("type");
-        if (typeFromParams !== null && typeFromParams != "") {
-            selectType(typeFromParams);
-        }
-    }, []);
+    useEffectUpdate(() => {
+        onSetFilterBy(filterByToEdit)
+    }, [filterByToEdit])
 
     function onClickType(type) {
-        setSearchParams({ type });
-        selectType(type);
+        setFilterByToEdit({type})
     }
 
-    function selectType(type) {
-        setFilterBy({...filterBy, type})
-    }
-
-    const { type: selectedType } = filterBy //  extracting the currently selected stay type from filterBy
+    const { type: selectedType } = filterByToEdit //  extracting the currently selected stay type from filterBy
     return (
         <section className="stay-filter">
             <div>
-                <Carousel arrows className="stay-filter-carousel" itemClass="" responsive={{
+                <Carousel
+                arrows
+                className="stay-filter-carousel"
+                itemClass=""
+                containerClass=""
+                infinite={false}
+                draggable={false}
+                swipeable
+                slidesToSlide={3}
+                responsive={{
                     desktop: {
                         breakpoint: {
                             max: 3000,
@@ -63,7 +59,8 @@ export function StayFilter() {
                     {typeList.map((type) => (
                         <button
                             key={type}
-                            className={type === selectedType ? 'stay-type-button selected' : 'stay-type-button'}
+                            className={`stay-type-button ${type === selectedType ? 'selected' : ''}`}
+                            disabled={type === selectedType}
                             onClick={() => onClickType(type)
                             }>
                             <img src={`${IMG_URL_PATH}${type}.jpg`} alt="" />
