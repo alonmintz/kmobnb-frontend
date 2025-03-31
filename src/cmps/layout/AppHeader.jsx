@@ -47,14 +47,14 @@ export function AppHeader() {
       <header className="app-header full">
         <section className="header-top flex">
           <div className="logo-container">
-            <img className="logo" src="src\assets\img\logo.png" alt="logo" />
+            <img className="logo" src="src/assets/img/logo.png" alt="logo" />
             <h3>kmobnb</h3>
           </div>
           <nav>
             <NavLink>Bnb your home</NavLink>
             <button className="user-info">
               <FontAwesomeIcon icon={faBars} />
-              <img src="src\assets\img\guest-unknown.svg" alt="user-icon" />
+              <img src="src/assets/img/guest-unknown.svg" alt="user-icon" />
             </button>
           </nav>
         </section>
