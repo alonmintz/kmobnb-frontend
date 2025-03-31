@@ -1,68 +1,81 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
-import {Carousel, WithStyles} from "react-multi-carousel";
+import Carousel from "react-multi-carousel";
+import 'react-multi-carousel/lib/styles.css'
+import { useSelector } from "react-redux";
+import { setFilterBy } from "../../store/actions/stay.actions";
 
-export function StayFilter({ filterBy, onSetFilterBy }) {
-  const IMG_URL_FORMAT = "../../src/assets/img/stay/type/";
-  const typeList = ["OMG!", "Beachfront", "Amazing Views"]; //  list of stay types
+export function StayFilter() {
+    const IMG_URL_FORMAT = "../../src/assets/img/stay/type/";
+    const typeList = ["OMG!", "Beachfront", "Amazing Views"]; //  list of stay types
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
-  //    the following code is for setting the data through a form:
-  //   const filterForm = () => {
-  //     const [formData, setFormData, handleChange] = useForm({
-  //         type: ""
-  //     })
-  //   }
-  //   const handleSubmit = (e) => {
-  //     e. preventDefault();
-  //     console.log("form submitted: ", formData)
-  //   }
+    const filterBy = useSelector((storeState) => storeState.stayModule.filterBy)
 
-  //    setting stay type filter on load only, according to search params
-  useEffect(() => {
-    console.log(typeList);
-    const typeFromParams = searchParams.get("type");
-    console.log("type from params: " + typeFromParams);
-    if (typeFromParams !== null && typeFromParams != "") {
-      selectType(typeFromParams);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    //    setting stay type filter on load only, according to search params
+    useEffect(() => {
+        console.log(typeList);
+        const typeFromParams = searchParams.get("type");
+        console.log("type from params: " + typeFromParams);
+        if (typeFromParams !== null && typeFromParams != "") {
+            selectType(typeFromParams);
+        }
+    }, []);
+
+    function onClickType(type) {
+        setSearchParams({ type });
+        selectType(type);
     }
-  }, []);
 
-  //  TODO: notify parent when filterBy is updated
-  useEffectUpdate(() => {
-    onSetFilterBy(filterByToEdit);
-  }, [filterByToEdit]);
+    function selectType(type) {
+        console.log("selecting type " + type);
+        setFilterBy({...filterBy, type})
+    }
 
-  function onClickType(type) {
-    setSearchParams({ type });
-    selectType(type);
-  }
-
-  function selectType(type) {
-    console.log("selecting type " + type);
-    setFilterByToEdit({ type });
-  }
-
-  const { type: selectedType } = filterByToEdit //  extracting the currently selected stay type from filterBy
-  return (
-    <section className="stay-filter">
-      <h3>StayFilter</h3>
-      <div className="stay-filter-carousel">
-        <button className="back" aria-label="Scroll to previous stay types">back</button>
-        <ul className="stay-filter-list">
-          {typeList.map((type) => (
-            <li key={type} onClick={() => onClickType(type)}>
-              <button className={type === selectedType ? 'stay-type-button selected' : 'stay-type-button'}>
-                <img src={`${IMG_URL_FORMAT}${type}.jpg`} alt="" />
-                <span>{type}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-        <button className="forward" aria-label="Scroll to next stay types">forward</button>
-      </div>
-    </section>
-  );
+    const { type: selectedType } = filterBy //  extracting the currently selected stay type from filterBy
+    return (
+        <section className="stay-filter">
+            {/* <h3>StayFilter</h3> */}
+            <div>
+                <Carousel arrows className="stay-filter-carousel" itemClass="" responsive={{
+                    desktop: {
+                        breakpoint: {
+                            max: 3000,
+                            min: 1024
+                        },
+                        items: 15,
+                        partialVisibilityGutter: 40
+                    },
+                    mobile: {
+                        breakpoint: {
+                            max: 464,
+                            min: 0
+                        },
+                        items: 3,
+                        partialVisibilityGutter: 30
+                    },
+                    tablet: {
+                        breakpoint: {
+                            max: 1024,
+                            min: 464
+                        },
+                        items: 7,
+                        partialVisibilityGutter: 30
+                    }
+                }}>
+                    {typeList.map((type) => (
+                        <button
+                            key={type}
+                            className={type === selectedType ? 'stay-type-button selected' : 'stay-type-button'}
+                            onClick={() => onClickType(type)
+                            }>
+                            <img src={`${IMG_URL_FORMAT}${type}.jpg`} alt="" />
+                            <p>{type}</p>
+                        </button>
+                    ))}
+                </Carousel>
+            </div>
+        </section>
+    );
 }
