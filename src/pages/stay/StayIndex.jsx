@@ -58,7 +58,7 @@ export function StayIndex() {
   return (
     <section className="stay-index">
       <StayFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <StayList />
+      <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
     </section>
   );
