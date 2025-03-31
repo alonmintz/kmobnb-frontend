@@ -1,100 +1,130 @@
 import { storageService } from "../async-storage.service";
-import { makeId } from "../util.service";
+import { loadFromStorage, makeId, saveToStorage } from "../util.service";
 import { userService } from "../user";
+import STAYS_DATA from "./stay_mockdata.json";
 
-const STORAGE_KEY = "stay";
+const STORAGE_KEY = "STAY_DB";
+const STAYS_PER_LOAD = 20;
 
-//TODO: refactor function to suit our needs
+_createStays();
+
 export const stayService = {
   query,
   getById,
   save,
   remove,
-  addStayMsg,
 };
 window.cs = stayService;
 
-async function query(filterBy = { txt: "", price: 0 }) {
-  var stays = await storageService.query(STORAGE_KEY);
-  //TODO: refactor to stays logic
-  //   const { txt, minSpeed, maxPrice, sortField, sortDir } = filterBy;
+async function query(
+  filterBy = {
+    city: "",
+    startDate: null,
+    endDate: null,
+    capacity: 0,
+    isPetsAllowed: false,
+    type: "",
+  },
+  bulkIdx = 0,
+  amount = STAYS_PER_LOAD
+) {
+  try {
+    let stays = await storageService.query(STORAGE_KEY);
 
-  //   if (txt) {
-  //     const regex = new RegExp(filterBy.txt, "i");
-  //     stays = stays.filter(
-  //       (stay) => regex.test(stay.vendor) || regex.test(stay.description)
-  //     );
-  //   }
-  //   if (minSpeed) {
-  //     stays = stays.filter((stay) => stay.speed >= minSpeed);
-  //   }
-  //   if (sortField === "vendor" || sortField === "owner") {
-  //     stays.sort(
-  //       (stay1, stay2) =>
-  //         stay1[sortField].localeCompare(stay2[sortField]) * +sortDir
-  //     );
-  //   }
-  //   if (sortField === "price" || sortField === "speed") {
-  //     stays.sort(
-  //       (stay1, stay2) => (stay1[sortField] - stay2[sortField]) * +sortDir
-  //     );
-  //   }
+    const { city, startDate, endDate, capacity, isPetsAllowed, type } =
+      filterBy;
 
-  //   stays = stays.map(({ _id, vendor, price, speed, owner }) => ({
-  //     _id,
-  //     vendor,
-  //     price,
-  //     speed,
-  //     owner,
-  //   }));
-  return stays;
+    if (city) {
+      stays = stays.filter((stay) => stay.loc.city === city);
+    }
+    if (capacity > 0) {
+      stays = stays.filter((stay) => stay.capacity > capacity);
+    }
+    if (isPetsAllowed) {
+      stays = stays.filter((stay) => stay.amenities.includes("Pets allowed"));
+    }
+    if (startDate && endDate) {
+      stays = _filterStaysByDates(stays, startDate, endDate);
+    }
+    if (type) {
+      stays = stays.filter((stay) => stay.type === type);
+    }
+
+    stays = stays.slice(bulkIdx * amount, bulkIdx * amount + amount);
+
+    return stays;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
-function getById(stayId) {
-  return storageService.get(STORAGE_KEY, stayId);
+async function getById(stayId) {
+  try {
+    return await storageService.get(STORAGE_KEY, stayId);
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
 async function remove(stayId) {
-  // throw new Error('Nope')
-  await storageService.remove(STORAGE_KEY, stayId);
+  try {
+    await storageService.remove(STORAGE_KEY, stayId);
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
 async function save(stay) {
-  var savedStay;
-  //TODO: refactor to stays logic
+  try {
+    var savedStay;
+    if (stay._id) {
+      const stayToSave = {
+        ...stay,
+      };
+      savedStay = await storageService.put(STORAGE_KEY, stayToSave);
+    } else {
+      //TODO: later on, add a function that populates the added stay with data not presented in the "edit stay" in the UI
+      const stayToSave = {
+        ...stay,
+      };
+      savedStay = await storageService.post(STORAGE_KEY, stayToSave);
+    }
 
-  //   if (stay._id) {
-  //     const stayToSave = {
-  //       _id: stay._id,
-  //       price: stay.price,
-  //       speed: stay.speed,
-  //     };
-  //     savedStay = await storageService.put(STORAGE_KEY, stayToSave);
-  //   } else {
-  //     const stayToSave = {
-  //       vendor: stay.vendor,
-  //       price: stay.price,
-  //       speed: stay.speed,
-  //       // Later, owner is set by the backend
-  //       owner: userService.getLoggedinUser(),
-  //       msgs: [],
-  //     };
-  //     savedStay = await storageService.post(STORAGE_KEY, stayToSave);
-  //   }
-  return savedStay;
+    return savedStay;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
-async function addStayMsg(stayId, txt) {
-  //TODO: refactor to stays logic
-  //   const stay = await getById(stayId);
+//private functions:
 
-  //   const msg = {
-  //     id: makeId(),
-  //     by: userService.getLoggedinUser(),
-  //     txt,
-  //   };
-  //   stay.msgs.push(msg);
-  //   await storageService.put(STORAGE_KEY, stay);
+function _createStays() {
+  let stays = loadFromStorage(STORAGE_KEY);
+  if (!stays || !stays.length) {
+    saveToStorage(STORAGE_KEY, STAYS_DATA);
+  }
+}
 
-  return msg;
+function _filterStaysByDates(stays, filterByStartDate, filterByEndDate) {
+  stays = stays.filter(({ occupancy }) => {
+    if (!occupancy || !occupancy.length) return true;
+
+    const filterStart = new Date(filterByStartDate);
+    const filterEnd = new Date(filterByEndDate);
+
+    const hasOverlap = occupancy.some((period) => {
+      const periodStart = new Date(period.startDate);
+      const periodEnd = new Date(period.endDate);
+
+      return (
+        (filterStart >= periodStart && filterStart <= periodEnd) ||
+        (filterEnd >= periodStart && filterEnd <= periodEnd) ||
+        (filterStart <= periodStart && filterEnd >= periodEnd)
+      );
+    });
+
+    return !hasOverlap;
+  });
+
+  return stays;
 }
