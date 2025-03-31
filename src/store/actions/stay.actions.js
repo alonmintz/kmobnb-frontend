@@ -20,13 +20,14 @@ export const stayActions = {
   resetFilterBy,
 };
 
-async function loadStays(filterBy) {
+async function loadStays(filterBy, startIdx, amount) {
   try {
-    const stays = await stayService.query(filterBy);
+    const stays = await stayService.query(filterBy, startIdx, amount);
     store.dispatch({
       type: SET_STAYS,
       stays,
     });
+    return stays;
   } catch (err) {
     console.log("Cannot load stays", err);
     throw err;
@@ -40,6 +41,7 @@ async function getStayById(stayId) {
       type: SET_STAY,
       stay,
     });
+    return stay;
   } catch (err) {
     console.log("Cannot load stay", err);
     throw err;
