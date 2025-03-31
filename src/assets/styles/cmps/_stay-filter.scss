@@ -30,9 +30,6 @@
                 margin-inline-end: unset;
                 
                 padding: 0;
-                
-                // overflow: hidden;
-                // white-space: nowrap;
         
                 img{
                     width: 2em;
@@ -51,8 +48,6 @@
                 }
                 &:hover, &.selected{
                     opacity: 1;
-                    // font-weight: bold;
-                    // padding: calc(5px - .01em) calc(10px - .2em);
                 }
         }
         }

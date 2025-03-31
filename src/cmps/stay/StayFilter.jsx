@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { setFilterBy } from "../../store/actions/stay.actions";
 
 export function StayFilter() {
-    const IMG_URL_FORMAT = "../../src/assets/img/stay/type/";
+    const IMG_URL_PATH = "../../src/assets/img/stay/type/";
     const typeList = ["OMG!", "Beachfront", "Amazing Views"]; //  list of stay types
 
     const filterBy = useSelector((storeState) => storeState.stayModule.filterBy)
@@ -15,9 +15,7 @@ export function StayFilter() {
 
     //    setting stay type filter on load only, according to search params
     useEffect(() => {
-        console.log(typeList);
         const typeFromParams = searchParams.get("type");
-        console.log("type from params: " + typeFromParams);
         if (typeFromParams !== null && typeFromParams != "") {
             selectType(typeFromParams);
         }
@@ -29,14 +27,12 @@ export function StayFilter() {
     }
 
     function selectType(type) {
-        console.log("selecting type " + type);
         setFilterBy({...filterBy, type})
     }
 
     const { type: selectedType } = filterBy //  extracting the currently selected stay type from filterBy
     return (
         <section className="stay-filter">
-            {/* <h3>StayFilter</h3> */}
             <div>
                 <Carousel arrows className="stay-filter-carousel" itemClass="" responsive={{
                     desktop: {
@@ -70,7 +66,7 @@ export function StayFilter() {
                             className={type === selectedType ? 'stay-type-button selected' : 'stay-type-button'}
                             onClick={() => onClickType(type)
                             }>
-                            <img src={`${IMG_URL_FORMAT}${type}.jpg`} alt="" />
+                            <img src={`${IMG_URL_PATH}${type}.jpg`} alt="" />
                             <p>{type}</p>
                         </button>
                     ))}
