@@ -5,9 +5,6 @@
         align-items: center;
         gap: 1em;
         margin: .5em 0;
-        // overflow: hidden;
-        // box-sizing: border-box;
-        // overscroll-behavior: none;
 
         > li{
             margin: .2em;
@@ -59,10 +56,6 @@
         margin: 0;
     }
 
-    // & :not(h3) {
-    //     cursor: pointer;
-    // }
-
     input:is([type="text"], [type="number"]){
         height: 1.8em;
         border: none;
@@ -83,8 +76,6 @@
         display: flex;
         align-items: center;
         gap: 1em;
-
-        // margin-inline-start: .4em;
 
         font-size: .8em;
     }
