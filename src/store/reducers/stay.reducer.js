@@ -1,4 +1,7 @@
 export const SET_STAYS = "SET_STAYS";
+export const INCREMENT_STAYS = "INCREMENT_STAYS";
+export const SET_BULK_INDEX = "SET_BULK_INDEX";
+export const INCREMENT_BULK_INDEX = "INCREMENT_BULK_INDEX";
 export const SET_STAY = "SET_STAY";
 export const REMOVE_STAY = "REMOVE_STAY";
 export const ADD_STAY = "ADD_STAY";
@@ -9,6 +12,7 @@ export const RESET_FILTER_BY = "RESET_FILTER_BY";
 
 const initialState = {
   stays: [],
+  currentBulkIdx: 0,
   stay: null,
   lastRemovedStay: null,
   filterBy: {},
@@ -20,6 +24,12 @@ export function stayReducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_STAYS:
       return { ...state, stays: action.stays };
+    case INCREMENT_STAYS:
+      return { ...state, stays: [...state.stays, action.stays] };
+    case SET_BULK_INDEX:
+      return { ...state, currentBulkIdx: action.bulkIdx };
+    case INCREMENT_BULK_INDEX:
+      return { ...state, currentBulkIdx: state.currentBulkIdx++ };
     case SET_STAY:
       return { ...state, stay: action.stay };
     case REMOVE_STAY: {

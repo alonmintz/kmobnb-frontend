@@ -4,10 +4,13 @@ import {
   ADD_STAY,
   REMOVE_STAY,
   SET_STAYS,
+  INCREMENT_STAYS,
   SET_STAY,
   UPDATE_STAY,
   SET_FILTER_BY,
   RESET_FILTER_BY,
+  SET_BULK_INDEX,
+  INCREMENT_BULK_INDEX,
 } from "../reducers/stay.reducer";
 
 export const stayActions = {
@@ -18,15 +21,18 @@ export const stayActions = {
   updateStay,
   setFilterBy,
   resetFilterBy,
+  setBulkIndex,
+  incrementBulkIndex,
 };
 
 async function loadStays(filterBy, startIdx, amount) {
   try {
     const stays = await stayService.query(filterBy, startIdx, amount);
     store.dispatch({
-      type: SET_STAYS,
+      type: startIdx !== 0 ? INCREMENT_STAYS : SET_STAYS,
       stays,
     });
+    
     return stays;
   } catch (err) {
     console.log("Cannot load stays", err);
@@ -111,6 +117,29 @@ async function resetFilterBy() {
     return emptyFilter;
   } catch (err) {
     console.log("cannot reset filter by", err);
+    throw err;
+  }
+}
+
+async function setBulkIndex(bulkIdx) {
+  try {
+    await store.dispatch({
+      type: SET_BULK_INDEX,
+      bulkIdx,
+    });
+  } catch (err) {
+    console.log("cannot set bulk index", err);
+    throw err;
+  }
+}
+
+async function incrementBulkIndex() {
+  try {
+    await store.dispatch({
+      type: INCREMENT_BULK_INDEX,
+    });
+  } catch (err) {
+    console.log("cannot increment bulk index", err);
     throw err;
   }
 }

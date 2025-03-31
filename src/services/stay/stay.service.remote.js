@@ -6,7 +6,7 @@ export const stayService = {
   getById,
   save,
   remove,
-  addStayMsg,
+  // addStayMsg,
 };
 
 async function query(filterBy = { txt: "", price: 0 }) {
@@ -30,7 +30,8 @@ async function save(stay) {
   return savedStay;
 }
 
-async function addStayMsg(stayId, txt) {
-  const savedMsg = await httpService.post(`stay/${stayId}/msg`, { txt });
-  return savedMsg;
-}
+//TODO: delete if not relevant
+// async function addStayMsg(stayId, txt) {
+//   const savedMsg = await httpService.post(`stay/${stayId}/msg`, { txt });
+//   return savedMsg;
+// }

@@ -25,7 +25,7 @@ async function query(
     isPetsAllowed: false,
     type: "",
   },
-  startIdx = 0,
+  bulkIdx = 0,
   amount = STAYS_PER_LOAD
 ) {
   try {
@@ -50,7 +50,7 @@ async function query(
       stays = stays.filter((stay) => stay.type === type);
     }
 
-    stays = stays.slice(startIdx * amount, startIdx * amount + amount);
+    stays = stays.slice(bulkIdx * amount, bulkIdx * amount + amount);
 
     return stays;
   } catch (err) {
