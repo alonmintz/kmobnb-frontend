@@ -4,10 +4,6 @@
     justify-content: space-between;
 
     font-family: 'Airbnb';
-    // FOR TESTING
-    // border-width: 1px;
-    // border-color: black;
-    // border-style: solid;
 
     >.gallery {
         display: block;
@@ -29,7 +25,7 @@
         grid-template-rows: repeat(3, 1.5em) 1.8em;
         column-gap: 1em;
         grid-auto-flow: column;
-        font-size: 15px; // TODO: move somewhere more appropriate. mixin?
+        font-size: rem(15px); // TODO: move somewhere more appropriate. mixin?
         align-items: end;
 
         .bold-text { // TODO: move somewhere more appropriate. mixin?
