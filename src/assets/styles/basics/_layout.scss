@@ -10,6 +10,11 @@
     }
   }
 
+  main {
+    min-height: calc(100vh - 7rem);
+    overflow: hidden; // Quick fix for JSONs in <pre>
+  }
+
   // @include for-narrow-layout {
   //     grid-template-columns:
   //         minmax(20px, 1fr)

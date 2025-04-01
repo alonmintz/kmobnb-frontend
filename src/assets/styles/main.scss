@@ -12,7 +12,6 @@
 @import "basics/forms";
 
 // pages
-@import "pages/root-cmp";
 @import "pages/about-us";
 @import "pages/home-page";
 @import "pages/stay-index";
@@ -24,11 +23,9 @@
 // Components
 @import "cmps/list";
 @import "cmps/preview";
-
 @import "cmps/app-header";
 @import "cmps/app-footer";
 @import "cmps/user-msg";
-
 @import "cmps/stay-filter";
 @import "cmps/review-edit";
 @import "cmps/review-list";
