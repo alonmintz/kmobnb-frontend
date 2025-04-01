@@ -13,6 +13,8 @@
   main {
     min-height: calc(100vh - 7rem);
     overflow: hidden; // Quick fix for JSONs in <pre>
+    padding-left: .7em;
+    padding-right: .7em; // TODO: make resonsive
   }
 
   // @include for-narrow-layout {
