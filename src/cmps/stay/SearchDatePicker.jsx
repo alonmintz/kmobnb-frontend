@@ -4,11 +4,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
 export function SearchDatePicker({ type, onSelect, ranges }) {
-  // const styledRanges = ranges.map((range) => ({
-  //   ...range,
-  //   color: "#ff385c", // Airbnb pink
-  // }));
-
+  //TODO: complete datePicker styling
   return (
     <SearchPickerWrapper type={type}>
       <section className="search-date-picker">

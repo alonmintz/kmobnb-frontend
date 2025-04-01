@@ -7,22 +7,20 @@ import { SearchWhoPicker } from "./SearchWhoPicker";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
 
-export function SearchBar() {
-  //TODO: integrate filterBy from store
-  // const filterBy = useSelector(storeState=> storeState.)
+export function SearchBar({
+  destination,
+  setDestination,
+  datesRange,
+  setDatesRange,
+  guests,
+  guestsDisplay,
+  onSetGuests,
+  updateFilterBy,
+}) {
   const formRef = useRef(null);
   const [activeSearchControl, setActiveSearchControl] = useState("");
   const [hoveredSearchControl, setHoveredSearchControl] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
-  const [searchDestination, setSearchDestination] = useState("");
-  const [datesRange, setDatesRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-      color: "#000",
-    },
-  ]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -38,10 +36,10 @@ export function SearchBar() {
   }, []);
 
   useEffect(() => {
-    if (searchDestination) {
-      setSearchInputValue(searchDestination);
+    if (destination) {
+      setSearchInputValue(destination);
     }
-  }, [searchDestination]);
+  }, [destination]);
 
   function renderSplitterActiveClass(leftControl, rightControl) {
     return activeSearchControl === leftControl ||
@@ -68,24 +66,33 @@ export function SearchBar() {
     }
   }
 
+  function onDestinationSearchChange(ev) {
+    setActiveSearchControl("where");
+    if (!ev.target.value) setDestination("");
+    setSearchInputValue(ev.target.value);
+  }
+
   function handleWhereSelection({ city }) {
-    setSearchDestination(`${city}`);
+    setDestination(`${city}`);
     setActiveSearchControl("check-in");
   }
 
   function handleDateSelection({ type, item }) {
     console.log(item.selection.startDate);
-    // console.log({ item });
 
     setDatesRange([item.selection]);
     if (type === "check-in") {
       setActiveSearchControl("check-out");
+    }
+    if (type === "check-out") {
+      setActiveSearchControl("who");
     }
   }
 
   function onSubmitSearch(event) {
     event.preventDefault();
     setActiveSearchControl("");
+    updateFilterBy();
     console.log("search");
   }
 
@@ -113,10 +120,7 @@ export function SearchBar() {
             type="search"
             placeholder="Search destinations"
             value={searchInputValue}
-            onChange={(ev) => {
-              setActiveSearchControl("where");
-              setSearchInputValue(ev.target.value);
-            }}
+            onChange={onDestinationSearchChange}
           />
         </div>
         <span
@@ -186,7 +190,7 @@ export function SearchBar() {
           }
         >
           <span className="title">Who</span>
-          <span className="subtitle">Add guests</span>
+          <span className="subtitle">{guestsDisplay}</span>
         </div>
         <button className="search-button">
           <FontAwesomeIcon icon={faSearch} />
@@ -197,6 +201,8 @@ export function SearchBar() {
             onSelect={handleSearchSelection}
             searchInputValue={searchInputValue}
             ranges={datesRange}
+            onSetGuests={onSetGuests}
+            guests={guests}
           />
         )}
       </form>

@@ -6,11 +6,8 @@ import { useEffect, useRef } from "react";
 import { SET_FILTER_BY } from "../../store/reducers/stay.reducer";
 
 export function StayIndex() {
-  //This is the base to the index, mind that whoever is making changes here / adding / modifying - inform the team
-
-  //EYAL: this is the stays list to pass to the StayList :)
+  //todo: apply the IntersectionObserver to load more stays at the end
   const stays = useSelector((storeState) => storeState.stayModule.stays);
-  //IDO: this filterBy should be passed to StayFilter :)
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const bulkIdx = useSelector(
     (storeState) => storeState.stayModule.currentBulkIdx
@@ -19,18 +16,18 @@ export function StayIndex() {
 
   const bottomDiv = useRef();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        loadStays();
-      }
-    });
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver((entries) => {
+  //     const entry = entries[0];
+  //     if (entry.isIntersecting) {
+  //       loadStays();
+  //     }
+  //   });
 
-    observer.observe(bottomDiv.current);
+  //   observer.observe(bottomDiv.current);
 
-    return () => observer.disconnect();
-  }, []);
+  //   return () => observer.disconnect();
+  // }, []);
 
   useEffect(() => {
     loadStays(0);
@@ -50,7 +47,6 @@ export function StayIndex() {
     }
   }
 
-  //IDO: this function should be passed to StayFilter :)
   function onSetFilterBy(updatedFilterBy) {
     dispatch({ type: SET_FILTER_BY, filterBy: updatedFilterBy });
   }
