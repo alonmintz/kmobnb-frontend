@@ -71,7 +71,11 @@ export function SearchWhoPicker({ type, guests, onSetGuests }) {
 function GuestSelectionBracket({ guest, onSelect, nonAdultsIncluded }) {
   const { type, desc, count } = guest;
   function determineDisabledButton() {
-    return type === "adults" ? nonAdultsIncluded && count <= 1 : count === 0;
+    return type === "adults" ? adultCountCheck() : count === 0;
+  }
+
+  function adultCountCheck() {
+    return nonAdultsIncluded ? count <= 1 : count === 0;
   }
 
   return (
