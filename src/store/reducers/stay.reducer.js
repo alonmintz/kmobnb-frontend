@@ -9,6 +9,7 @@ export const UPDATE_STAY = "UPDATE_STAY";
 export const ADD_STAY_MSG = "ADD_STAY_MSG";
 export const SET_FILTER_BY = "SET_FILTER_BY";
 export const RESET_FILTER_BY = "RESET_FILTER_BY";
+export const SET_GUESTS = "SET_GUESTS";
 
 const initialState = {
   stays: [],
@@ -16,11 +17,15 @@ const initialState = {
   stay: null,
   lastRemovedStay: null,
   filterBy: {},
+  guests: [
+    { type: "adults", desc: "Ages 13 or above", count: 0 },
+    { type: "children", desc: "Ages 2 – 12", count: 0 },
+    { type: "infants", desc: "Under 2", count: 0 },
+    { type: "pets", desc: "Bringing a service animal?", count: 0 },
+  ],
 };
 
 export function stayReducer(state = initialState, action = {}) {
-  // var newState = state;
-  // var stays;
   switch (action.type) {
     case SET_STAYS:
       return { ...state, stays: action.stays };
@@ -59,6 +64,8 @@ export function stayReducer(state = initialState, action = {}) {
         filterBy: emptyFilter,
       };
     }
+    case SET_GUESTS:
+      return { ...state, guests: [...action.guests] };
     default:
       return state;
   }
