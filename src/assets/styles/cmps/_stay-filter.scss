@@ -1,13 +1,20 @@
 .stay-filter {
   width: 100%;
+  margin-bottom: .7em;
   // position: sticky;
 
   > div {
-    width: 90%;
-    margin: 0 auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  > button{
+    display: inline-block;
   }
 
   .stay-filter-carousel {
+    width: 90%;
     .react-multiple-carousel__arrow {
       z-index: 2;
     }
@@ -50,10 +57,11 @@
     }
 
     ul {
-      display: flex;
-      flex-direction: row;
+      // display: grid;
+      // grid-auto-flow: column;
+      display: flex; /* Use flex instead of grid */
       align-items: center;
-      gap: 1em;
+      gap: 2em;
       margin: 0.5em 0;
 
       > li {
@@ -61,22 +69,26 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: max-content !important;
+        // width: max-content !important;
 
         .stay-type-button {
-          width: max-content !important;
+          // width: max-content !important;
           background-color: transparent;
           color: black;
           display: flex;
           flex-direction: column;
           align-items: center;
           opacity: 0.5;
-          border-bottom: 3px solid transparent;
+          border-bottom: 2px solid transparent;
 
           margin: 0;
           margin-inline-end: unset;
 
           padding: 0;
+
+          gap: 0.5em;
+
+          transition: 0.2s;
 
           img {
             width: 2em;
@@ -85,6 +97,7 @@
           p {
             text-align: center;
             font-size: 10pt;
+            // margin-bottom: 0.7em;
           }
 
           &:hover {
