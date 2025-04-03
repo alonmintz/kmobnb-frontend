@@ -1,64 +1,70 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css'
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 
-export function StayFilter({filterBy, onSetFilterBy}) {
+export function StayFilter({ filterBy, onSetFilterBy }) {
     const IMG_URL_PATH = "../../src/assets/img/stay/type/";
     const typeList = ["OMG!", "Beachfront", "Amazing Views", "Trending", "Design", "Luxe", "Countryside", "Top cities", "Off-the-grid", "Historical homes", "Desert", "Cabins", "Surfing", "New", "National parks", "Rooms", "Amazing pools", "Camping", "Top of the world", "Skiing", "Tropical", "Creative spaces", "Castles"]; //  list of stay types
 
-    const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+
+    const carouselRef = useRef(null)
 
     useEffectUpdate(() => {
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
 
     function onClickType(type) {
-        setFilterByToEdit({type})
+        setFilterByToEdit({ type })
     }
 
     const { type: selectedType } = filterByToEdit //  extracting the currently selected stay type from filterBy
     return (
         <section className="stay-filter">
             <div>
+                <button className="carousel-prev" onClick={() => carouselRef.current.previous()}>
+                    ◀
+                </button>
                 <Carousel
-                arrows
-                className="stay-filter-carousel"
-                itemClass=""
-                containerClass=""
-                infinite={false}
-                draggable={false}
-                swipeable
-                centerMode={false}
-                slidesToSlide={9}
-                rewind={false}
-                rewindWithAnimation={false}
-                responsive={{
-                    desktop: {
-                        breakpoint: {
-                            max: 3000,
-                            min: 1024
+                    arrows={false}
+                    ref={carouselRef}
+                    className="stay-filter-carousel"
+                    itemClass=""
+                    containerClass=""
+                    infinite={false}
+                    draggable={false}
+                    swipeable
+                    centerMode={false}
+                    slidesToSlide={9}
+                    rewind={false}
+                    rewindWithAnimation={false}
+                    responsive={{
+                        desktop: {
+                            breakpoint: {
+                                max: 3000,
+                                min: 1024
+                            },
+                            items: 13,
+                            partialVisibilityGutter: 40,
                         },
-                        items: 15,
-                        partialVisibilityGutter: 40,
-                    },
-                    mobile: {
-                        breakpoint: {
-                            max: 464,
-                            min: 0
+                        mobile: {
+                            breakpoint: {
+                                max: 464,
+                                min: 0
+                            },
+                            items: 3,
+                            partialVisibilityGutter: 30,
                         },
-                        items: 3,
-                        partialVisibilityGutter: 30,
-                    },
-                    tablet: {
-                        breakpoint: {
-                            max: 1024,
-                            min: 464
-                        },
-                        items: 7,
-                        partialVisibilityGutter: 30
-                    }
-                }}>
+                        tablet: {
+                            breakpoint: {
+                                max: 1024,
+                                min: 464
+                            },
+                            items: 7,
+                            partialVisibilityGutter: 30
+                        }
+                    }}>
                     {typeList.map((type) => (
                         <button
                             key={type}
@@ -71,6 +77,9 @@ export function StayFilter({filterBy, onSetFilterBy}) {
                         </button>
                     ))}
                 </Carousel>
+                <button className="carousel-next" onClick={() => carouselRef.current.next()}>
+                    ▶
+                </button>
                 <button>Filters</button>
             </div>
         </section>
