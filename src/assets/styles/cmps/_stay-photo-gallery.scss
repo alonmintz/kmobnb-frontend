@@ -1,0 +1,39 @@
+.stay-photo-gallery {
+    display: block;
+    margin-bottom: 0.5em;
+
+    .carousel-list {
+        border-radius: 0.7em;
+    }
+
+    .carousel-item {
+        aspect-ratio: 1;
+    }
+
+    .react-multi-carousel-dot-list {
+        bottom: rem(7px);
+    }
+
+    .react-multi-carousel-dot {
+
+        button {
+            border-width: 0px;
+            opacity: 0.5;
+            margin: rem(2px);
+            width: rem(7px);
+            height: rem(7px);
+            background: white;
+        }
+
+        &.react-multi-carousel-dot--active button {
+            opacity: 1;
+        }
+    }
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-position: center;
+        object-fit: cover;
+    }
+}
