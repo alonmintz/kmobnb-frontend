@@ -2,18 +2,17 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     font-family: 'Airbnb';
-    // FOR TESTING
-    // border-width: 1px;
-    // border-color: black;
-    // border-style: solid;
+
+    &:hover {
+        cursor: pointer;
+    }
 
     >.gallery {
         display: block;
         aspect-ratio: 1;
         margin-bottom: 0.5em;
-        
+
         >img {
             height: 100%;
             width: 100%;
@@ -29,10 +28,11 @@
         grid-template-rows: repeat(3, 1.5em) 1.8em;
         column-gap: 1em;
         grid-auto-flow: column;
-        font-size: 15px; // TODO: move somewhere more appropriate. mixin?
+        font-size: rem(15px); // TODO: move somewhere more appropriate. mixin?
         align-items: end;
 
-        .bold-text { // TODO: move somewhere more appropriate. mixin?
+        .bold-text {
+            // TODO: move somewhere more appropriate. mixin?
             font-weight: bold;
         }
 
@@ -43,7 +43,7 @@
 
         img {
             display: inline-block;
-            height: 1em;
+            height: 0.8em;
         }
     }
 
