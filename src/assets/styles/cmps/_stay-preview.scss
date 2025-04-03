@@ -8,19 +8,19 @@
         cursor: pointer;
     }
 
-    >.gallery {
-        display: block;
-        aspect-ratio: 1;
-        margin-bottom: 0.5em;
+    // >.gallery {
+    //     display: block;
+    //     aspect-ratio: 1;
+    //     margin-bottom: 0.5em;
 
-        >img {
-            height: 100%;
-            width: 100%;
-            object-position: center;
-            object-fit: cover;
-            border-radius: 0.7em;
-        }
-    }
+    //     >img {
+    //         height: 100%;
+    //         width: 100%;
+    //         object-position: center;
+    //         object-fit: cover;
+    //         border-radius: 0.7em;
+    //     }
+    // }
 
     >.text-container {
         display: grid;

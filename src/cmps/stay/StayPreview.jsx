@@ -1,15 +1,18 @@
+import { StayPhotoGallery } from "./StayPhotoGallery"
+
 export function StayPreview({ stay }) {
 
-    if (!stay) return <div className="stay-preview">Loading...</div>
     //TODO: calculate distance from user location
     //TODO: calculate (or generate) dates
     //TODO: generate rating?
     
+    if (!stay) return <div className="stay-preview">Loading...</div>
     return (
         <div className="stay-preview">
-            <div className="gallery">
+            <StayPhotoGallery imgUrls={stay.imgUrls} />
+            {/* <div className="gallery">
                 <img className="img-container" src={stay.imgUrls[0]} alt="Stay image" />
-            </div>
+            </div> */}
             <div className="text-container">
                 <div className="bold-text">{stay.loc.city}, {stay.loc.country}</div>
                 <div className="normal-text">1,337 kilometers away</div>
