@@ -9,7 +9,9 @@
     display: grid;
     grid-template-columns: 3fr auto 1fr auto 1fr auto 2fr auto;
     align-items: center;
-    width: 90%;
+    //TODO: adjust width & make form responsive
+    width: 65%;
+    min-width: 800px;
     height: 66px;
     background-color: white;
     border: 1px solid lightgrey;
@@ -19,9 +21,9 @@
       background-color: rgb(236, 235, 235);
     }
     .search-control {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      display: grid;
+      align-content: center;
+      gap: 0.5rem;
       height: 100%;
       min-width: 0;
       margin: 0;
@@ -83,7 +85,6 @@
       align-items: center;
       justify-content: center;
       margin: 0;
-      //   margin-inline-end: 0.5rem;
       width: 3rem;
       height: 3rem;
       background-color: #ff385c;
@@ -124,12 +125,7 @@
   &.check-in,
   &.check-out {
     width: 100%;
-    height: auto;
-    padding: 1.5rem;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    height: fit-content;
   }
   &.who {
     right: 0;
@@ -234,184 +230,5 @@
         }
       }
     }
-  }
-}
-.search-date-picker {
-  // ------------------------------------------
-  // Layout & Alignment
-  // ------------------------------------------
-
-  .rdrCalendarWrapper {
-    width: 100%;
-  }
-
-  .rdrMonth {
-    padding: 0 0.5rem 1rem;
-
-    .rdrMonthName {
-      text-align: center;
-    }
-  }
-
-  .rdrWeekDays {
-    padding: 0 0.5rem;
-  }
-
-  .rdrWeekDay {
-    font-size: 13px;
-    color: #717171;
-    font-weight: 400;
-    text-align: center;
-  }
-
-  .rdrDay {
-    height: 42px;
-    width: 42px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    .rdrEndEdge + .rdrDayNumber span {
-      background-color: black;
-      color: white;
-    }
-    .rdrStartEdge + .rdrDayNumber span {
-      background-color: black;
-    }
-  }
-
-  .rdrDayNumber {
-    span {
-      &:hover {
-        border: 1px solid black;
-      }
-    }
-  }
-
-  .rdrDay:not(.rdrDayPassive).rdrDaySelected .rdrSelected {
-    background-color: black !important;
-    border-radius: 50% !important;
-    width: 34px;
-    height: 34px;
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    z-index: 3000;
-  }
-
-  .rdrDay:not(.rdrDayPassive).rdrDaySelected .rdrDayNumber span {
-    color: white !important;
-  }
-
-  .rdrDay:not(.rdrDayPassive) .rdrStartEdge,
-  .rdrDay:not(.rdrDayPassive) .rdrEndEdge {
-    // background-color: rgb(236, 235, 235) !important;
-    // border: #e31c5f 1px solid;
-  }
-
-  .rdrDayPassive {
-    visibility: hidden;
-  }
-
-  .rdrDayNumber span {
-    font-size: 14px;
-    z-index: 2;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    color: black;
-  }
-
-  .rdrDayPassive .rdrDayNumber span {
-    color: #ccc !important;
-  }
-
-  // ------------------------------------------
-  // Airbnb-like Range Styles
-  // ------------------------------------------
-
-  // Entire in-range background (middle dates)
-  .rdrInRange {
-    background-color: rgb(236, 235, 235) !important;
-    border-radius: 0 !important;
-    position: absolute;
-    top: 5px;
-    bottom: 5px;
-    left: 0;
-    right: 0;
-    z-index: 1;
-  }
-
-  // Start edge of the range (left rounded)
-  .rdrStartEdge {
-    background-color: rgb(236, 235, 235) !important;
-    border-top-left-radius: 22px !important;
-    border-bottom-left-radius: 22px !important;
-    position: absolute;
-    top: 5px;
-    bottom: 5px;
-    left: 5px;
-    right: 0;
-    z-index: 1;
-  }
-
-  // End edge of the range (right rounded)
-  .rdrEndEdge {
-    background-color: rgb(236, 235, 235) !important;
-    border-top-right-radius: 22px !important;
-    border-bottom-right-radius: 22px !important;
-    position: absolute;
-    top: 5px;
-    bottom: 5px;
-    left: 0;
-    right: 5px;
-    z-index: 1;
-  }
-
-  .rdrStartEdge.rdrEndEdge {
-    background-color: transparent !important;
-  }
-
-  // Selected day (start or end) - black circle
-  .rdrSelected {
-    background-color: black !important;
-    border-radius: 50% !important;
-    width: 34px;
-    height: 34px;
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    z-index: 3; // <-- important: must be above edge backgrounds!
-  }
-
-  // 🛠️ Force in-range numbers to be black (excluding start & end)
-  .rdrDay:not(.rdrStartEdge):not(.rdrEndEdge) .rdrInRange ~ .rdrDayNumber span {
-    color: black !important;
-  }
-
-  .rdrDaySelected span {
-    color: white !important;
-  }
-
-  // Remove today's underline (optional)
-  .rdrDayToday .rdrDayNumber span:after {
-    display: none;
-  }
-
-  .rdrDayInPreview {
-    background-color: #e31c5f;
-  }
-  .rdrDayInPreview.rdrStartEdge.rdrEndEdge {
-    background-color: #e31c5f;
   }
 }

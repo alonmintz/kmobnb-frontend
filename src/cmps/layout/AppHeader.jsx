@@ -14,17 +14,8 @@ export function AppHeader() {
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const [filterByToEdit, setFilterByToEdit] = useState({});
   const [destination, setDestination] = useState("");
-  //TODO: complete datePicker styling
-  const [datesRange, setDatesRange] = useState([
-    {
-      // startDate: new Date(),
-      // endDate: new Date(),
-      startDate: null,
-      endDate: null,
-      key: "selection",
-      color: "#000",
-    },
-  ]);
+  //TODO: move date ranges and guests to store
+  const [datesRange, setDatesRange] = useState([]);
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
 
@@ -45,6 +36,7 @@ export function AppHeader() {
     updateGuestsFilter();
   }, [guests]);
 
+  //TODO: convert to scroll listener
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -69,8 +61,8 @@ export function AppHeader() {
   function updateDatesRangeFilter() {
     setFilterByToEdit((prevFilterByToEdit) => ({
       ...prevFilterByToEdit,
-      startDate: datesRange[0].startDate,
-      endDate: datesRange[0].endDate,
+      startDate: datesRange[0],
+      endDate: datesRange[1],
     }));
   }
 
@@ -103,14 +95,14 @@ export function AppHeader() {
         case "infants":
           {
             if (count > 0) {
-              guestsDisplayArray.push(`${count} infants`);
+              guestsDisplayArray.push(`${count} infant${count > 1 ? "s" : ""}`);
             }
           }
           break;
         case "pets":
           {
             if (count > 0) {
-              guestsDisplayArray.push(`${count} pets`);
+              guestsDisplayArray.push(`${count} pet${count > 1 ? "s" : ""}`);
             }
           }
           break;
@@ -119,7 +111,10 @@ export function AppHeader() {
       }
     });
 
-    if (guestCount > 0) guestsDisplayArray.unshift(`${guestCount} guests`);
+    if (guestCount > 0)
+      guestsDisplayArray.unshift(
+        `${guestCount} guest${guestCount > 1 ? "s" : ""}`
+      );
 
     return !guestsDisplayArray.length
       ? "Add guests"
@@ -160,7 +155,7 @@ export function AppHeader() {
             </button>
           </nav>
         </section>
-        {isSearchBarShow && (
+        {true && (
           <SearchBar
             destination={destination}
             setDestination={setDestination}

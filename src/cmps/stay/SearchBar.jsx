@@ -77,15 +77,11 @@ export function SearchBar({
     setActiveSearchControl("check-in");
   }
 
-  function handleDateSelection({ type, item }) {
-    console.log(item.selection.startDate);
+  function handleDateSelection({ type, dates }) {
+    setDatesRange(dates);
 
-    setDatesRange([item.selection]);
     if (type === "check-in") {
       setActiveSearchControl("check-out");
-    }
-    if (type === "check-out") {
-      setActiveSearchControl("who");
     }
   }
 
@@ -143,9 +139,7 @@ export function SearchBar({
         >
           <span className="title">Check in</span>
           <span className="subtitle">
-            {datesRange[0].startDate
-              ? format(datesRange[0].startDate, "MMM d")
-              : "Add dates"}
+            {datesRange[0] ? format(datesRange[0], "MMM d") : "Add dates"}
           </span>
         </div>
         <span
@@ -168,9 +162,7 @@ export function SearchBar({
         >
           <span className="title"> Check Out</span>
           <span className="subtitle">
-            {datesRange[0].endDate
-              ? format(datesRange[0].endDate, "MMM d")
-              : "Add dates"}
+            {datesRange[1] ? format(datesRange[1], "MMM d") : "Add dates"}
           </span>
         </div>
         <span
@@ -200,7 +192,7 @@ export function SearchBar({
             type={activeSearchControl}
             onSelect={handleSearchSelection}
             searchInputValue={searchInputValue}
-            ranges={datesRange}
+            dates={datesRange}
             onSetGuests={onSetGuests}
             guests={guests}
           />
