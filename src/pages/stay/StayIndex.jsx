@@ -1,54 +1,62 @@
-import { useDispatch, useSelector } from "react-redux";
-import { StayFilter } from "../../cmps/stay/StayFilter";
-import { StayList } from "../../cmps/stay/StayList";
-import { stayActions } from "../../store/actions/stay.actions";
-import { useEffect, useRef } from "react";
-import { SET_FILTER_BY } from "../../store/reducers/stay.reducer";
+import { useSelector } from "react-redux"
+import { StayFilter } from "../../cmps/stay/StayFilter"
+import { StayList } from "../../cmps/stay/StayList"
+import { stayActions } from "../../store/actions/stay.actions"
+import { useEffect, useRef } from "react"
 
 export function StayIndex() {
   //todo: apply the IntersectionObserver to load more stays at the end
-  const stays = useSelector((storeState) => storeState.stayModule.stays);
-  const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
+  const stays = useSelector((storeState) => storeState.stayModule.stays)
+  const filterBy = useSelector((storeState) => storeState.stayModule.filterBy)
   const bulkIdx = useSelector(
     (storeState) => storeState.stayModule.currentBulkIdx
-  );
-  const dispatch = useDispatch();
+  )
 
-  const bottomDiv = useRef();
+  const bottomDiv = useRef()
 
   // useEffect(() => {
   //   const observer = new IntersectionObserver((entries) => {
-  //     const entry = entries[0];
+  //     const entry = entries[0]
   //     if (entry.isIntersecting) {
-  //       loadStays();
+  //       loadStays()
   //     }
-  //   });
+  //   })
 
-  //   observer.observe(bottomDiv.current);
+  //   observer.observe(bottomDiv.current)
 
-  //   return () => observer.disconnect();
-  // }, []);
+  //   return () => observer.disconnect()
+  // }, [])
 
   useEffect(() => {
-    loadStays(0);
-  }, [filterBy]);
+    loadStays(bulkIdx)
+    console.log("bulkIdx", bulkIdx)
+  }, [filterBy, bulkIdx])
 
   async function loadStays(bulkIdxToSet) {
     try {
       if (bulkIdxToSet) {
-        await stayActions.setBulkIndex(bulkIdxToSet);
+        await stayActions.setBulkIndex(bulkIdxToSet)
       } else {
-        await stayActions.incrementBulkIndex();
+        await stayActions.incrementBulkIndex()
       }
-      await stayActions.loadStays(filterBy, bulkIdx);
+      await stayActions.loadStays(filterBy, bulkIdx)
     } catch (err) {
       //TODO: later change to user msg
-      console.log("failed loading stays: ", err);
+      console.log("Failed loading stays: ", err)
     }
   }
 
+  async function onLoadMoreStays() {
+    try {
+      await stayActions.incrementBulkIndex()
+    } catch (err) {
+      console.log("Failed loading more stays: ", err)
+    }
+    console.log("bulkIdx", bulkIdx)
+  }
+
   function onSetFilterBy(updatedFilterBy) {
-    dispatch({ type: SET_FILTER_BY, filterBy: updatedFilterBy });
+    stayActions.setFilterBy(updatedFilterBy)
   }
 
   return (
@@ -56,6 +64,9 @@ export function StayIndex() {
       <StayFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
       <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
+      <button className="load-more" onClick={onLoadMoreStays}>
+        Load More
+      </button>
     </section>
-  );
+  )
 }
