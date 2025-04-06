@@ -8,17 +8,18 @@ import { useSelector } from "react-redux";
 import { format } from "date-fns";
 
 export function SearchBar({
+  activeSearchControl,
+  setActiveSearchControl,
   destination,
   setDestination,
   datesRange,
-  setDatesRange,
+  onSetDatesRange,
   guests,
   guestsDisplay,
   onSetGuests,
   updateFilterBy,
 }) {
   const formRef = useRef(null);
-  const [activeSearchControl, setActiveSearchControl] = useState("");
   const [hoveredSearchControl, setHoveredSearchControl] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
 
@@ -78,7 +79,7 @@ export function SearchBar({
   }
 
   function handleDateSelection({ type, dates }) {
-    setDatesRange(dates);
+    onSetDatesRange(dates);
 
     if (type === "check-in") {
       setActiveSearchControl("check-out");
