@@ -1,61 +1,95 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css'
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 
-export function StayFilter({filterBy, onSetFilterBy}) {
+export function StayFilter({ filterBy, onSetFilterBy }) {
     const IMG_URL_PATH = "../../src/assets/img/stay/type/";
-    const typeList = ["OMG!", "Beachfront", "Amazing Views", "Trending", "Design", "Camping", "Luxe", "Countryside", "Top cities", "Off-the-grid", "Historical homes", "Desert", "Cabins", "Surfing", "New", "National parks", "Rooms", "Amazing pools", "Camping", "Top of the world", "Skiing", "Tropical", "Creative spaces", "Castles"]; //  list of stay types
+    const LAST_SLIDE = "LAST_SLIDE"
+    const FIRST_SLIDE = "FIRST_SLIDE"
 
-    const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
+    const typeList = ["OMG!", "Beachfront", "Amazing Views", "Trending", "Design", "Luxe", "Countryside", "Top cities", "Off-the-grid", "Historical homes", "Desert", "Cabins", "Surfing", "New", "National parks", "Rooms", "Amazing pools", "Camping", "Top of the world", "Skiing", "Tropical", "Creative spaces", "Castles"]; //  list of stay types
+
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+
+    const [carouselPage, setCarouselPage] = useState(FIRST_SLIDE)
+
+    const carouselRef = useRef(null)
 
     useEffectUpdate(() => {
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
 
     function onClickType(type) {
-        setFilterByToEdit({type})
+        setFilterByToEdit({ type })
+    }
+
+    const handleAfterChange = (previousSlide, { currentSlide }) => {
+        console.log("prev slide: ", previousSlide)
+        console.log("curr slide: ", currentSlide)
+
+        const LAST_SLIDE_INDEX = 10 //  TODO: calculate last slide index dynamically
+        const FIRST_SLIDE_INDEX = 0 //  TODO: calculate first slide index dynamically
+        switch (currentSlide) {
+            case FIRST_SLIDE_INDEX:
+                setCarouselPage(FIRST_SLIDE)
+                break
+            case LAST_SLIDE_INDEX:
+                setCarouselPage(LAST_SLIDE)
+                break;
+            default:
+                setCarouselPage("")
+        }
     }
 
     const { type: selectedType } = filterByToEdit //  extracting the currently selected stay type from filterBy
     return (
         <section className="stay-filter">
             <div>
+                <button className={carouselPage === FIRST_SLIDE ? "carousel-prev invis" : "carousel-prev"} onClick={() => carouselRef.current.previous()}>
+                    <svg className="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg>
+                </button>
+
                 <Carousel
-                arrows
-                className="stay-filter-carousel"
-                itemClass=""
-                containerClass=""
-                infinite={false}
-                draggable={false}
-                swipeable
-                slidesToSlide={3}
-                responsive={{
-                    desktop: {
-                        breakpoint: {
-                            max: 3000,
-                            min: 1024
+                    arrows={false}
+                    afterChange={handleAfterChange}
+                    ref={carouselRef}
+                    className="stay-filter-carousel"
+                    itemClass=""
+                    containerClass=""
+                    infinite={false}
+                    draggable={false}
+                    swipeable
+                    centerMode={false}
+                    slidesToSlide={9}
+                    rewind={false}
+                    rewindWithAnimation={false}
+                    responsive={{
+                        desktop: {
+                            breakpoint: {
+                                max: 3000,
+                                min: 1024
+                            },
+                            items: 13,
+                            partialVisibilityGutter: 40,
                         },
-                        items: 15,
-                        partialVisibilityGutter: 40
-                    },
-                    mobile: {
-                        breakpoint: {
-                            max: 464,
-                            min: 0
+                        mobile: {
+                            breakpoint: {
+                                max: 464,
+                                min: 0
+                            },
+                            items: 3,
+                            partialVisibilityGutter: 30,
                         },
-                        items: 3,
-                        partialVisibilityGutter: 30
-                    },
-                    tablet: {
-                        breakpoint: {
-                            max: 1024,
-                            min: 464
-                        },
-                        items: 7,
-                        partialVisibilityGutter: 30
-                    }
-                }}>
+                        tablet: {
+                            breakpoint: {
+                                max: 1024,
+                                min: 464
+                            },
+                            items: 7,
+                            partialVisibilityGutter: 30
+                        }
+                    }}>
                     {typeList.map((type) => (
                         <button
                             key={type}
@@ -68,7 +102,12 @@ export function StayFilter({filterBy, onSetFilterBy}) {
                         </button>
                     ))}
                 </Carousel>
+
+                <button className={carouselPage === LAST_SLIDE ? "carousel-next invis" : "carousel-next"} onClick={() => carouselRef.current.next()}>
+                    <svg class="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg>
+                </button>
             </div>
+            <button className="filters-button">Filters</button>
         </section>
     );
 }
