@@ -34,7 +34,7 @@ export function stayReducer(state = initialState, action = {}) {
     case SET_BULK_INDEX:
       return { ...state, currentBulkIdx: action.bulkIdx };
     case INCREMENT_BULK_INDEX:
-      return { ...state, currentBulkIdx: state.currentBulkIdx++ };
+      return { ...state, currentBulkIdx: ++state.currentBulkIdx };
     case SET_STAY:
       return { ...state, stay: action.stay };
     case REMOVE_STAY: {

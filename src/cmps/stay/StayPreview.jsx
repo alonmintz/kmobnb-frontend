@@ -2,17 +2,21 @@ import { StayPhotoGallery } from "./StayPhotoGallery"
 
 export function StayPreview({ stay }) {
 
-    //TODO: calculate distance from user location
-    //TODO: calculate (or generate) dates
-    //TODO: generate rating?
-    
+    // TODO: handle missing data better
+    if (stay.imgUrls.length === 0) {
+        stay.imgUrls = ["http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436912/xle8ueqxjeazbs4bp09p.jpg"]
+    }
+    if (!stay.loc.city) {
+        stay.loc.city = "City"
+    }
+    if (!stay.loc.country) {
+        stay.loc.country = "Country"
+    }
+
     if (!stay) return <div className="stay-preview">Loading...</div>
     return (
         <div className="stay-preview">
             <StayPhotoGallery imgUrls={stay.imgUrls} />
-            {/* <div className="gallery">
-                <img className="img-container" src={stay.imgUrls[0]} alt="Stay image" />
-            </div> */}
             <div className="text-container">
                 <div className="bold-text">{stay.loc.city}, {stay.loc.country}</div>
                 <div className="normal-text">1,337 kilometers away</div>

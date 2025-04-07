@@ -8,9 +8,7 @@ export function StayIndex() {
   //todo: apply the IntersectionObserver to load more stays at the end
   const stays = useSelector((storeState) => storeState.stayModule.stays)
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy)
-  const bulkIdx = useSelector(
-    (storeState) => storeState.stayModule.currentBulkIdx
-  )
+  const bulkIdx = useSelector((storeState) => storeState.stayModule.currentBulkIdx)
 
   const bottomDiv = useRef()
 
@@ -29,17 +27,17 @@ export function StayIndex() {
 
   useEffect(() => {
     loadStays(bulkIdx)
-    console.log("bulkIdx", bulkIdx)
+    // console.log("inside useEffect. bulkIdx:", bulkIdx)
   }, [filterBy, bulkIdx])
 
   async function loadStays(bulkIdxToSet) {
     try {
-      if (bulkIdxToSet) {
-        await stayActions.setBulkIndex(bulkIdxToSet)
-      } else {
-        await stayActions.incrementBulkIndex()
-      }
-      await stayActions.loadStays(filterBy, bulkIdx)
+      // if (bulkIdxToSet) {
+      //   await stayActions.setBulkIndex(bulkIdxToSet)
+      // } else {
+      //   await stayActions.incrementBulkIndex()
+      // }
+      await stayActions.loadStays(filterBy, bulkIdxToSet)
     } catch (err) {
       //TODO: later change to user msg
       console.log("Failed loading stays: ", err)
@@ -49,10 +47,10 @@ export function StayIndex() {
   async function onLoadMoreStays() {
     try {
       await stayActions.incrementBulkIndex()
+      // console.log("button clicked, incrementing bulkIdx to:", bulkIdx)
     } catch (err) {
       console.log("Failed loading more stays: ", err)
     }
-    console.log("bulkIdx", bulkIdx)
   }
 
   function onSetFilterBy(updatedFilterBy) {
@@ -62,11 +60,9 @@ export function StayIndex() {
   return (
     <section className="stay-index">
       <StayFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+      <button className="load-more" onClick={onLoadMoreStays}>TESTING BUTTON: Load More</button>
       <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
-      <button className="load-more" onClick={onLoadMoreStays}>
-        Load More
-      </button>
     </section>
   )
 }
