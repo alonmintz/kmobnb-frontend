@@ -4,10 +4,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-block-end: 1rem;
   form {
     position: relative;
     display: grid;
-    grid-template-columns: 3fr auto 1fr auto 1fr auto 2fr auto;
+    grid-template-columns: 2fr auto 1fr auto 1fr auto 2fr auto;
     align-items: center;
     //TODO: adjust width & make form responsive
     width: 65%;
@@ -17,22 +18,36 @@
     border: 1px solid lightgrey;
     border-radius: 3em;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
     &.active {
       background-color: rgb(236, 235, 235);
     }
+
+    &.active .search-control:hover:not(.active) {
+      background-color: lightgrey;
+    }
     .search-control {
+      position: relative;
       display: grid;
-      align-content: center;
+      grid-template-rows: repeat(2, 1fr);
+      // align-items: center;
       gap: 0.5rem;
       height: 100%;
       min-width: 0;
       margin: 0;
-      padding: 0.5em 1.5em;
+      // padding: 0.5em 1.5em;
+      padding-inline: 1.5em;
       border-radius: 2em;
       cursor: pointer;
+
+      &.check-in,
+      &.check-out {
+        padding-inline: 1.1em;
+      }
       &:hover {
         background-color: rgb(236, 235, 235);
       }
+
       &.active {
         background-color: white;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -40,32 +55,68 @@
           background-color: white;
         }
       }
+
       span {
+        // height: 100%;
+        // display: flex;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
+
       .title {
+        align-self: flex-end;
         font-size: 0.75rem;
         font-weight: 600;
       }
+
       .subtitle {
         font-size: 0.85rem;
         font-weight: 400;
       }
-      input[type="search"] {
+
+      input[type="text"] {
+        line-height: 1;
+        height: 1em;
+        font-size: 0.85rem;
+        padding: 0;
+        margin: 0;
         border: none;
         background-color: transparent;
         outline: 0;
-        font-weight: 600;
+        font-weight: 500;
         &::placeholder {
           font-weight: 400;
         }
       }
+
+      .reset-btn {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 1rem;
+        width: 1rem;
+        margin: 0;
+        padding: 0.75rem;
+        font-size: rem(10px);
+        background-color: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        &:hover {
+          background-color: lightgray;
+        }
+        svg {
+          color: #222;
+          width: 0.6rem;
+          height: 0.6rem;
+        }
+      }
     }
-    &.active .search-control:hover:not(.active) {
-      background-color: lightgrey;
-    }
+
     .splitter {
       width: 1px;
       height: 60%;

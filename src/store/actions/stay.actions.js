@@ -12,6 +12,7 @@ import {
   SET_BULK_INDEX,
   INCREMENT_BULK_INDEX,
   SET_GUESTS,
+  SET_DATES_RANGE,
 } from "../reducers/stay.reducer";
 
 export const stayActions = {
@@ -25,6 +26,7 @@ export const stayActions = {
   setBulkIndex,
   incrementBulkIndex,
   setGuests,
+  setDatesRange,
 };
 
 async function loadStays(filterBy, startIdx, amount) {
@@ -151,6 +153,15 @@ async function setGuests(guests) {
     await store.dispatch({ type: SET_GUESTS, guests });
   } catch (err) {
     console.log("cannot set guests", err);
+    throw err;
+  }
+}
+
+async function setDatesRange(datesRange) {
+  try {
+    await store.dispatch({ type: SET_DATES_RANGE, datesRange });
+  } catch (err) {
+    console.log("cannot set dates range", err);
     throw err;
   }
 }
