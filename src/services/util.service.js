@@ -89,7 +89,6 @@ export function loadFromStorage(key) {
 
 export function animateCSS(el, animation, options = {}) {
   const { isRemoveClass = true } = options;
-  console.log({ el });
 
   const prefix = "animate__";
   return new Promise((resolve, reject) => {
