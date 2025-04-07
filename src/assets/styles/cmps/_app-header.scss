@@ -23,16 +23,26 @@
       justify-content: space-between;
       padding-block: 1rem;
       overflow: hidden;
+      a {
+        cursor: default;
+        &:hover {
+          text-decoration: none;
+        }
+      }
 
       .logo-container {
         grid-column: 1;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: rem(4px);
         & > * {
           margin: 0;
+          cursor: pointer;
         }
         h3 {
+          font-size: rem(24px);
+          font-weight: 700;
+          letter-spacing: -0.05em;
           color: #ff385c;
         }
         .logo {
@@ -133,46 +143,48 @@
 
         font-size: 0.8em;
 
-        //   .active {
-        //     color: $clr1;
-        //   }
-
-        //   .logo {
-        //     font-size: 1.4em;
-        //     font-weight: bold;
-        //     margin-inline-end: 2em;
-        //   }
-
-        //   .login-link {
-        //     margin-inline-start: auto;
-        //   }
+        a {
+          color: #222222;
+          font-weight: 500;
+          &:hover {
+            text-decoration: none;
+            cursor: pointer;
+          }
+          .active {
+            color: inherit;
+          }
+        }
 
         button {
-          margin-inline-end: 0;
+          margin: 0;
         }
-      }
+        .user-info {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          width: 86px;
+          height: 48px;
+          // gap: 1em;
+          padding-inline-start: 1.2em;
+          background-color: white;
+          color: #222;
+          border: 1px solid lightgray;
+          border-radius: 2em;
+          transition: box-shadow 0.3s ease;
+          &:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          }
 
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 1em;
-        background-color: white;
-        color: black;
-        border: 1px solid lightgray;
-        border-radius: 2em;
-        transition: box-shadow 0.3s ease;
-        &:hover {
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
-
-        img {
-          width: 32px;
-          aspect-ratio: 1;
-          border-radius: 50%;
-        }
-
-        .btn-link {
-          color: $clr2;
+          img {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+          }
         }
       }
     }

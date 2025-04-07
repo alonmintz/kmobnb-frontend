@@ -4,8 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import { SearchWherePicker } from "./SearchWherePicker";
 import { SearchDatePicker } from "./SearchDatePicker";
 import { SearchWhoPicker } from "./SearchWhoPicker";
-import { useSelector } from "react-redux";
 import { format } from "date-fns";
+import { INITIAL_GUESTS } from "../../services/stay/stay.service.local";
 
 export function SearchBar({
   activeSearchControl,
@@ -23,10 +23,6 @@ export function SearchBar({
   const [hoveredSearchControl, setHoveredSearchControl] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
 
-  //TODO:delete this useEffect:
-  useEffect(() => {
-    console.log({ activeSearchControl });
-  }, [activeSearchControl]);
   useEffect(() => {
     function handleClickOutside(event) {
       if (formRef.current && !formRef.current.contains(event.target)) {
@@ -37,6 +33,7 @@ export function SearchBar({
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      setActiveSearchControl("");
     };
   }, []);
 
@@ -93,14 +90,37 @@ export function SearchBar({
   function onResetClick(ev) {
     ev.preventDefault();
     ev.stopPropagation();
+    switch (activeSearchControl) {
+      case "where":
+        setSearchInputValue("");
+        setDestination("");
+        break;
+      case "check-in":
+        onSetDatesRange([]);
+        break;
+      case "check-out":
+        onSetDatesRange([]);
+        setActiveSearchControl("check-in");
+        break;
+      case "who":
+        onSetGuests(INITIAL_GUESTS);
+        break;
+      default:
+        break;
+    }
   }
 
   function onSubmitSearch(event) {
     event.preventDefault();
     setActiveSearchControl("");
     updateFilterBy();
-    console.log("search");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
+
+  const guestsCount = guests.reduce(
+    (totalCount, guest) => totalCount + guest.count,
+    0
+  );
 
   return (
     <section className={`search-bar`}>
@@ -122,19 +142,13 @@ export function SearchBar({
           }
         >
           <span className="title">Where</span>
-          {/* <input
-            type="search"
-            placeholder="Search destinations"
-            value={searchInputValue}
-            onChange={onDestinationSearchChange}
-          /> */}
           <input
             type="text"
             placeholder="Search destinations"
             value={searchInputValue}
             onChange={onDestinationSearchChange}
           />
-          {activeSearchControl === "where" && (
+          {activeSearchControl === "where" && searchInputValue && (
             <button type="button" className="reset-btn" onClick={onResetClick}>
               <FontAwesomeIcon icon={faX} />
             </button>
@@ -162,7 +176,7 @@ export function SearchBar({
           <span className="subtitle">
             {datesRange[0] ? format(datesRange[0], "MMM d") : "Add dates"}
           </span>
-          {activeSearchControl === "check-in" && (
+          {activeSearchControl === "check-in" && datesRange.length !== 0 && (
             <button type="button" className="reset-btn" onClick={onResetClick}>
               <FontAwesomeIcon icon={faX} />
             </button>
@@ -190,7 +204,7 @@ export function SearchBar({
           <span className="subtitle">
             {datesRange[1] ? format(datesRange[1], "MMM d") : "Add dates"}
           </span>
-          {activeSearchControl === "check-out" && (
+          {activeSearchControl === "check-out" && datesRange.length !== 0 && (
             <button type="button" className="reset-btn" onClick={onResetClick}>
               <FontAwesomeIcon icon={faX} />
             </button>
@@ -214,9 +228,18 @@ export function SearchBar({
         >
           <span className="title">Who</span>
           <span className="subtitle">{guestsDisplay}</span>
+          {activeSearchControl === "who" && guestsCount > 0 && (
+            <button type="button" className="reset-btn" onClick={onResetClick}>
+              <FontAwesomeIcon icon={faX} />
+            </button>
+          )}
         </div>
-        <button className="search-button">
+        <button
+          className={`search-button ${activeSearchControl ? "active" : ""}`}
+        >
           <FontAwesomeIcon icon={faSearch} />
+          {activeSearchControl && <span>Search</span>}
+          <span></span>
         </button>
         {activeSearchControl && (
           <DynamicSearchPicker

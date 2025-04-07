@@ -43,7 +43,6 @@ export function AppHeader() {
         isManuallyTriggeredRef.current &&
         !justTriggeredManually.current
       ) {
-        console.log("here");
         setIsManuallyTriggered(false);
         isManuallyTriggeredRef.current = false;
       }
@@ -73,18 +72,9 @@ export function AppHeader() {
     }
 
     async function animateSearchBarLeave() {
-      // animateCSS(searchBarRef.current, "fadeOutUp");
       setIsSearchBarVisible(false);
     }
   }, [shouldShowSearchBar]);
-
-  // useEffect(() => {
-  //   if (isSearchBarVisible) {
-  //     animateCSS(miniSearchBarRef.current, "fadeOut");
-  //   } else {
-  //     animateCSS(miniSearchBarRef.current, "fadeInUp");
-  //   }
-  // }, [isSearchBarVisible]);
 
   useEffect(() => {
     if (!isSearchBarVisible) {
@@ -212,10 +202,16 @@ export function AppHeader() {
       <header className="app-header full">
         <div className="header-container">
           <section className="header-top">
-            <div className="logo-container">
-              <img className="logo" src="src/assets/img/logo.png" alt="logo" />
-              <h3>kmobnb</h3>
-            </div>
+            <NavLink className={"logo-link"}>
+              <div className="logo-container">
+                <img
+                  className="logo"
+                  src="src/assets/img/logo.png"
+                  alt="logo"
+                />
+                <h3>kmobnb</h3>
+              </div>
+            </NavLink>
             {isSearchBarVisible ? (
               <div ref={homesTitleRef} className="homes-title-container">
                 <h2>Homes</h2>
