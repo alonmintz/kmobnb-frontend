@@ -8,20 +8,89 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { SearchBar } from "../stay/SearchBar";
 import { useEffect, useRef, useState } from "react";
 import { stayActions } from "../../store/actions/stay.actions";
+import { animateCSS } from "../../services/util.service";
+import { SearchBarMini } from "../stay/SearchBarMini";
 
 export function AppHeader() {
   // const user = useSelector((storeState) => storeState.userModule.user);
-  const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
+
   const [filterByToEdit, setFilterByToEdit] = useState({});
+  const [activeSearchControl, setActiveSearchControl] = useState("");
   const [destination, setDestination] = useState("");
-  //TODO: move date ranges and guests to store
-  const [datesRange, setDatesRange] = useState([]);
+  const datesRange = useSelector(
+    (storeState) => storeState.stayModule.datesRange
+  );
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
-
-  const topDiv = useRef();
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(() => window.scrollY === 0);
+  const [isManuallyTriggered, setIsManuallyTriggered] = useState(false);
+  const isManuallyTriggeredRef = useRef(false);
+  const justTriggeredManually = useRef(false);
+  const shouldShowSearchBar = isAtTop || isManuallyTriggered;
+  const searchBarRef = useRef();
+  const miniSearchBarRef = useRef();
+  const homesTitleRef = useRef();
   // const navigate = useNavigate();
-  const [isSearchBarShow, setIsSearchBarShow] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const atTop = window.scrollY === 0;
+      setIsAtTop(atTop);
+
+      if (
+        !atTop &&
+        isManuallyTriggeredRef.current &&
+        !justTriggeredManually.current
+      ) {
+        console.log("here");
+        setIsManuallyTriggered(false);
+        isManuallyTriggeredRef.current = false;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // initialize
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isAtTop) {
+      setIsManuallyTriggered(false); // clear manual override when back at top
+    }
+  }, [isAtTop]);
+
+  useEffect(() => {
+    if (shouldShowSearchBar) {
+      animateSearchBarEntrance();
+    } else {
+      animateSearchBarLeave();
+    }
+    async function animateSearchBarEntrance() {
+      await setIsSearchBarVisible(true);
+      animateCSS(searchBarRef.current, "fadeInDown");
+      animateCSS(homesTitleRef.current, "fadeInDown");
+    }
+
+    async function animateSearchBarLeave() {
+      // animateCSS(searchBarRef.current, "fadeOutUp");
+      setIsSearchBarVisible(false);
+    }
+  }, [shouldShowSearchBar]);
+
+  // useEffect(() => {
+  //   if (isSearchBarVisible) {
+  //     animateCSS(miniSearchBarRef.current, "fadeOut");
+  //   } else {
+  //     animateCSS(miniSearchBarRef.current, "fadeInUp");
+  //   }
+  // }, [isSearchBarVisible]);
+
+  useEffect(() => {
+    if (!isSearchBarVisible) {
+      animateCSS(miniSearchBarRef.current, "fadeInUp");
+    }
+  }, [isSearchBarVisible]);
 
   useEffect(() => {
     updateDestinationFilter();
@@ -36,26 +105,15 @@ export function AppHeader() {
     updateGuestsFilter();
   }, [guests]);
 
-  //TODO: convert to scroll listener
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        setIsSearchBarShow(true);
-      } else {
-        setIsSearchBarShow(false);
-      }
-    });
-
-    observer.observe(topDiv.current);
-    return () => observer.disconnect();
-  }, []);
-
   function updateDestinationFilter() {
     setFilterByToEdit((prevFilterByToEdit) => ({
       ...prevFilterByToEdit,
       city: destination,
     }));
+  }
+
+  function onSetDatesRange(datesRange) {
+    stayActions.setDatesRange(datesRange);
   }
 
   function updateDatesRangeFilter() {
@@ -128,6 +186,17 @@ export function AppHeader() {
   function updateFilterBy() {
     stayActions.setFilterBy(filterByToEdit);
   }
+
+  function handleMiniSearchBarClick(controlType) {
+    setIsManuallyTriggered(true);
+    isManuallyTriggeredRef.current = true;
+    justTriggeredManually.current = true;
+
+    setTimeout(() => {
+      justTriggeredManually.current = false;
+    }, 100);
+    setActiveSearchControl(controlType);
+  }
   // async function onLogout() {
   //   try {
   //     await logout();
@@ -140,33 +209,47 @@ export function AppHeader() {
 
   return (
     <>
-      <div ref={topDiv} className="top-div"></div>
       <header className="app-header full">
-        <section className="header-top flex">
-          <div className="logo-container">
-            <img className="logo" src="src/assets/img/logo.png" alt="logo" />
-            <h3>kmobnb</h3>
-          </div>
-          <nav>
-            <NavLink>Bnb your home</NavLink>
-            <button className="user-info">
-              <FontAwesomeIcon icon={faBars} />
-              <img src="src/assets/img/guest-unknown.svg" alt="user-icon" />
-            </button>
-          </nav>
-        </section>
-        {true && (
-          <SearchBar
-            destination={destination}
-            setDestination={setDestination}
-            datesRange={datesRange}
-            setDatesRange={setDatesRange}
-            guests={guests}
-            guestsDisplay={guestsDisplay}
-            onSetGuests={onSetGuests}
-            updateFilterBy={updateFilterBy}
-          />
-        )}
+        <div className="header-container">
+          <section className="header-top">
+            <div className="logo-container">
+              <img className="logo" src="src/assets/img/logo.png" alt="logo" />
+              <h3>kmobnb</h3>
+            </div>
+            {isSearchBarVisible ? (
+              <div ref={homesTitleRef} className="homes-title-container">
+                <h2>Homes</h2>
+              </div>
+            ) : (
+              <div ref={miniSearchBarRef} className="mini-search-bar-container">
+                <SearchBarMini onSelect={handleMiniSearchBarClick} />
+              </div>
+            )}
+            <nav>
+              <NavLink>Bnb your home</NavLink>
+              <button className="user-info">
+                <FontAwesomeIcon icon={faBars} />
+                <img src="src/assets/img/guest-unknown.svg" alt="user-icon" />
+              </button>
+            </nav>
+          </section>
+          {isSearchBarVisible && (
+            <div ref={searchBarRef}>
+              <SearchBar
+                activeSearchControl={activeSearchControl}
+                setActiveSearchControl={setActiveSearchControl}
+                destination={destination}
+                setDestination={setDestination}
+                datesRange={datesRange}
+                onSetDatesRange={onSetDatesRange}
+                guests={guests}
+                guestsDisplay={guestsDisplay}
+                onSetGuests={onSetGuests}
+                updateFilterBy={updateFilterBy}
+              />
+            </div>
+          )}
+        </div>
       </header>
     </>
   );

@@ -10,6 +10,7 @@ export const ADD_STAY_MSG = "ADD_STAY_MSG";
 export const SET_FILTER_BY = "SET_FILTER_BY";
 export const RESET_FILTER_BY = "RESET_FILTER_BY";
 export const SET_GUESTS = "SET_GUESTS";
+export const SET_DATES_RANGE = "SET_DATES_RANGE";
 
 const initialState = {
   stays: [],
@@ -23,6 +24,7 @@ const initialState = {
     { type: "infants", desc: "Under 2", count: 0 },
     { type: "pets", desc: "Bringing a service animal?", count: 0 },
   ],
+  datesRange: [],
 };
 
 export function stayReducer(state = initialState, action = {}) {
@@ -66,6 +68,8 @@ export function stayReducer(state = initialState, action = {}) {
     }
     case SET_GUESTS:
       return { ...state, guests: [...action.guests] };
+    case SET_DATES_RANGE:
+      return { ...state, datesRange: [...action.datesRange] };
     default:
       return state;
   }
