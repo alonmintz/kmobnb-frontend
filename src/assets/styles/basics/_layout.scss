@@ -1,6 +1,6 @@
 .main-container {
   display: grid;
-  grid-template-columns: 2rem 1fr 2rem;
+  grid-template-columns: 5rem 1fr 5rem;
 
   > * {
     grid-column: 2;
@@ -8,6 +8,11 @@
     &.full {
       grid-column: 1 / -1;
     }
+  }
+
+  main {
+    min-height: calc(100vh - 7rem);
+    overflow: hidden; // Quick fix for JSONs in <pre>
   }
 
   // @include for-narrow-layout {
@@ -30,8 +35,8 @@
   // }
 }
 
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 20px;
-}
+// .card-grid {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+//   grid-gap: 20px;
+// }
