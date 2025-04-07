@@ -109,11 +109,15 @@
         &:hover {
           background-color: lightgray;
         }
+
         svg {
           color: #222;
           width: 0.6rem;
           height: 0.6rem;
         }
+      }
+      &.who.active > .reset-btn {
+        right: 7.5rem;
       }
     }
 
@@ -140,13 +144,26 @@
       height: 3rem;
       background-color: #ff385c;
       border: none;
-      border-radius: 50%;
+      border-radius: 2em;
       cursor: pointer;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease,
+        width 0.3s ease;
 
       &:hover {
         background-color: #e31c5f;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      &.active {
+        width: 6.5rem;
+        justify-content: space-around;
+        padding-inline-end: 0.2rem;
+        span {
+          font-size: 1rem;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          padding-inline-start: 0.2rem;
+        }
       }
 
       svg {

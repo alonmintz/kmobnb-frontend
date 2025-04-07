@@ -3,6 +3,46 @@ import { loadFromStorage, makeId, saveToStorage } from "../util.service";
 import { userService } from "../user";
 import STAYS_DATA from "./stay_mockdata.json";
 
+export const INITIAL_GUESTS = [
+  { type: "adults", desc: "Ages 13 or above", count: 0 },
+  { type: "children", desc: "Ages 2 – 12", count: 0 },
+  { type: "infants", desc: "Under 2", count: 0 },
+  { type: "pets", desc: "Bringing a service animal?", count: 0 },
+];
+
+//TODO: update options array to include ALL the locations
+export const CITY_OPTIONS = [
+  {
+    city: "Maui",
+    country: "United States",
+    phrase: "Tropical paradise with beaches and volcanoes",
+    imgUrl: "src/assets/img/city-icons/maui-icon.png",
+  },
+  {
+    city: "Montreal",
+    country: "Canada",
+    phrase: "French-Canadian charm and vibrant culture",
+    imgUrl: "src/assets/img/city-icons/montreal-icon.png",
+  },
+  {
+    city: "Porto",
+    country: "Portugal",
+    phrase: "Historic riverside city with wine and charm",
+    imgUrl: "src/assets/img/city-icons/porto-icon.png",
+  },
+  {
+    city: "New York",
+    country: "United States",
+    phrase: "The city that never sleeps",
+    imgUrl: "src/assets/img/city-icons/new-york-icon.png",
+  },
+  {
+    city: "Barcelona",
+    country: "Spain",
+    phrase: "Beachside beauty with Gaudí’s magic",
+    imgUrl: "src/assets/img/city-icons/barcelona-icon.png",
+  },
+];
 const STORAGE_KEY = "STAY_DB";
 const STAYS_PER_LOAD = 20;
 

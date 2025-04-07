@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchPickerWrapper } from "./SearchPickerWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +6,17 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 export function SearchWhoPicker({ type, guests, onSetGuests }) {
   const [guestsToEdit, setGuestsToEdit] = useState([...guests]);
   const [nonAdultsIncluded, setNonAdultsIncluded] = useState();
+  const prevGuests = usePrevious(guests);
+
+  useEffect(() => {
+    const guestsChanged = JSON.stringify(guests) !== JSON.stringify(prevGuests);
+
+    const isReset = guests.every((g) => g.count === 0);
+
+    if (guestsChanged && isReset) {
+      setGuestsToEdit([...guests]);
+    }
+  }, [guests]);
 
   useEffect(() => {
     checkForNonAdults(guestsToEdit);
@@ -66,6 +77,14 @@ export function SearchWhoPicker({ type, guests, onSetGuests }) {
       </section>
     </SearchPickerWrapper>
   );
+}
+
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
 }
 
 function GuestSelectionBracket({ guest, onSelect, nonAdultsIncluded }) {
