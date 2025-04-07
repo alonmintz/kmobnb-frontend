@@ -8,10 +8,6 @@
   min-height: 3.5rem;
   background-color: white;
   z-index: 10;
-  overflow: hidden;
-
-  //   background-color: $clr4;
-  // padding: rem(20px) 0;
   border-bottom: 1px solid lightgray;
   .header-container {
     grid-column: 2;
@@ -21,10 +17,12 @@
     .header-top {
       width: 100%;
       display: grid;
+      //TODO: responsive: under ...px change to auto 1fr 1fr
       grid-template-columns: repeat(3, 1fr);
       align-items: center;
       justify-content: space-between;
-      padding-block-end: 1rem;
+      padding-block: 1rem;
+      overflow: hidden;
 
       .logo-container {
         grid-column: 1;
@@ -45,20 +43,82 @@
         }
       }
 
+      .homes-title-container {
+        grid-column: 2;
+        justify-self: center;
+        h2 {
+          margin: 0;
+          font-weight: 500;
+          cursor: default;
+        }
+      }
+
       .mini-search-bar-container {
         grid-column: 2;
         justify-self: center;
-        width: 100%;
+        width: 400px;
+        padding-inline: rem(24px);
         .search-bar-mini {
+          position: relative;
           display: grid;
           grid-auto-flow: column;
-          grid-template-columns: 1fr auto 1fr auto 1fr;
+          grid-template-columns: 1fr auto 1fr auto 1.5fr;
+          align-items: center;
+          height: 48px;
+          padding-inline: 1rem;
+          background-color: white;
+          border: 1px solid lightgrey;
+          border-radius: 2em;
+          box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+          cursor: pointer;
+          transition: box-shadow 0.2s ease;
+          &:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+          }
           .splitter {
             width: 1px;
             height: 60%;
             background-color: lightgrey;
             justify-self: center;
             align-self: center;
+          }
+          .mini-display {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-inline: 1rem;
+            span {
+              // height: 100%;
+              font-size: rem(14px);
+              line-height: 1.2em;
+              font-weight: 500;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: #222222;
+            }
+          }
+          .search-button {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: #ff385c;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            svg {
+              color: white;
+              width: 0.75rem;
+              height: 0.75rem;
+            }
           }
         }
       }

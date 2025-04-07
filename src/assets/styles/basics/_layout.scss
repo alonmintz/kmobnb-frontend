@@ -11,8 +11,10 @@
   }
 
   main {
+    position: static;
     min-height: calc(100vh - 7rem);
-    overflow: hidden; // Quick fix for JSONs in <pre>
+    overflow: hidden;
+    // Quick fix for JSONs in <pre>
   }
 
   // @include for-narrow-layout {

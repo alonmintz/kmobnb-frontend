@@ -22,7 +22,6 @@ export function AppHeader() {
   );
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
-  const [isSearchBarShow, setIsSearchBarShow] = useState(true);
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
   const [isAtTop, setIsAtTop] = useState(() => window.scrollY === 0);
   const [isManuallyTriggered, setIsManuallyTriggered] = useState(false);
@@ -31,6 +30,7 @@ export function AppHeader() {
   const shouldShowSearchBar = isAtTop || isManuallyTriggered;
   const searchBarRef = useRef();
   const miniSearchBarRef = useRef();
+  const homesTitleRef = useRef();
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,6 +69,7 @@ export function AppHeader() {
     async function animateSearchBarEntrance() {
       await setIsSearchBarVisible(true);
       animateCSS(searchBarRef.current, "fadeInDown");
+      animateCSS(homesTitleRef.current, "fadeInDown");
     }
 
     async function animateSearchBarLeave() {
@@ -77,10 +78,16 @@ export function AppHeader() {
     }
   }, [shouldShowSearchBar]);
 
+  // useEffect(() => {
+  //   if (isSearchBarVisible) {
+  //     animateCSS(miniSearchBarRef.current, "fadeOut");
+  //   } else {
+  //     animateCSS(miniSearchBarRef.current, "fadeInUp");
+  //   }
+  // }, [isSearchBarVisible]);
+
   useEffect(() => {
-    if (isSearchBarVisible) {
-      animateCSS(miniSearchBarRef.current, "fadeOut");
-    } else {
+    if (!isSearchBarVisible) {
       animateCSS(miniSearchBarRef.current, "fadeInUp");
     }
   }, [isSearchBarVisible]);
@@ -209,7 +216,11 @@ export function AppHeader() {
               <img className="logo" src="src/assets/img/logo.png" alt="logo" />
               <h3>kmobnb</h3>
             </div>
-            {!isSearchBarVisible && (
+            {isSearchBarVisible ? (
+              <div ref={homesTitleRef} className="homes-title-container">
+                <h2>Homes</h2>
+              </div>
+            ) : (
               <div ref={miniSearchBarRef} className="mini-search-bar-container">
                 <SearchBarMini onSelect={handleMiniSearchBarClick} />
               </div>

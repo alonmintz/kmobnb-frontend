@@ -1,4 +1,4 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useRef } from "react";
 import { SearchWherePicker } from "./SearchWherePicker";
@@ -23,6 +23,10 @@ export function SearchBar({
   const [hoveredSearchControl, setHoveredSearchControl] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
 
+  //TODO:delete this useEffect:
+  useEffect(() => {
+    console.log({ activeSearchControl });
+  }, [activeSearchControl]);
   useEffect(() => {
     function handleClickOutside(event) {
       if (formRef.current && !formRef.current.contains(event.target)) {
@@ -86,6 +90,11 @@ export function SearchBar({
     }
   }
 
+  function onResetClick(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
   function onSubmitSearch(event) {
     event.preventDefault();
     setActiveSearchControl("");
@@ -101,7 +110,7 @@ export function SearchBar({
         onSubmit={onSubmitSearch}
       >
         <div
-          className={`search-control ${
+          className={`search-control where ${
             activeSearchControl === "where" ? "active" : ""
           }`}
           onMouseEnter={() => setHoveredSearchControl("where")}
@@ -113,12 +122,23 @@ export function SearchBar({
           }
         >
           <span className="title">Where</span>
-          <input
+          {/* <input
             type="search"
             placeholder="Search destinations"
             value={searchInputValue}
             onChange={onDestinationSearchChange}
+          /> */}
+          <input
+            type="text"
+            placeholder="Search destinations"
+            value={searchInputValue}
+            onChange={onDestinationSearchChange}
           />
+          {activeSearchControl === "where" && (
+            <button type="button" className="reset-btn" onClick={onResetClick}>
+              <FontAwesomeIcon icon={faX} />
+            </button>
+          )}
         </div>
         <span
           className={`splitter ${renderSplitterActiveClass(
@@ -127,7 +147,7 @@ export function SearchBar({
           )}`}
         ></span>
         <div
-          className={`search-control ${
+          className={`search-control check-in ${
             activeSearchControl === "check-in" ? "active" : ""
           }`}
           onMouseEnter={() => setHoveredSearchControl("check-in")}
@@ -142,6 +162,11 @@ export function SearchBar({
           <span className="subtitle">
             {datesRange[0] ? format(datesRange[0], "MMM d") : "Add dates"}
           </span>
+          {activeSearchControl === "check-in" && (
+            <button type="button" className="reset-btn" onClick={onResetClick}>
+              <FontAwesomeIcon icon={faX} />
+            </button>
+          )}
         </div>
         <span
           className={`splitter ${renderSplitterActiveClass(
@@ -150,7 +175,7 @@ export function SearchBar({
           )}`}
         ></span>
         <div
-          className={`search-control ${
+          className={`search-control check-out ${
             activeSearchControl === "check-out" ? "active" : ""
           }`}
           onMouseEnter={() => setHoveredSearchControl("check-out")}
@@ -165,6 +190,11 @@ export function SearchBar({
           <span className="subtitle">
             {datesRange[1] ? format(datesRange[1], "MMM d") : "Add dates"}
           </span>
+          {activeSearchControl === "check-out" && (
+            <button type="button" className="reset-btn" onClick={onResetClick}>
+              <FontAwesomeIcon icon={faX} />
+            </button>
+          )}
         </div>
         <span
           className={`splitter ${renderSplitterActiveClass(
@@ -173,7 +203,7 @@ export function SearchBar({
           )}`}
         ></span>
         <div
-          className={`search-control ${
+          className={`search-control who ${
             activeSearchControl === "who" ? "active" : ""
           }`}
           onMouseEnter={() => setHoveredSearchControl("who")}

@@ -12,19 +12,31 @@ export function SearchBarMini({ onSelect }) {
   //TODO: work on the div styling and display
   return (
     <section className="search-bar-mini">
-      <div className="destination" onClick={() => onSelect("where")}>
-        {filterBy.city}
+      <div
+        className="mini-display destination"
+        onClick={() => onSelect("where")}
+      >
+        <span className="filter-display">Anywhere</span>
+        {/* {filterBy.city} */}
       </div>
       <span className="splitter"></span>
-      <div className="dates-range" onClick={() => onSelect("check-in")}>
-        {format(filterBy.startDate, "MMM d")}
-        {/* {filterBy.startDate}-{filterBy.endDate} */}
+      <div
+        className="mini-display dates-range"
+        onClick={() => onSelect("check-in")}
+      >
+        <span className="filter-display">Any week</span>
+        {/* {filterBy.startDateformat ? (
+          <span>{format(filterBy.startDate, "MMM d")}</span>
+        ) : (
+          <span>No</span>
+        )} */}
       </div>
       <span className="splitter"></span>
-      <div className="capacity" onClick={() => onSelect("who")}>
-        {filterBy.capacity}
+      <div className="mini-display capacity" onClick={() => onSelect("who")}>
+        <span className="filter-display">Add guests</span>
+        {/* {filterBy.capacity} */}
       </div>
-      <button className="search-button">
+      <button className="search-button" onClick={() => onSelect("")}>
         <FontAwesomeIcon icon={faSearch} />
       </button>
     </section>
