@@ -1,39 +1,5 @@
-import { useEffect } from "react";
 import { SearchPickerWrapper } from "./SearchPickerWrapper";
-
-//TODO: move options array and filtering to service?
-const OPTIONS = [
-  {
-    city: "Maui",
-    country: "United States",
-    phrase: "Tropical paradise with beaches and volcanoes",
-    imgUrl: "src/assets/img/city-icons/maui-icon.png",
-  },
-  {
-    city: "Montreal",
-    country: "Canada",
-    phrase: "French-Canadian charm and vibrant culture",
-    imgUrl: "src/assets/img/city-icons/montreal-icon.png",
-  },
-  {
-    city: "Porto",
-    country: "Portugal",
-    phrase: "Historic riverside city with wine and charm",
-    imgUrl: "src/assets/img/city-icons/porto-icon.png",
-  },
-  {
-    city: "New York",
-    country: "United States",
-    phrase: "The city that never sleeps",
-    imgUrl: "src/assets/img/city-icons/new-york-icon.png",
-  },
-  {
-    city: "Barcelona",
-    country: "Spain",
-    phrase: "Beachside beauty with Gaudí’s magic",
-    imgUrl: "src/assets/img/city-icons/barcelona-icon.png",
-  },
-];
+import { CITY_OPTIONS } from "../../services/stay/stay.service.local";
 
 export function SearchWherePicker({ type, onSelect, searchInputValue }) {
   function handleSelect({ city }) {
@@ -44,7 +10,7 @@ export function SearchWherePicker({ type, onSelect, searchInputValue }) {
     <SearchPickerWrapper type={type}>
       <section className="search-where-picker">
         <span className="title">Suggested destinations</span>
-        {OPTIONS.filter((option) => {
+        {CITY_OPTIONS.filter((option) => {
           if (!searchInputValue) return true;
           return (
             option.city

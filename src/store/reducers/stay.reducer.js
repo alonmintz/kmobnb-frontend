@@ -1,3 +1,5 @@
+import { INITIAL_GUESTS } from "../../services/stay/stay.service.local";
+
 export const SET_STAYS = "SET_STAYS";
 export const INCREMENT_STAYS = "INCREMENT_STAYS";
 export const SET_BULK_INDEX = "SET_BULK_INDEX";
@@ -18,12 +20,7 @@ const initialState = {
   stay: null,
   lastRemovedStay: null,
   filterBy: {},
-  guests: [
-    { type: "adults", desc: "Ages 13 or above", count: 0 },
-    { type: "children", desc: "Ages 2 – 12", count: 0 },
-    { type: "infants", desc: "Under 2", count: 0 },
-    { type: "pets", desc: "Bringing a service animal?", count: 0 },
-  ],
+  guests: INITIAL_GUESTS,
   datesRange: [],
 };
 
