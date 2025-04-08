@@ -16,7 +16,6 @@ export const SET_DATES_RANGE = "SET_DATES_RANGE";
 
 const initialState = {
   stays: [],
-  currentBulkIdx: 0,
   stay: null,
   lastRemovedStay: null,
   filterBy: {},
@@ -29,11 +28,7 @@ export function stayReducer(state = initialState, action = {}) {
     case SET_STAYS:
       return { ...state, stays: action.stays };
     case INCREMENT_STAYS:
-      return { ...state, stays: [...state.stays, action.stays] };
-    case SET_BULK_INDEX:
-      return { ...state, currentBulkIdx: action.bulkIdx };
-    case INCREMENT_BULK_INDEX:
-      return { ...state, currentBulkIdx: state.currentBulkIdx++ };
+      return { ...state, stays: [...state.stays, ...action.stays] };
     case SET_STAY:
       return { ...state, stay: action.stay };
     case REMOVE_STAY: {
