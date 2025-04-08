@@ -23,8 +23,6 @@ export const stayActions = {
   updateStay,
   setFilterBy,
   resetFilterBy,
-  setBulkIndex,
-  incrementBulkIndex,
   setGuests,
   setDatesRange,
 };
@@ -121,29 +119,6 @@ async function resetFilterBy() {
     return emptyFilter;
   } catch (err) {
     console.log("cannot reset filter by", err);
-    throw err;
-  }
-}
-
-async function setBulkIndex(bulkIdx) {
-  try {
-    await store.dispatch({
-      type: SET_BULK_INDEX,
-      bulkIdx,
-    });
-  } catch (err) {
-    console.log("cannot set bulk index", err);
-    throw err;
-  }
-}
-
-async function incrementBulkIndex() {
-  try {
-    await store.dispatch({
-      type: INCREMENT_BULK_INDEX,
-    });
-  } catch (err) {
-    console.log("cannot increment bulk index", err);
     throw err;
   }
 }
