@@ -1,16 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { StayFilter } from "../../cmps/stay/StayFilter";
 import { StayList } from "../../cmps/stay/StayList";
 import { stayActions } from "../../store/actions/stay.actions";
 import { useEffect, useRef, useState } from "react";
-import { SET_FILTER_BY } from "../../store/reducers/stay.reducer";
 
 export function StayIndex() {
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const [bulkIdx, setBulkIndex] = useState(0);
-
-  const dispatch = useDispatch();
 
   const bottomDiv = useRef();
   //TODO: add a condition to stop increasing the bulkIdx and rendering more when there is no more stays to show. maybe an indication from the backend?
@@ -36,7 +33,7 @@ export function StayIndex() {
   }, [bulkIdx]);
 
   function onSetFilterBy(updatedFilterBy) {
-    dispatch({ type: SET_FILTER_BY, filterBy: updatedFilterBy });
+    stayActions.setFilterBy(updatedFilterBy)
   }
 
   return (
@@ -45,5 +42,5 @@ export function StayIndex() {
       <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
     </section>
-  );
+  )
 }

@@ -104,7 +104,7 @@ export function StayFilter({ filterBy, onSetFilterBy }) {
                 </Carousel>
 
                 <button className={carouselPage === LAST_SLIDE ? "carousel-next invis" : "carousel-next"} onClick={() => carouselRef.current.next()}>
-                    <svg class="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg>
+                    <svg className="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg>
                 </button>
             </div>
             <button className="filters-button">Filters</button>
