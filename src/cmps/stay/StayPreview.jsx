@@ -2,17 +2,6 @@ import { StayPhotoGallery } from "./StayPhotoGallery"
 
 export function StayPreview({ stay }) {
 
-    // TODO: handle missing data better
-    if (stay.imgUrls.length === 0) {
-        stay.imgUrls = ["http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436912/xle8ueqxjeazbs4bp09p.jpg"]
-    }
-    if (!stay.loc.city) {
-        stay.loc.city = "City"
-    }
-    if (!stay.loc.country) {
-        stay.loc.country = "Country"
-    }
-
     if (!stay) return <div className="stay-preview">Loading...</div>
     return (
         <div className="stay-preview">
