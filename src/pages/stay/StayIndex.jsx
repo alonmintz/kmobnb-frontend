@@ -10,7 +10,8 @@ export function StayIndex() {
   const [bulkIdx, setBulkIndex] = useState(0);
 
   const bottomDiv = useRef();
-  //TODO: add a condition to stop increasing the bulkIdx and rendering more when there is no more stays to show. maybe an indication from the backend?
+  //TODO: determine a min height to the index div so the bottom div won't be triggered on load.
+  //TODO: add loading when loading stays (animation or even better: empty preview templates (like in origin))
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -25,7 +26,12 @@ export function StayIndex() {
   }, []);
 
   useEffect(() => {
-    setBulkIndex(0);
+    console.log({ filterBy });
+    if (bulkIdx === 0) {
+      stayActions.loadStays(filterBy, bulkIdx);
+    } else {
+      setBulkIndex(0);
+    }
   }, [filterBy]);
 
   useEffect(() => {
@@ -33,7 +39,7 @@ export function StayIndex() {
   }, [bulkIdx]);
 
   function onSetFilterBy(updatedFilterBy) {
-    stayActions.setFilterBy(updatedFilterBy)
+    stayActions.setFilterBy(updatedFilterBy);
   }
 
   return (
@@ -42,5 +48,5 @@ export function StayIndex() {
       <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
     </section>
-  )
+  );
 }

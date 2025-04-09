@@ -10,7 +10,7 @@ export const INITIAL_GUESTS = [
   { type: "pets", desc: "Bringing a service animal?", count: 0 },
 ];
 
-//TODO: update options array to include ALL the locations
+//TODO: edit Hong Kong, Sydney, Rio De Janeiro .png's backgrounds, size and variate colors
 export const CITY_OPTIONS = [
   {
     city: "Maui",
@@ -41,6 +41,30 @@ export const CITY_OPTIONS = [
     country: "Spain",
     phrase: "Beachside beauty with Gaudí’s magic",
     imgUrl: "src/assets/img/city-icons/barcelona-icon.png",
+  },
+  {
+    city: "Istanbul",
+    country: "Turkey",
+    phrase: "Where East meets West in stunning style",
+    imgUrl: "src/assets/img/city-icons/istanbul-icon.png",
+  },
+  {
+    city: "Hong Kong",
+    country: "Hong Kong",
+    phrase: "Skyline views, street food, and endless energy",
+    imgUrl: "src/assets/img/city-icons/hong-kong-icon.png",
+  },
+  {
+    city: "Sydney",
+    country: "Australia",
+    phrase: "Harbor life with iconic Aussie vibes",
+    imgUrl: "src/assets/img/city-icons/sydney-icon.png",
+  },
+  {
+    city: "Rio De Janeiro",
+    country: "Brazil",
+    phrase: "Beaches, samba, and breathtaking views",
+    imgUrl: "src/assets/img/city-icons/rio-de-janeiro-icon.png",
   },
 ];
 const STORAGE_KEY = "STAY_DB";
