@@ -4,11 +4,11 @@ import 'react-multi-carousel/lib/styles.css'
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 
 export function StayFilter({ filterBy, onSetFilterBy }) {
-    const IMG_URL_PATH = "../../src/assets/img/stay/type/";
-    const LAST_SLIDE = "LAST_SLIDE"
     const FIRST_SLIDE = "FIRST_SLIDE"
+    const LAST_SLIDE = "LAST_SLIDE"
 
     const typeList = ["OMG!", "Beachfront", "Amazing Views", "Trending", "Design", "Luxe", "Countryside", "Top cities", "Off-the-grid", "Historical homes", "Desert", "Cabins", "Surfing", "New", "National parks", "Rooms", "Amazing pools", "Camping", "Top of the world", "Skiing", "Tropical", "Creative spaces", "Castles"]; //  list of stay types
+    const IMG_URL_PATH = "../../src/assets/img/stay/type/"
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
@@ -44,11 +44,13 @@ export function StayFilter({ filterBy, onSetFilterBy }) {
 
     const { type: selectedType } = filterByToEdit //  extracting the currently selected stay type from filterBy
     return (
-        <section className="stay-filter">
-            <div>
-                <button className={carouselPage === FIRST_SLIDE ? "carousel-prev invis" : "carousel-prev"} onClick={() => carouselRef.current.previous()}>
-                    <svg className="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg>
-                </button>
+        <div className="stay-filter">
+            <div className="carousel-container">
+                <div className={`arrow-container left ${carouselPage === FIRST_SLIDE ? 'hidden' : ''}`}>
+                    <button className="arrow-button carousel-prev" onClick={() => carouselRef.current.previous()}>
+                        <svg className="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg>
+                    </button>
+                </div>
 
                 <Carousel
                     arrows={false}
@@ -103,11 +105,13 @@ export function StayFilter({ filterBy, onSetFilterBy }) {
                     ))}
                 </Carousel>
 
-                <button className={carouselPage === LAST_SLIDE ? "carousel-next invis" : "carousel-next"} onClick={() => carouselRef.current.next()}>
-                    <svg className="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg>
-                </button>
+                <div className={`arrow-container right ${carouselPage === LAST_SLIDE ? 'hidden' : ''}`}>
+                    <button className="arrow-button carousel-next" onClick={() => carouselRef.current.next()}>
+                        <svg className="carousel__icon" viewBox="0 0 24 24" role="img"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg>
+                    </button>
+                </div>
             </div>
             <button className="filters-button">Filters</button>
-        </section>
+        </div>
     );
 }
