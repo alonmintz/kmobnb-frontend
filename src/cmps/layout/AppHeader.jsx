@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from "react";
 import { stayActions } from "../../store/actions/stay.actions";
 import { animateCSS } from "../../services/util.service";
 import { SearchBarMini } from "../stay/SearchBarMini";
+import logo from "../../assets/img/logo.png"
+import guestUnknown from "../../assets/img/guest-unknown.svg"
 
 export function AppHeader() {
   // const user = useSelector((storeState) => storeState.userModule.user);
@@ -206,7 +208,8 @@ export function AppHeader() {
               <div className="logo-container">
                 <img
                   className="logo"
-                  src="src/assets/img/logo.png"
+                  // src="src/assets/img/logo.png"
+                  src={logo}
                   alt="logo"
                 />
                 <h3>kmobnb</h3>
@@ -225,7 +228,7 @@ export function AppHeader() {
               <NavLink>Bnb your home</NavLink>
               <button className="user-info">
                 <FontAwesomeIcon icon={faBars} />
-                <img src="src/assets/img/guest-unknown.svg" alt="user-icon" />
+                <img src={guestUnknown} alt="user-icon" />
               </button>
             </nav>
           </section>
