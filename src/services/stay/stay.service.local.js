@@ -2,6 +2,15 @@ import { storageService } from "../async-storage.service";
 import { loadFromStorage, makeId, saveToStorage } from "../util.service";
 import { userService } from "../user";
 import STAYS_DATA from "./stay_mockdata.json";
+import mauiIcon from "../../assets/img/city-icons/maui-icon.png";
+import montrealIcon from "../../assets/img/city-icons/montreal-icon.png";
+import portoIcon from "../../assets/img/city-icons/porto-icon.png";
+import newYorkIcon from "../../assets/img/city-icons/new-york-icon.png";
+import barcelonaIcon from "../../assets/img/city-icons/barcelona-icon.png";
+import istanbulIcon from "../../assets/img/city-icons/istanbul-icon.png";
+import hongKongIcon from "../../assets/img/city-icons/hong-kong-icon.png";
+import sydneyIcon from "../../assets/img/city-icons/sydney-icon.png";
+import rioDeJaneiroIcon from "../../assets/img/city-icons/rio-de-janeiro-icon.png";
 
 export const INITIAL_GUESTS = [
   { type: "adults", desc: "Ages 13 or above", count: 0 },
@@ -15,55 +24,55 @@ export const CITY_OPTIONS = [
     city: "Maui",
     country: "United States",
     phrase: "Tropical paradise with beaches and volcanoes",
-    imgUrl: "src/assets/img/city-icons/maui-icon.png",
+    imgUrl: mauiIcon,
   },
   {
     city: "Montreal",
     country: "Canada",
     phrase: "French-Canadian charm and vibrant culture",
-    imgUrl: "src/assets/img/city-icons/montreal-icon.png",
+    imgUrl: montrealIcon,
   },
   {
     city: "Porto",
     country: "Portugal",
     phrase: "Historic riverside city with wine and charm",
-    imgUrl: "src/assets/img/city-icons/porto-icon.png",
+    imgUrl: portoIcon,
   },
   {
     city: "New York",
     country: "United States",
     phrase: "The city that never sleeps",
-    imgUrl: "src/assets/img/city-icons/new-york-icon.png",
+    imgUrl: newYorkIcon,
   },
   {
     city: "Barcelona",
     country: "Spain",
     phrase: "Beachside beauty with Gaudí’s magic",
-    imgUrl: "src/assets/img/city-icons/barcelona-icon.png",
+    imgUrl: barcelonaIcon,
   },
   {
     city: "Istanbul",
     country: "Turkey",
     phrase: "Where East meets West in stunning style",
-    imgUrl: "src/assets/img/city-icons/istanbul-icon.png",
+    imgUrl: istanbulIcon,
   },
   {
     city: "Hong Kong",
     country: "Hong Kong",
     phrase: "Skyline views, street food, and endless energy",
-    imgUrl: "src/assets/img/city-icons/hong-kong-icon.png",
+    imgUrl: hongKongIcon,
   },
   {
     city: "Sydney",
     country: "Australia",
     phrase: "Harbor life with iconic Aussie vibes",
-    imgUrl: "src/assets/img/city-icons/sydney-icon.png",
+    imgUrl: sydneyIcon,
   },
   {
     city: "Rio De Janeiro",
     country: "Brazil",
     phrase: "Beaches, samba, and breathtaking views",
-    imgUrl: "src/assets/img/city-icons/rio-de-janeiro-icon.png",
+    imgUrl: rioDeJaneiroIcon,
   },
 ];
 const STORAGE_KEY = "STAY_DB";
