@@ -105,3 +105,16 @@ export function animateCSS(el, animation, options = {}) {
     el.addEventListener("animationend", handleAnimationEnd, { once: true });
   });
 }
+
+export function getExistingProperties(obj) {
+  const truthyObj = {};
+  for (const key in obj) {
+    const val = obj[key];
+    if (val || typeof val === "boolean") {
+      console.log(`${val} is truthy`);
+
+      truthyObj[key] = val;
+    }
+  }
+  return truthyObj;
+}
