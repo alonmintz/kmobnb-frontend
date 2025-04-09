@@ -76,7 +76,7 @@
       }
 
       input[type="text"] {
-        line-height: 1;
+        line-height: 1.5;
         height: 1em;
         font-size: 0.85rem;
         padding: 0;
@@ -179,7 +179,7 @@
   top: 100%;
   height: clamp(300px, 50vh, 400px);
   margin-block-start: 0.75rem;
-  padding: 1.5em;
+  padding: 1em 1.5em;
   background-color: white;
   border-radius: 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -188,7 +188,7 @@
   overscroll-behavior: contain;
   &.where {
     left: 0;
-    width: 60%;
+    width: 50%;
   }
   &.check-in,
   &.check-out {
@@ -230,6 +230,7 @@
       .option-details {
         display: grid;
         align-content: center;
+        gap: 0.3em;
         .city-country {
           font-size: 1rem;
           font-weight: 600;
@@ -263,6 +264,7 @@
     }
     .guest-details {
       display: grid;
+      gap: 0.3em;
       .guest-type {
         font-size: 1rem;
         font-weight: 600;
@@ -283,8 +285,8 @@
       }
       .action-btn {
         background-color: transparent;
-        color: black;
-        border: 1px solid gray;
+        color: #6a6a6a;
+        border: 1px solid #b0b0b0;
         border-radius: 50%;
         width: 2rem;
         height: 2rem;
@@ -292,8 +294,13 @@
         justify-content: center;
         align-items: center;
         padding: 0;
+        &:not(:disabled):hover {
+          color: black;
+          border-color: black;
+        }
         &:disabled {
-          opacity: 0.5;
+          color: #ebebeb;
+          border: 1px solid #ebebeb;
           cursor: not-allowed;
         }
       }

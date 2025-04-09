@@ -10,7 +10,6 @@ export const INITIAL_GUESTS = [
   { type: "pets", desc: "Bringing a service animal?", count: 0 },
 ];
 
-//TODO: edit Hong Kong, Sydney, Rio De Janeiro .png's backgrounds, size and variate colors
 export const CITY_OPTIONS = [
   {
     city: "Maui",
