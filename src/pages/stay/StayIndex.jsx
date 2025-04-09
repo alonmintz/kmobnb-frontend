@@ -26,7 +26,6 @@ export function StayIndex() {
   }, []);
 
   useEffect(() => {
-    console.log({ filterBy });
     if (bulkIdx === 0) {
       stayActions.loadStays(filterBy, bulkIdx);
     } else {
