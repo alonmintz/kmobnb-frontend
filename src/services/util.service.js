@@ -111,8 +111,6 @@ export function getExistingProperties(obj) {
   for (const key in obj) {
     const val = obj[key];
     if (val || typeof val === "boolean") {
-      console.log(`${val} is truthy`);
-
       truthyObj[key] = val;
     }
   }
