@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
@@ -8,17 +8,21 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { SearchBar } from "../stay/SearchBar";
 import { useEffect, useRef, useState } from "react";
 import { stayActions } from "../../store/actions/stay.actions";
-import { animateCSS } from "../../services/util.service";
+import { animateCSS, getExistingProperties } from "../../services/util.service";
 import { SearchBarMini } from "../stay/SearchBarMini";
-import logo from "../../assets/img/logo.png"
-import guestUnknown from "../../assets/img/guest-unknown.svg"
+import logo from "../../assets/img/logo.png";
+import guestUnknown from "../../assets/img/guest-unknown.svg";
+import { stayService } from "../../services/stay";
+import { addDays } from "date-fns";
 
 export function AppHeader() {
   // const user = useSelector((storeState) => storeState.userModule.user);
-
-  const [filterByToEdit, setFilterByToEdit] = useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const [activeSearchControl, setActiveSearchControl] = useState("");
-  const [destination, setDestination] = useState("");
+  const [destination, setDestination] = useState(
+    searchParams.get("city") || ""
+  );
   const datesRange = useSelector(
     (storeState) => storeState.stayModule.datesRange
   );
@@ -34,6 +38,20 @@ export function AppHeader() {
   const miniSearchBarRef = useRef();
   const homesTitleRef = useRef();
   // const navigate = useNavigate();
+
+  useEffect(() => {
+    setSearchParams(getExistingProperties(filterBy));
+  }, [filterBy]);
+
+  useEffect(() => {
+    stayActions.setFilterBy(
+      stayService.getFilterByFromSearchParams(searchParams)
+    );
+    stayActions.setGuests(stayService.getGuestsFromSearchParams(searchParams));
+    stayActions.setDatesRange(
+      stayService.getDatesRangeFromSearchParams(searchParams)
+    );
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,50 +103,11 @@ export function AppHeader() {
   }, [isSearchBarVisible]);
 
   useEffect(() => {
-    updateDestinationFilter();
-  }, [destination]);
-
-  useEffect(() => {
-    updateDatesRangeFilter();
-  }, [datesRange]);
-
-  useEffect(() => {
     setGuestsDisplay(renderGuestsDisplay());
-    updateGuestsFilter();
   }, [guests]);
-
-  function updateDestinationFilter() {
-    setFilterByToEdit((prevFilterByToEdit) => ({
-      ...prevFilterByToEdit,
-      city: destination,
-    }));
-  }
 
   function onSetDatesRange(datesRange) {
     stayActions.setDatesRange(datesRange);
-  }
-
-  function updateDatesRangeFilter() {
-    setFilterByToEdit((prevFilterByToEdit) => ({
-      ...prevFilterByToEdit,
-      startDate: datesRange[0],
-      endDate: datesRange[1],
-    }));
-  }
-
-  function updateGuestsFilter() {
-    const hasPets = (guestsArray) => {
-      const petGuest = guestsArray.find((guest) => guest.type === "pets");
-      return petGuest ? petGuest.count > 0 : false;
-    };
-    setFilterByToEdit((prevFilterByToEdit) => ({
-      ...prevFilterByToEdit,
-      capacity: guests.reduce(
-        (totalCount, guest) => totalCount + guest.count,
-        0
-      ),
-      isPetsAllowed: hasPets(guests),
-    }));
   }
 
   function renderGuestsDisplay() {
@@ -175,8 +154,28 @@ export function AppHeader() {
     stayActions.setGuests([...newGuests]);
   }
 
-  function updateFilterBy() {
-    stayActions.setFilterBy(filterByToEdit);
+  async function updateFilterBy() {
+    let endDate = datesRange[1];
+
+    if (datesRange[0] && !datesRange[1]) {
+      endDate = addDays(datesRange[0], 1);
+      await stayActions.setDatesRange([datesRange[0], endDate]);
+    }
+
+    const capacity = guests.reduce((acc, guest) => acc + guest.count, 0);
+    const isPetsAllowed = guests.some(
+      (guest) => guest.type === "pets" && guest.count > 0
+    );
+
+    const newFilterBy = {
+      city: destination,
+      startDate: datesRange[0],
+      endDate,
+      capacity,
+      isPetsAllowed,
+    };
+
+    stayActions.setFilterBy(newFilterBy, guests);
   }
 
   function handleMiniSearchBarClick(controlType) {

@@ -97,7 +97,13 @@ async function updateStay(stay) {
   }
 }
 
-async function setFilterBy(filterBy) {
+async function setFilterBy(filterBy, guests) {
+  if (guests) {
+    guests.forEach((guestObj) => {
+      filterBy[guestObj.type] = guestObj.count;
+    });
+  }
+
   try {
     await store.dispatch({
       type: SET_FILTER_BY,
