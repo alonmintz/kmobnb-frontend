@@ -10,6 +10,7 @@ export const ADD_STAY = "ADD_STAY";
 export const UPDATE_STAY = "UPDATE_STAY";
 export const ADD_STAY_MSG = "ADD_STAY_MSG";
 export const SET_FILTER_BY = "SET_FILTER_BY";
+export const REPLACE_FILTER_BY = "REPLACE_FILTER_BY";
 export const RESET_FILTER_BY = "RESET_FILTER_BY";
 export const SET_GUESTS = "SET_GUESTS";
 export const SET_DATES_RANGE = "SET_DATES_RANGE";
@@ -19,7 +20,7 @@ const initialState = {
   stay: null,
   lastRemovedStay: null,
   filterBy: {},
-  guests: INITIAL_GUESTS,
+  guests: structuredClone(INITIAL_GUESTS),
   datesRange: [],
 };
 
@@ -50,6 +51,11 @@ export function stayReducer(state = initialState, action = {}) {
       return {
         ...state,
         filterBy: { ...state.filterBy, ...action.filterBy },
+      };
+    case REPLACE_FILTER_BY:
+      return {
+        ...state,
+        filterBy: { ...action.filterBy },
       };
     case RESET_FILTER_BY: {
       const emptyFilter = {};

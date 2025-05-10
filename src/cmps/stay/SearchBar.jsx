@@ -40,6 +40,8 @@ export function SearchBar({
   useEffect(() => {
     if (destination) {
       setSearchInputValue(destination);
+    } else {
+      setSearchInputValue("");
     }
   }, [destination]);
 
@@ -103,7 +105,7 @@ export function SearchBar({
         setActiveSearchControl("check-in");
         break;
       case "who":
-        onSetGuests(INITIAL_GUESTS);
+        onSetGuests(structuredClone(INITIAL_GUESTS));
         break;
       default:
         break;

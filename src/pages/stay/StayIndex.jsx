@@ -37,13 +37,9 @@ export function StayIndex() {
     stayActions.loadStays(filterBy, bulkIdx);
   }, [bulkIdx]);
 
-  function onSetFilterBy(updatedFilterBy) {
-    stayActions.setFilterBy(updatedFilterBy);
-  }
-
   return (
     <section className="stay-index">
-      <StayFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+      <StayFilter/>
       <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
     </section>

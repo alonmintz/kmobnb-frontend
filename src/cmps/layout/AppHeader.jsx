@@ -18,11 +18,9 @@ import { addDays } from "date-fns";
 export function AppHeader() {
   // const user = useSelector((storeState) => storeState.userModule.user);
   const [searchParams, setSearchParams] = useSearchParams();
-  const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const [activeSearchControl, setActiveSearchControl] = useState("");
-  const [destination, setDestination] = useState(
-    searchParams.get("city") || ""
-  );
+  const city = useSelector((storeState) => storeState.stayModule.filterBy.city);
+  const [destination, setDestination] = useState(city || "");
   const datesRange = useSelector(
     (storeState) => storeState.stayModule.datesRange
   );
@@ -40,10 +38,6 @@ export function AppHeader() {
   // const navigate = useNavigate();
 
   useEffect(() => {
-    setSearchParams(getExistingProperties(filterBy));
-  }, [filterBy]);
-
-  useEffect(() => {
     stayActions.setFilterBy(
       stayService.getFilterByFromSearchParams(searchParams)
     );
@@ -51,7 +45,7 @@ export function AppHeader() {
     stayActions.setDatesRange(
       stayService.getDatesRangeFromSearchParams(searchParams)
     );
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,6 +95,10 @@ export function AppHeader() {
       animateCSS(miniSearchBarRef.current, "fadeInUp");
     }
   }, [isSearchBarVisible]);
+
+  useEffect(() => {
+    setDestination(city);
+  }, [city]);
 
   useEffect(() => {
     setGuestsDisplay(renderGuestsDisplay());
@@ -163,19 +161,32 @@ export function AppHeader() {
     }
 
     const capacity = guests.reduce((acc, guest) => acc + guest.count, 0);
-    const isPetsAllowed = guests.some(
-      (guest) => guest.type === "pets" && guest.count > 0
-    );
 
     const newFilterBy = {
       city: destination,
       startDate: datesRange[0],
       endDate,
       capacity,
-      isPetsAllowed,
     };
 
-    stayActions.setFilterBy(newFilterBy, guests);
+    const isPetsAllowed = guests.some(
+      (guest) => guest.type === "pets" && guest.count > 0
+    );
+
+    if (isPetsAllowed) {
+      newFilterBy.isPetsAllowed = isPetsAllowed;
+    }
+
+    guests.forEach((guestObj) => {
+      newFilterBy[guestObj.type] = guestObj.count;
+    });
+
+    const type = searchParams.get("type");
+    if (type) {
+      newFilterBy.type = type;
+    }
+
+    setSearchParams({ ...getExistingProperties(newFilterBy) });
   }
 
   function handleMiniSearchBarClick(controlType) {
@@ -203,7 +214,7 @@ export function AppHeader() {
       <header className="app-header full">
         <div className="header-container">
           <section className="header-top">
-            <NavLink className={"logo-link"}>
+            <NavLink className={"logo-link"} to={""}>
               <div className="logo-container">
                 <img
                   className="logo"
