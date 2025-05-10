@@ -40,7 +40,7 @@ function getFilterByFromSearchParams(searchParams) {
 }
 
 function getGuestsFromSearchParams(searchParams) {
-  const guests = [...INITIAL_GUESTS];
+  const guests = structuredClone(INITIAL_GUESTS);
   const searchParamsObj = Object.fromEntries(searchParams.entries());
 
   const {

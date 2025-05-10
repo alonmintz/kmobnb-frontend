@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
+import { useSearchParams } from "react-router-dom";
 
-export function StayFilter({ filterBy, onSetFilterBy }) {
+export function StayFilter() {
   const FIRST_SLIDE = "FIRST_SLIDE";
   const LAST_SLIDE = "LAST_SLIDE";
 
@@ -33,19 +34,16 @@ export function StayFilter({ filterBy, onSetFilterBy }) {
     "Castles",
   ]; //  list of stay types
   const IMG_URL_PATH = "../../src/assets/img/stay/type/";
-
-  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const [carouselPage, setCarouselPage] = useState(FIRST_SLIDE);
-
   const carouselRef = useRef(null);
 
-  useEffectUpdate(() => {
-    onSetFilterBy(filterByToEdit);
-  }, [filterByToEdit]);
-
   function onClickType(type) {
-    setFilterByToEdit({ type });
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set("type", type);
+      return newParams;
+    });
   }
 
   const handleAfterChange = (previousSlide, { currentSlide }) => {
@@ -66,7 +64,7 @@ export function StayFilter({ filterBy, onSetFilterBy }) {
     }
   };
 
-  const { type: selectedType } = filterByToEdit; //  extracting the currently selected stay type from filterBy
+  const selectedType = searchParams.get("type");
   return (
     <div className="stay-filter">
       <div className="carousel-container">

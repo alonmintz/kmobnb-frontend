@@ -2,8 +2,8 @@
   position: sticky;
   display: flex;
   width: 100%;
-  margin-bottom: .7em;
-  margin-top: .7em;
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
   flex-direction: row;
   align-items: center;
 
@@ -14,7 +14,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
+
     .arrow-container {
       display: flex;
       position: absolute;
@@ -40,9 +40,11 @@
           width: 3em;
           height: 100%;
           z-index: 10;
-          background: linear-gradient(to right,
-              rgba(255, 255, 255, 1),
-              rgba(255, 255, 255, 0));
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 0)
+          );
         }
       }
 
@@ -57,9 +59,11 @@
           width: 3em;
           height: 100%;
           z-index: 10;
-          background: linear-gradient(to left,
-              rgba(255, 255, 255, 1),
-              rgba(255, 255, 255, 0));
+          background: linear-gradient(
+            to left,
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 0)
+          );
           // background: red;
         }
       }
@@ -80,7 +84,7 @@
         height: 3em;
         opacity: 1;
         color: black;
-  
+
         .carousel__icon {
           scale: 1.5;
           position: fixed;
@@ -102,7 +106,7 @@
     color: #000000;
     border-radius: 10%;
     border-color: black;
-    padding: .6em;
+    padding: 0.6em;
   }
 
   .stay-filter-carousel {
@@ -115,7 +119,7 @@
       margin: 0.5em 0;
       padding: 0;
 
-      >li {
+      > li {
         flex: 1;
         display: flex;
         justify-content: center;
@@ -159,9 +163,11 @@
           }
 
           &.selected p,
-          &:disabled p {
-            border-bottom-color: black;
+          &:disabled {
             cursor: default;
+            p {
+              border-bottom-color: black;
+            }
           }
 
           &:hover,

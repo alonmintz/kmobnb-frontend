@@ -8,6 +8,7 @@ import {
   SET_STAY,
   UPDATE_STAY,
   SET_FILTER_BY,
+  REPLACE_FILTER_BY,
   RESET_FILTER_BY,
   SET_BULK_INDEX,
   INCREMENT_BULK_INDEX,
@@ -97,16 +98,11 @@ async function updateStay(stay) {
   }
 }
 
-async function setFilterBy(filterBy, guests) {
-  if (guests) {
-    guests.forEach((guestObj) => {
-      filterBy[guestObj.type] = guestObj.count;
-    });
-  }
-
+async function setFilterBy(filterBy) {
   try {
     await store.dispatch({
-      type: SET_FILTER_BY,
+      // type: SET_FILTER_BY,
+      type: REPLACE_FILTER_BY,
       filterBy,
     });
     return filterBy;
