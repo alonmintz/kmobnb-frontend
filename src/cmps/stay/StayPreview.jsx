@@ -35,13 +35,16 @@ export function StayPreview({ stay }) {
     return (
         <div className="stay-preview">
             <StayPhotoGallery imgUrls={stay.imgUrls} />
+            <div className="heart-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false"><path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path></svg>
+            </div>
             <div className="text-container">
                 <div className="bold-text">{stay.loc.city}, {stay.loc.country}</div>
                 <div className="normal-text">{calcDistance(currLat, currLon, stay.loc.lat, stay.loc.lan).toLocaleString()} kilometers away</div>
                 <div className="normal-text">Apr 3 – 8</div>
                 <div className="price">₪<span className="bold-text">{stay.price}</span> night</div>
                 <div className="rating">
-                    <span><img src="src/assets/img/rating-star.svg" /> 4.9</span>
+                    <span><img className="star-image" src="src/assets/img/rating-star.svg" /> 4.9</span>
                 </div>
             </div>
         </div>
