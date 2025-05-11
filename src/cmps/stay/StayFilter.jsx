@@ -155,7 +155,7 @@ export function StayFilter() {
           </button>
         </div>
       </div>
-      <button className="filters-button">Filters</button>
+      <button className="filters-button">🎚️ Filters</button>
     </div>
   );
 }
