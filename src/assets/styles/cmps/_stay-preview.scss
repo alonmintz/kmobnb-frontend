@@ -23,8 +23,16 @@
 
         transition: transform 0.2s ease;
 
+        &.clicked {
+            fill: rgb(255, 56, 92);
+        }
+
         &:hover {
             transform: scale(1.08);
+        }
+
+        &:active {
+            transform: scale(0.95);
         }
     }
 

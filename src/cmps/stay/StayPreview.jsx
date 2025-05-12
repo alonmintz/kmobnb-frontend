@@ -1,9 +1,12 @@
 import { StayPhotoGallery } from "./StayPhotoGallery"
+import { useState } from "react"
 
 export function StayPreview({ stay }) {
 
     const currLon = 32.086722
     const currLat = 34.789777
+
+    const [heartClicked, setHeartClicked] = useState(false)
 
     function calcDistance(lat1, lon1, lat2, lon2) {
         const EARTH_RADIUS_KM = 6371
@@ -37,14 +40,22 @@ export function StayPreview({ stay }) {
         return parseFloat(avg.toFixed(2))
     }
 
+    function onHeartClick() {
+        if (heartClicked) {
+            setHeartClicked(false)
+        } else {
+            setHeartClicked(true)
+        }
+    }
+
     if (!stay) return <div className="stay-preview">Loading...</div>
     return (
         <div className="stay-preview">
             <StayPhotoGallery imgUrls={stay.imgUrls} />
-            <div className="heart-button">
+            <div className={`heart-button ${heartClicked ? "clicked" : ""}`} onClick={onHeartClick}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false"><path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path></svg>
             </div>
-            <div className="text-container">
+            <div className="text-container" onClick={() => console.log('preview clicked')}>
                 <div className="bold-text">{stay.loc.city}, {stay.loc.country}</div>
                 <div className="normal-text">{calcDistance(currLat, currLon, stay.loc.lat, stay.loc.lan).toLocaleString()} kilometers away</div>
                 <div className="normal-text">Apr 3 – 8</div>
