@@ -86,17 +86,20 @@ export const stayService = {
   save,
   remove,
 };
-window.cs = stayService;
+
+// window.cs = stayService;
+
+const emptyFilter = {
+  city: "",
+  startDate: null,
+  endDate: null,
+  capacity: 0,
+  isPetsAllowed: false,
+  type: ""
+}
 
 async function query(
-  filterBy = {
-    city: "",
-    startDate: null,
-    endDate: null,
-    capacity: 0,
-    isPetsAllowed: false,
-    type: "",
-  },
+  filterBy = emptyFilter,
   bulkIdx = 0,
   amount = STAYS_PER_LOAD
 ) {

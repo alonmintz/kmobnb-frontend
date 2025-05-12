@@ -77,7 +77,7 @@ export function StayFilter() {
             className="arrow-button carousel-prev"
             onClick={() => carouselRef.current.previous()}
           >
-            <svg className="carousel__icon" viewBox="0 0 24 24" role="img">
+            <svg className="arrow__icon" viewBox="0 0 24 24" role="img">
               <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path>
             </svg>
           </button>
@@ -87,9 +87,9 @@ export function StayFilter() {
           arrows={false}
           afterChange={handleAfterChange}
           ref={carouselRef}
-          className="stay-filter-carousel"
-          itemClass=""
-          containerClass=""
+          className="stay-type-button"
+          itemClass="carousel-item"
+          containerClass="stay-filter-carousel"
           infinite={false}
           draggable={false}
           swipeable
@@ -149,13 +149,13 @@ export function StayFilter() {
             className="arrow-button carousel-next"
             onClick={() => carouselRef.current.next()}
           >
-            <svg className="carousel__icon" viewBox="0 0 24 24" role="img">
+            <svg className="arrow__icon" viewBox="0 0 24 24" role="img">
               <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>
             </svg>
           </button>
         </div>
       </div>
-      <button className="filters-button">Filters</button>
+      <button className="filters-button">🎚️ Filters</button>
     </div>
   );
 }
