@@ -31,6 +31,12 @@ export function StayPreview({ stay }) {
         return distance
     }
 
+    function calcAverageRate(reviews) {
+        const sum = reviews.reduce((acc, review) => acc + review.starsRate, 0)
+        const avg = sum / reviews.length
+        return parseFloat(avg.toFixed(2))
+    }
+
     if (!stay) return <div className="stay-preview">Loading...</div>
     return (
         <div className="stay-preview">
@@ -44,7 +50,7 @@ export function StayPreview({ stay }) {
                 <div className="normal-text">Apr 3 – 8</div>
                 <div className="price">₪<span className="bold-text">{stay.price}</span> night</div>
                 <div className="rating">
-                    <span><img className="star-image" src="src/assets/img/rating-star.svg" /> 4.9</span>
+                    <span><img className="star-image" src="src/assets/img/rating-star.svg" /> {calcAverageRate(stay.reviews)}</span>
                 </div>
             </div>
         </div>
