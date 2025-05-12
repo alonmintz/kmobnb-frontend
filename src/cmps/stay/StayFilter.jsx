@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { useSearchParams } from "react-router-dom";
 
 export function StayFilter() {
@@ -49,20 +48,16 @@ export function StayFilter() {
   }
 
   const handleAfterChange = (previousSlide, { currentSlide }) => {
-    console.log("prev slide: ", previousSlide);
-    console.log("curr slide: ", currentSlide);
-
-    switch (currentSlide) {
-      case FIRST_SLIDE_INDEX:
-        setCarouselSlide(FIRST_SLIDE);
-        break;
-      case LAST_SLIDE_INDEX:
-        setCarouselSlide(LAST_SLIDE);
-        break;
-      default:
-        setCarouselSlide("");
+    if (currentSlide === FIRST_SLIDE_INDEX) {
+      setCarouselSlide(FIRST_SLIDE)
     }
-  };
+    else if (currentSlide >= LAST_SLIDE_INDEX) {
+      setCarouselSlide(LAST_SLIDE)
+    }
+    else {
+      setCarouselSlide("")
+    }
+  }
 
   const selectedType = searchParams.get("type");
   return (
@@ -93,7 +88,7 @@ export function StayFilter() {
           draggable={false}
           swipeable
           centerMode={false}
-          slidesToSlide={9}
+          slidesToSlide={8}
           rewind={false}
           rewindWithAnimation={false}
           responsive={{
