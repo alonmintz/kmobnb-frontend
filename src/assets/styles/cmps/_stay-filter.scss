@@ -8,21 +8,23 @@
   align-items: center;
 
   .filters-button {
-    position: absolute;
-    right: 0;
+    // position: absolute;
+    // right: 0;
     width: rem(85px);
     height: rem(45px);
     background-color: white;
     color: #000000;
     border-radius: 0.5rem;
     border: 0.5px solid;
-    border-color:gainsboro;
+    border-color: gainsboro;
     padding: 0.8rem;
+    margin-left: 1rem;
     font-size: rem(12px);
   }
 
   .carousel-container {
-    width: 92%;
+    width: 92%; // TODO: remove
+    flex: 1 1 auto;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -30,6 +32,7 @@
     justify-content: space-between;
 
     .stay-filter-carousel {
+      display: flex;
       width: 100%;
 
       ul {
@@ -48,7 +51,7 @@
           min-width: 0;
 
           .stay-type-button {
-            width: 100% !important;
+            // width: 100% !important;
             background-color: transparent;
             color: black;
             display: flex;
@@ -167,7 +170,7 @@
         opacity: 1;
         color: black;
 
-        .carousel__icon {
+        .arrow__icon {
           scale: 1.5;
           position: fixed;
           top: 50%;
