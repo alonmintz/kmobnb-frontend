@@ -48,8 +48,8 @@ export function StayPreview({ stay }) {
         }
     }
 
-    function onPreviewClick(e) {
-        window.open(`/stay/${stay._id}`)
+    function onPreviewClick() {
+        window.open(`/stay/${stay._id}` + window.location.search)
     }
 
     if (!stay) return <div className="stay-preview">Loading...</div>

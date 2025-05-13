@@ -12,7 +12,7 @@ export function StayPhotoGallery({ imgUrls, onPreviewClick }) {
     return (
         <div className="stay-photo-gallery">
             <Carousel
-                onClick={(e) => onPreviewClick(e)}
+                onClick={() => onPreviewClick()}
                 arrows
                 containerClass="carousel-list"
                 itemClass="carousel-item"
@@ -31,7 +31,7 @@ export function StayPhotoGallery({ imgUrls, onPreviewClick }) {
                     }
                 }}>
                 {imgUrls.map((imgUrl) => (
-                    <img key={imgUrl} className="stay-photo-gallery-img" src={imgUrl} alt="image" onClick={(e) => onPreviewClick(e)} />
+                    <img key={imgUrl} className="stay-photo-gallery-img" src={imgUrl} alt="image" onClick={() => onPreviewClick()} />
                 ))
                 }
             </Carousel>
