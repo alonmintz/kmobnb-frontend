@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSearchParams } from "react-router-dom";
+import filterIcon from "../../assets/img/filter-icon.svg"
 
 export function StayFilter() {
   const FIRST_SLIDE = "FIRST_SLIDE";
@@ -147,7 +148,9 @@ export function StayFilter() {
           </button>
         </div>
       </div>
-      <button className="filters-button">🎚️ Filters</button>
+      <button className="filters-button">
+        <img src={filterIcon} className="filters-icon" />Filters
+      </button>
     </div>
   );
 }
