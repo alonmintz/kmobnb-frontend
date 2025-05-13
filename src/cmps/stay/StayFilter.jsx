@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { useSearchParams } from "react-router-dom";
 
 export function StayFilter() {
   const FIRST_SLIDE = "FIRST_SLIDE";
   const LAST_SLIDE = "LAST_SLIDE";
+  const FIRST_SLIDE_INDEX = 0; //  TODO: calculate first slide index dynamically
+  const LAST_SLIDE_INDEX = 10; //  TODO: calculate last slide index dynamically
 
   const typeList = [
     "OMG!",
@@ -35,7 +36,7 @@ export function StayFilter() {
   ]; //  list of stay types
   const IMG_URL_PATH = "../../src/assets/img/stay/type/";
   const [searchParams, setSearchParams] = useSearchParams();
-  const [carouselPage, setCarouselPage] = useState(FIRST_SLIDE);
+  const [carouselSlide, setCarouselSlide] = useState(FIRST_SLIDE);
   const carouselRef = useRef(null);
 
   function onClickType(type) {
@@ -47,31 +48,24 @@ export function StayFilter() {
   }
 
   const handleAfterChange = (previousSlide, { currentSlide }) => {
-    console.log("prev slide: ", previousSlide);
-    console.log("curr slide: ", currentSlide);
-
-    const LAST_SLIDE_INDEX = 10; //  TODO: calculate last slide index dynamically
-    const FIRST_SLIDE_INDEX = 0; //  TODO: calculate first slide index dynamically
-    switch (currentSlide) {
-      case FIRST_SLIDE_INDEX:
-        setCarouselPage(FIRST_SLIDE);
-        break;
-      case LAST_SLIDE_INDEX:
-        setCarouselPage(LAST_SLIDE);
-        break;
-      default:
-        setCarouselPage("");
+    if (currentSlide === FIRST_SLIDE_INDEX) {
+      setCarouselSlide(FIRST_SLIDE)
     }
-  };
+    else if (currentSlide >= LAST_SLIDE_INDEX) {
+      setCarouselSlide(LAST_SLIDE)
+    }
+    else {
+      setCarouselSlide("")
+    }
+  }
 
   const selectedType = searchParams.get("type");
   return (
     <div className="stay-filter">
       <div className="carousel-container">
         <div
-          className={`arrow-container left ${
-            carouselPage === FIRST_SLIDE ? "hidden" : ""
-          }`}
+          className={`arrow-container left ${carouselSlide === FIRST_SLIDE ? "hidden" : ""
+            }`}
         >
           <button
             className="arrow-button carousel-prev"
@@ -94,7 +88,7 @@ export function StayFilter() {
           draggable={false}
           swipeable
           centerMode={false}
-          slidesToSlide={9}
+          slidesToSlide={8}
           rewind={false}
           rewindWithAnimation={false}
           responsive={{
@@ -128,9 +122,8 @@ export function StayFilter() {
           {typeList.map((type) => (
             <button
               key={type}
-              className={`stay-type-button ${
-                type === selectedType ? "selected" : ""
-              }`}
+              className={`stay-type-button ${type === selectedType ? "selected" : ""
+                }`}
               disabled={type === selectedType}
               onClick={() => onClickType(type)}
             >
@@ -141,9 +134,8 @@ export function StayFilter() {
         </Carousel>
 
         <div
-          className={`arrow-container right ${
-            carouselPage === LAST_SLIDE ? "hidden" : ""
-          }`}
+          className={`arrow-container right ${carouselSlide === LAST_SLIDE ? "hidden" : ""
+            }`}
         >
           <button
             className="arrow-button carousel-next"
