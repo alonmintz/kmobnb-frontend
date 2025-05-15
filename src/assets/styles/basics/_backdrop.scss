@@ -1,0 +1,9 @@
+.backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: $background-with-opacity;
+  backdrop-filter: blur(2px);
+  inset: 0;
+  z-index: 5;
+}
