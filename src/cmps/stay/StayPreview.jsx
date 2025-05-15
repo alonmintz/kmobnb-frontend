@@ -63,7 +63,7 @@ export function StayPreview({ stay }) {
                 <div className="bold-text">{stay.loc.city}, {stay.loc.country}</div>
                 <div className="normal-text">{calcDistance(currLat, currLon, stay.loc.lat, stay.loc.lan).toLocaleString()} kilometers away</div>
                 <div className="normal-text">Apr 3 – 8</div>
-                <div className="price">₪<span className="bold-text">{stay.price}</span> night</div>
+                <div className="price">$<span className="bold-text">{stay.price}</span> night</div>
                 <div className="rating">
                     <span><img className="star-image" src="src/assets/img/rating-star.svg" /> {calcAverageRate(stay.reviews)}</span>
                 </div>
