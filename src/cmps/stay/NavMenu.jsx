@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Modal } from "../general/Modal"
+import { login } from "../../store/actions/user.actions"
 
 export function NavMenu() {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
@@ -18,7 +19,7 @@ export function NavMenu() {
             {!isLoginModalVisible ? "" :
                 <Modal isBackdrop onClose={toggleLoginModal}>
                     <div className="login-modal">
-                        <button className="login-button">Login as guest</button>
+                        <button className="modal-button" onClick={() => login("keisha")}>Login as demo guest</button>
                     </div>
                 </Modal>}
             <div className="buttons-container">

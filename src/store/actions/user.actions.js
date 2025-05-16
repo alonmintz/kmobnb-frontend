@@ -1,7 +1,6 @@
 import { userService } from "../../services/user";
 // import { socketService } from "../../services/socket.service";
 import { store } from "../store";
-
 import { showErrorMsg } from "../../services/event-bus.service";
 import { LOADING_DONE, LOADING_START } from "../reducers/system.reducer";
 import {
@@ -42,6 +41,7 @@ export async function login(credentials) {
       user,
     });
     // socketService.login(user._id)
+    console.log("logged in successfully!")
     return user;
   } catch (err) {
     console.log("Cannot login", err);
