@@ -3,6 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export function SearchDatePicker({ type, dates, onSelect }) {
+  console.log(dates);
+
   return (
     <SearchPickerWrapper type={type}>
       <section className="search-date-picker">

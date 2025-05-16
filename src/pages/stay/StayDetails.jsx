@@ -1,151 +1,375 @@
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
+import starIcon from "../../assets/img/rating-star.svg";
+import guestUnknown from "../../assets/img/guest-unknown.svg";
+import { useEffect, useState } from "react";
+import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
+import { Amenity } from "../../cmps/stay/Amenity";
+import { StayDatePicker } from "../../cmps/stay/StayDatePicker";
+import { useParams, useSearchParams } from "react-router-dom";
+import { stayService } from "../../services/stay/stay.service.local";
+import { useSelector } from "react-redux";
+import { ReserveCard } from "../../cmps/order/ReserveCard";
+import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
+import { format } from "date-fns";
 
-const dummyStay = {
-  _id: "622f337a75c7d36e498aaaf8",
-  name: "Westin Kaanapali KORVN 2BR",
-  type: "National parks",
-  imgUrls: [
-    "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436975/hx9ravtjop3uqv4giupt.jpg",
-    "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436294/mvhb3iazpiar6duvy9we.jpg",
-    "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436496/ihozxprafjzuhil9qhh4.jpg",
-    "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436952/aef9ajipinpjhkley1e3.jpg",
-    "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436948/vgfxpvmcpd2q40qxtuv3.jpg",
-  ],
-  price: 595,
-  summary: `Westin Kaanapali Ocean Resort Villas North timeshare - Pay resort: $14-20/day, stays under 7 night $38/res - Inquire about availability, I review then offer/approve if available :) - READ "The Space" for cleaning/etc AND brief explanation about timeshare reservations - Want guaranteed view for additional cost? Must be weekly rental, other restrictions - Wheelchair accessible / ADA, call resort directly to ensure U receive. If U need ADA U MUST inform us BEFORE booking.`,
-  capacity: 8,
-  amenities: [
-    "TV",
-    "Cable TV",
-    "Internet",
-    "Wifi",
-    "Air conditioning",
-    "Wheelchair accessible",
-    "Pool",
-    "Kitchen",
-    "Free parking on premises",
-    "Doorman",
-    "Gym",
-    "Elevator",
-    "Hot tub",
-    "Heating",
-    "Family/kid friendly",
-    "Suitable for events",
-    "Washer",
-    "Dryer",
-    "Smoke detector",
-    "Carbon monoxide detector",
-    "First aid kit",
-    "Safety card",
-    "Fire extinguisher",
-    "Essentials",
-    "Shampoo",
-    "24-hour check-in",
-    "Hangers",
-    "Hair dryer",
-    "Iron",
-    "Laptop friendly workspace",
-    "Self check-in",
-    "Building staff",
-    "Private entrance",
-    "Room-darkening shades",
-    "Hot water",
-    "Bed linens",
-    "Extra pillows and blankets",
-    "Ethernet connection",
-    "Luggage dropoff allowed",
-    "Long term stays allowed",
-    "Ground floor access",
-    "Wide hallway clearance",
-    "Step-free access",
-    "Wide doorway",
-    "Flat path to front door",
-    "Well-lit path to entrance",
-    "Disabled parking spot",
-    "Step-free access",
-    "Wide doorway",
-    "Wide clearance to bed",
-    "Step-free access",
-    "Wide doorway",
-    "Step-free access",
-    "Wide entryway",
-    "Waterfront",
-    "Beachfront",
-  ],
-  bathrooms: 2,
-  bedrooms: 2,
-  roomType: "Entire home/apt",
-  host: {
-    _id: "622f3403e36c59e6164faf93",
-    fullname: "Patty And Beckett",
-    location: "Eureka, California, United States",
-    about: "Adventurous couple loves to travel :)",
-    responseTime: "within an hour",
-    thumbnailUrl:
-      "https://a0.muscache.com/im/pictures/542dba0c-eb1b-4ab3-85f3-94d3cc8f87a4.jpg?aki_policy=profile_small",
-    pictureUrl:
-      "https://a0.muscache.com/im/pictures/542dba0c-eb1b-4ab3-85f3-94d3cc8f87a4.jpg?aki_policy=profile_x_medium",
-    isSuperhost: true,
-    id: "36133410",
+const conclusionList = [
+  {
+    title: "Peace and quiet",
+    desc: "This home is in a quiet area.",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style={{
+          display: "block",
+          height: "24px",
+          width: "24px",
+          fill: "currentcolor",
+        }}
+      >
+        <path d="M16 0a12 12 0 0 1 12 12c0 6.34-3.81 12.75-11.35 19.26l-.65.56-1.08-.93C7.67 24.5 4 18.22 4 12 4 5.42 9.4 0 16 0zm0 2C10.5 2 6 6.53 6 12c0 5.44 3.25 11.12 9.83 17.02l.17.15.58-.52C22.75 23 25.87 17.55 26 12.33V12A10 10 0 0 0 16 2zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
+      </svg>
+    ),
   },
-  loc: {
-    country: "United States",
-    countryCode: "US",
-    city: "Maui",
-    address: "Lahaina, HI, United States",
-    lat: -156.6917,
-    lan: 20.93792,
+  {
+    title: "Self check-in",
+    desc: "Check yourself in with the lockbox.",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style={{
+          display: "block",
+          height: "24px",
+          width: "24px",
+          fill: "currentcolor",
+        }}
+      >
+        <path d="M24.33 1.67a2 2 0 0 1 2 1.85v24.81h3v2H2.67v-2h3V3.67a2 2 0 0 1 1.85-2h.15zm-4 2H7.67v24.66h12.66zm4 0h-2v24.66h2zm-7 11a1.33 1.33 0 1 1 0 2.66 1.33 1.33 0 0 1 0-2.66z"></path>
+      </svg>
+    ),
   },
-  reviews: [
-    {
-      at: "2016-06-12T04:00:00.000Z",
-      by: {
-        _id: "622f3407e36c59e6164fc004",
-        fullname: "Kiesha",
-        imgUrl: "https://robohash.org/10711825?set=set1",
-        id: "10711825",
-      },
-      txt: "I had a great experience working with Patty and Peter...",
-      starsRate: 4,
-    },
-    {
-      at: "2016-07-28T04:00:00.000Z",
-      by: {
-        _id: "622f3403e36c59e6164fb204",
-        fullname: "Chris",
-        imgUrl: "https://robohash.org/70072865?set=set1",
-        id: "70072865",
-      },
-      txt: "Peter quickly responded to any questions I had before, and during the trip. Will use again, highly recommend.",
-      starsRate: 3,
-    },
-    // ... rest of reviews same as you provided
-  ],
-  likedByUsers: [],
-  occupancy: [
-    {
-      startDate: "2025-05-18T00:00:00.000Z",
-      endDate: "2025-05-20T00:00:00.000Z",
-    },
-  ],
-};
+  {
+    title: "Park for free",
+    desc: "This is one of the few places in the area with free parking.",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style={{
+          display: "block",
+          height: "24px",
+          width: "24px",
+          fill: "currentcolor",
+        }}
+      >
+        <path d="M16 1a15 15 0 1 1 0 30 15 15 0 0 1 0-30zm0 2a13 13 0 1 0 0 26 13 13 0 0 0 0-26zm2 5a5 5 0 0 1 .22 10H13v6h-2V8zm0 2h-5v6h5a3 3 0 0 0 .18-6z"></path>
+      </svg>
+    ),
+  },
+];
 
 export function StayDetails() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = useParams();
+  const [stay, setStay] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [modalContentType, setModalContentType] = useState(false);
+  const [datesRange, setDatesRange] = useState([
+    searchParams.get("startDate"),
+    searchParams.get("endDate"),
+  ]);
+  const [heartClicked, setHeartClicked] = useState(false);
+
   useEffect(() => {
-    console.log({ dummyStay });
-  }, []);
+    loadStay();
+  }, [params.stayId]);
+
+  useEffect(() => {
+    if (datesRange[0] && datesRange[1]) {
+      setSearchParams((prev) => {
+        const params = new URLSearchParams(prev);
+        params.set("startDate", datesRange[0]);
+        params.set("endDate", datesRange[1]);
+        return params;
+      });
+    }
+  }, [datesRange]);
+
+  useEffect(() => {
+    setDatesRange([searchParams.get("startDate"), searchParams.get("endDate")]);
+  }, [searchParams]);
+
+  useEffectUpdate(() => {
+    toggleIsDetailsModalOpen();
+  }, [modalContentType]);
+
+  async function loadStay() {
+    setIsLoading(true);
+    try {
+      const stay = await stayService.getById(params.stayId);
+      console.log({ stay });
+
+      setStay(stay);
+    } catch (err) {
+      alert("Error loading your request");
+      //todo: add navigation back to home including the search params
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function toggleIsDetailsModalOpen() {
+    setIsDetailsModalOpen((prev) => !prev);
+  }
+
+  function handleDatesSelect({ dates }) {
+    setDatesRange([dates[0], dates[1]]);
+  }
+
+  function onHeartClick() {
+    if (heartClicked) {
+      setHeartClicked(false);
+    } else {
+      setHeartClicked(true);
+    }
+  }
+
+  function getNumberOfNights() {
+    const [startDateStr, endDateStr] = datesRange;
+    if (!startDateStr || !endDateStr) return 0;
+
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
+
+    const msPerNight = 1000 * 60 * 60 * 24;
+    const diffInMs = endDate - startDate;
+
+    const nights = Math.round(diffInMs / msPerNight);
+    return nights > 0 ? nights : 0;
+  }
+
+  function renderDatePickerTitle() {
+    if (!datesRange[0] && !datesRange[1]) return "Select check-in date";
+    if (datesRange[0] && !datesRange[1]) return "Select checkout date";
+    const number = getNumberOfNights();
+    if (datesRange[0] && datesRange[1])
+      return `${number} night${number > 1 ? "s" : ""} in ${loc.city}`;
+  }
+
+  function renderDatePickerSubTitle() {
+    if (!datesRange[0] && !datesRange[1])
+      return "When do you want to start your stay?";
+    if (datesRange[0] && !datesRange[1]) return "When do you wish to leave?";
+    if (datesRange[0] && datesRange[1])
+      return `${format(datesRange[0], "MMM d, yyyy")} - ${format(
+        datesRange[1],
+        "MMM d, yyyy"
+      )}`;
+  }
+
+  if (isLoading || !stay) return <div className="loader">loading</div>;
+
+  const {
+    name,
+    imgUrls,
+    price,
+    summary,
+    capacity,
+    amenities,
+    bathrooms,
+    bedrooms,
+    roomType,
+    host,
+    loc,
+    reviews,
+    likedByUsers,
+    occupancy,
+  } = stay;
+
+  function getAverageRate() {
+    const starSum = reviews.reduce((acc, review) => acc + review.starsRate, 0);
+    const avg = starSum / reviews.length;
+    return parseFloat(avg.toFixed(2));
+  }
+
+  function getBlockedRanges() {
+    return occupancy.map(({ startDate, endDate }) => [
+      new Date(startDate),
+      new Date(endDate),
+    ]);
+  }
+
   return (
     <section className="stay-details">
-      <section className="title-container">
-        <h1>{dummyStay.name}</h1>
-        <button className="btn-save" style={{ color: "black" }}>
-          {/* this is a temp heart svg */}
-          <FontAwesomeIcon icon={faHeart} />
-          <span>Save</span>
+      <section className="title-section">
+        <h1>{name}</h1>
+        <button className="save-btn" onClick={onHeartClick}>
+          <div className={`heart-icon ${heartClicked ? "clicked" : ""}`}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+            >
+              <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
+            </svg>
+          </div>
+          <span className="save-btn-text">{`Save${
+            heartClicked ? "d" : ""
+          }`}</span>
         </button>
       </section>
+      <section className="img-section">
+        {imgUrls.slice(0, 5).map((url, idx) => (
+          <div key={url} className={`img-wrapper img-${idx + 1}`}>
+            <img src={url} alt={`stay-img-${idx}`} />
+          </div>
+        ))}
+      </section>
+      <section className="details-section">
+        <div className="reserve-container">
+          <ReserveCard
+            stay={stay}
+            datesRange={datesRange}
+            blockedRanges={getBlockedRanges()}
+            onDateSelect={handleDatesSelect}
+          />
+        </div>
+        <div className="room-details-container">
+          <h2 className="room-type">{`${roomType} in ${loc.city}, ${loc.country}`}</h2>
+          <ol className="room-details-ol">
+            <li>
+              {`${capacity} guest`}
+              {capacity > 1 && "s"}
+            </li>
+            <li>
+              {`${bedrooms} bedroom`}
+              {bedrooms > 1 && "s"}
+            </li>
+            <li>
+              {`${bathrooms} bath`}
+              {bathrooms > 1 && "s"}
+            </li>
+          </ol>
+          <span className="avg-rate">
+            <img src={starIcon} />
+            {getAverageRate()}
+          </span>
+        </div>
+        <div className="host-conclusions-grid">
+          <div className="host-container">
+            {/* <img src={host.pictureUrl} alt={"host-img"} /> */}
+            <img src={guestUnknown} alt={"host-img"} />
+            <div className="host-dec">
+              <h2 className="host">{`Hosted by ${host.fullname}`}</h2>
+              {host.isSuperhost && <span>Superhost</span>}
+            </div>
+          </div>
+          <div className="conclusions-container">
+            {conclusionList.map((conclusion) => (
+              <Conclusion key={conclusion.title} conclusion={conclusion} />
+            ))}
+          </div>
+        </div>
+        <div className="summary-container">
+          <Summary
+            summary={summary}
+            onShowMore={() => {
+              setModalContentType("summary");
+            }}
+          />
+        </div>
+        <div className="amenities-container">
+          <AmenitiesPreview
+            amenities={amenities}
+            onShowMore={() => {
+              setModalContentType("amenities");
+            }}
+          />
+        </div>
+        <div className="date-picker-container">
+          <h2 className="date-picker-title">{renderDatePickerTitle()}</h2>
+          <h2 className="date-picker-subtitle">{renderDatePickerSubTitle()}</h2>
+          <StayDatePicker
+            dates={datesRange}
+            blockedRanges={getBlockedRanges()}
+            onSelect={handleDatesSelect}
+          />
+        </div>
+      </section>
+      <section className="reviews-section">reviews section</section>
+      <section className="map-section">
+        <StayDetailsMap
+          city={loc.city}
+          country={loc.country}
+          lat={loc.lat}
+          lng={loc.lan}
+        />
+      </section>
     </section>
+  );
+}
+
+function Conclusion({ conclusion }) {
+  const { title, desc, svg } = conclusion;
+  return (
+    <div className="conclusion">
+      <div className="conclusion-icon">{svg}</div>
+      <div className="conclusion-details">
+        <h3>{title}</h3>
+        <span>{desc}</span>
+      </div>
+    </div>
+  );
+}
+
+function Summary({ summary, onShowMore }) {
+  const isSummaryLong = summary.length > 300;
+  const summaryToDisplay = isSummaryLong
+    ? summary.slice(0, 300) + "..."
+    : summary;
+  return (
+    <div className="summary">
+      <p>{summaryToDisplay}</p>
+      {isSummaryLong && (
+        <button className="show-more-btn" onClick={onShowMore}>
+          Show more
+        </button>
+      )}
+    </div>
+  );
+}
+
+function AmenitiesPreview({ amenities, onShowMore }) {
+  const isAmenitiesLong = amenities.length > 10;
+  const amenitiesToDisplay = isAmenitiesLong
+    ? amenities.slice(0, 10)
+    : amenities;
+  return (
+    <div className="amenities-preview">
+      <h2>What this place offers</h2>
+      <div className="amenities-preview-display">
+        {amenitiesToDisplay.map((amenity) => (
+          <Amenity key={amenity} amenityName={amenity} />
+        ))}
+      </div>
+      {isAmenitiesLong && (
+        <button className="show-more-btn" onClick={onShowMore}>
+          Show all {amenities.length} amenities
+        </button>
+      )}
+    </div>
   );
 }
