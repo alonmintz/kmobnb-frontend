@@ -1,0 +1,258 @@
+.reserve-card {
+  position: sticky;
+  top: 130px;
+  display: grid;
+  gap: 0.5rem;
+  height: auto;
+  padding: 2rem;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  .price-title {
+    h2 {
+      padding-block-end: 1rem;
+      letter-spacing: 0.02em;
+      span {
+        font-size: 1rem;
+        &.price-title-number {
+          font-weight: 600;
+          font-size: 1.5rem;
+        }
+      }
+      &.dates-missing-title {
+        font-weight: 600;
+      }
+    }
+  }
+  .reserve-picker {
+    display: grid;
+    grid-template-columns: repeat(1fr);
+    grid-template-areas:
+      "check-in check-out"
+      "guests guests";
+    margin-block-end: 0.5rem;
+    border: 1px solid gray;
+    border-radius: 0.5rem;
+    .reserve-item {
+      display: grid;
+      position: relative;
+      padding: 0.85rem 0.5rem;
+      cursor: pointer;
+      > .title {
+        font-weight: 600;
+        font-size: 0.8rem;
+        padding-block-end: 0.5rem;
+      }
+      > .subtitle {
+        font-size: 0.9rem;
+      }
+      &.check-in,
+      &.check-out {
+        border-bottom: 1.5px solid gray;
+      }
+      &.check-in {
+        grid-area: check-in;
+        border-right: 1px solid gray;
+      }
+      &.check-out {
+        grid-area: check-out;
+      }
+      &.guests {
+        grid-area: guests;
+        .arrow {
+          position: absolute;
+          right: 1rem;
+          top: 25%;
+        }
+        .reserve-guest-picker {
+          position: absolute;
+          top: 105%;
+          display: grid;
+          align-content: start;
+          width: 100%;
+          height: fit-content;
+          padding-inline-end: 0.5em;
+          //   overflow-y: auto;
+          overscroll-behavior: contain;
+          z-index: 1;
+          background-color: white;
+          border-radius: 1rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+          .guest-selection-bracket {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 1em 0.5em;
+            border-bottom: 1px solid rgb(236, 235, 235);
+            &:nth-last-child(1) {
+              border-bottom: none;
+            }
+            .guest-details {
+              display: grid;
+              gap: 0.3em;
+              .guest-type {
+                font-size: 1rem;
+                font-weight: 600;
+                text-transform: capitalize;
+              }
+              .guest-description {
+                font-size: 0.85rem;
+                color: gray;
+              }
+            }
+            .guest-count-container {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 0.5em;
+              .guest-count {
+                font-size: 1rem;
+              }
+              .action-btn {
+                background-color: transparent;
+                color: #6a6a6a;
+                border: 1px solid #b0b0b0;
+                border-radius: 50%;
+                width: 2rem;
+                height: 2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                &:not(:disabled):hover {
+                  color: black;
+                  border-color: black;
+                }
+                &:disabled {
+                  color: #ebebeb;
+                  border: 1px solid #ebebeb;
+                  cursor: not-allowed;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .reserve-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    // width: 3rem;
+    height: 3rem;
+    color: white;
+    background-color: #ff385c;
+    border: none;
+    border-radius: 2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease,
+      width 0.3s ease;
+
+    &:hover {
+      background-color: #e31c5f;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    span {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding-inline-start: 0.2rem;
+    }
+  }
+  .date-picker-wrapper {
+    position: absolute;
+    display: grid;
+    top: 10px;
+    right: -5px;
+    width: fit-content;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    .date-brackets {
+      width: 50%;
+      display: grid;
+      grid-auto-flow: column;
+      justify-self: end;
+      border: 1px solid grey;
+      border-radius: 0.5rem;
+      .date-bracket {
+        display: grid;
+        position: relative;
+        padding: 0.85rem 0.5rem;
+        cursor: default;
+        > .title {
+          font-weight: 600;
+          font-size: 0.8rem;
+          padding-block-end: 0.5rem;
+        }
+        > .subtitle {
+          font-size: 0.9rem;
+        }
+        &.check-in {
+          border-right: 1px solid grey;
+        }
+        .reset-btn {
+          position: absolute;
+          right: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 1rem;
+          width: 1rem;
+          margin: 0;
+          padding: 0.75rem;
+          font-size: rem(10px);
+          background-color: transparent;
+          border-radius: 50%;
+          cursor: pointer;
+          &:hover {
+            background-color: lightgray;
+          }
+        }
+      }
+    }
+    .close-btn {
+      justify-self: end;
+      padding-block: 0.5rem;
+      padding-inline: 1rem;
+      border-radius: 0.5rem;
+      color: white;
+      background-color: #222222;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.1s ease;
+      &:hover {
+        background-color: #1a1a1a;
+      }
+    }
+  }
+  .price-calc-section {
+    padding-block-start: 1rem;
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      padding-block-start: 1rem;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      &.total-nights,
+      &.service-fee {
+        .price-desc {
+          text-decoration: underline;
+        }
+      }
+      &.total-price {
+        margin-block-start: 1rem;
+        border-top: 1px solid lightgray;
+        font-weight: 600;
+      }
+    }
+  }
+}

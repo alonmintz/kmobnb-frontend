@@ -20,6 +20,7 @@ import { NotFound } from "./pages/NotFound";
 
 export function App() {
   return (
+    //todo: fix main layout!!! critical!!!
     <div className="main-container">
       <AppHeader />
       <main>
