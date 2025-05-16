@@ -95,3 +95,17 @@ async function _createAdmin() {
   const newUser = await storageService.post("user", userCred);
   console.log("newUser: ", newUser);
 }
+
+// To quickly create a demo user, uncomment the next line
+// _createDemoUser()
+async function _createDemoUser() {
+  const demoUser = {
+    "_id": "622f3407e36c59e6164fc004",
+    "username": "keisha",
+    "fullname": "Kiesha",
+    "password": "1234",
+    "isAdmin": false
+  }
+  signup(demoUser)
+  console.log('local demo user created')
+}

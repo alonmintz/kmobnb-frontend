@@ -1,0 +1,23 @@
+.modal {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    height: 50vh;
+    width: 50vw;
+    translate: -50% -50%;
+    border-radius: 1rem;
+    border-width: rem(2px);
+    border-color: black;
+    background-color: white;
+    z-index: 500;
+    
+}
+
+.modal-backdrop {
+    position: fixed;
+    background-color: $background-with-opacity;
+    inset: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 400;
+}

@@ -1,0 +1,38 @@
+.nav-menu {
+    position: absolute;
+    top: rem(75px);
+    background-color: white;
+    border-radius: rem(12px);
+    z-index: 100;
+    box-shadow:rgba(0, 0, 0, 0.08) 1px 1px 11px 1px, rgba(0, 0, 0, 0.05) 0px 4px 12px;
+}
+
+.buttons-container {
+    padding: 10px 0px;
+}
+
+.menu-button {
+    box-sizing: border-box;
+    font-size: rem(14px);
+    padding: rem(12px) rem(20px);
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(246,246,246);
+    }
+}
+
+.login-modal {
+    right: 50%;
+    padding: 2rem;
+}
+
+.modal-button {
+    translate: 50%;
+    color: black;
+    width: rem(200px);
+    height: rem(60px);
+    border-radius: 1rem;
+    font-weight: 1000;
+    font-size: rem(20px);
+}
