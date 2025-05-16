@@ -1,7 +1,8 @@
 export function Backdrop({ isBackdrop, onClick, children }) {
+  
   return (
-    <section className={isBackdrop ? "backdrop" : ""} onClick={onClick}>
+    <div className={isBackdrop ? "modal-backdrop" : ""} onClick={onClick}>
       {children}
-    </section>
+    </div>
   )
 }
