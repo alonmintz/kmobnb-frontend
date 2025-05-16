@@ -14,7 +14,7 @@ import logo from "../../assets/img/logo.png";
 import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
-import { HeaderUserMenu } from "../stay/HeaderUserMenu";
+import { NavMenu } from "../stay/NavMenu";
 
 export function AppHeader() {
   // const user = useSelector((storeState) => storeState.userModule.user);
@@ -30,7 +30,7 @@ export function AppHeader() {
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
   const [isAtTop, setIsAtTop] = useState(() => window.scrollY === 0);
   const [isManuallyTriggered, setIsManuallyTriggered] = useState(false);
-  const [isHeaderUserMenuVisible, setIsHeaderUserMenuVisible] = useState(false);
+  const [isNavMenuVisible, setIsNavMenuVisible] = useState(false);
   const isManuallyTriggeredRef = useRef(false);
   const justTriggeredManually = useRef(false);
   const shouldShowSearchBar = isAtTop || isManuallyTriggered;
@@ -212,11 +212,11 @@ export function AppHeader() {
   // }
 
   function handleUserIconClick() {
-    if (isHeaderUserMenuVisible) {
-      setIsHeaderUserMenuVisible(false)
+    if (isNavMenuVisible) {
+      setIsNavMenuVisible(false)
     }
     else {
-      setIsHeaderUserMenuVisible(true)
+      setIsNavMenuVisible(true)
     }
   }
 
@@ -250,7 +250,7 @@ export function AppHeader() {
                 <FontAwesomeIcon icon={faBars} />
                 <img src={guestUnknown} alt="user-icon" />
               </button>
-              {isHeaderUserMenuVisible ? <HeaderUserMenu /> : ""}
+              {isNavMenuVisible ? <NavMenu /> : ""}
             </nav>
           </section>
           {isSearchBarVisible && (
