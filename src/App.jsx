@@ -21,30 +21,30 @@ import { NotFound } from "./pages/NotFound";
 export function App() {
   return (
     //todo: fix main layout!!! critical!!!
-    <div className="main-container">
+    // <div className="root">
+    <main className="main-container">
       <AppHeader />
-      <main>
-        <Routes>
-          <Route path="" element={<StayIndex />} />
-          <Route path="stay/:stayId" element={<StayDetails />} />
-          <Route path="order/:stayId" element={<OrderPage />} />
-          <Route path="login" element={<LoginSignup />}>
-            <Route index element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-          </Route>
-          <Route path="user/:userId" element={<UserDetails />} />
-          <Route path="trips/:userId" element={<Trips />} />
-          <Route path="wishlists/:userId" element={<WishLists />} />
-          <Route path="host/:userId" element={<Host />}>
-            <Route index element={<Dashboard />} />
-            <Route path="Listings" element={<Listings />} />
-            <Route path="stay/edit" element={<StayEdit />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="" element={<StayIndex />} />
+        <Route path="stay/:stayId" element={<StayDetails />} />
+        <Route path="order/:stayId" element={<OrderPage />} />
+        <Route path="login" element={<LoginSignup />}>
+          <Route index element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
+        <Route path="user/:userId" element={<UserDetails />} />
+        <Route path="trips/:userId" element={<Trips />} />
+        <Route path="wishlists/:userId" element={<WishLists />} />
+        <Route path="host/:userId" element={<Host />}>
+          <Route index element={<Dashboard />} />
+          <Route path="Listings" element={<Listings />} />
+          <Route path="stay/edit" element={<StayEdit />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <AppFooter />
       <UserMsg />
-    </div>
+    </main>
+    // </div>
   );
 }
