@@ -1,197 +1,219 @@
 .stay-filter {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: subgrid;
+
   position: sticky;
-  display: flex;
+  top: 80px;
   width: 100%;
   margin-bottom: 0.7em;
   margin-top: 0.7em;
-  flex-direction: row;
   align-items: center;
+  background-color: #fff;
+  z-index: 9;
 
-  .filters-button {
-    // position: absolute;
-    // right: 0;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    width: rem(85px);
-    height: rem(45px);
-    background-color: white;
-    color: #222;
-    border-radius: 0.5rem;
-    border: 1px solid;
-    border-color: #dedede;
-    padding: rem(13px) rem(24px);
-    margin-left: 1rem;
-    margin-inline-start: 24px;
-    font-size: rem(12px);
-    gap: rem(8px);
-
-    .filters-icon {
-      height: 14px;
-      aspect-ratio: 1 / 1;
-    }
+  &.scrolled::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.16);
+    transition: box-shadow 0.2s ease;
   }
 
-  .carousel-container {
-    width: 85%; // TODO: remove
-    flex: 1 1 auto;
+  .filter-container {
+    width: 100%;
+    grid-column: 2;
     position: relative;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    justify-content: space-between;
 
-    .stay-filter-carousel {
+    .filters-button {
       display: flex;
-      width: 100%;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      width: rem(85px);
+      height: rem(45px);
+      background-color: white;
+      color: #222;
+      border-radius: 0.5rem;
+      border: 1px solid;
+      border-color: #dedede;
+      padding: rem(13px) rem(24px);
+      margin-left: 1rem;
+      margin-inline-start: 24px;
+      font-size: rem(12px);
+      gap: rem(8px);
 
-      ul {
+      .filters-icon {
+        height: 14px;
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    .carousel-container {
+      width: 80vw;
+      flex: 1 1 auto;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .stay-filter-carousel {
         display: flex;
-        position: relative;
-        align-items: center;
-        justify-content: space-between;
-        margin: 0.5em 0;
-        padding: 0;
+        width: 100%;
 
-        >li {
-          flex: 1;
+        ul {
           display: flex;
-          justify-content: center;
+          position: relative;
           align-items: center;
-          min-width: 0;
+          justify-content: space-between;
+          margin: 0.5em 0;
+          padding: 0;
 
-          .stay-type-button {
-            // width: 100% !important;
-            background-color: transparent;
-            color: black;
+          > li {
+            flex: 1;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            opacity: 0.7;
+            min-width: 0;
 
-            margin: 0;
-            margin-inline-end: unset;
+            .stay-type-button {
+              background-color: transparent;
+              color: black;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              opacity: 0.7;
 
-            padding: 0;
+              margin: 0;
+              margin-inline-end: unset;
 
-            gap: 0.5em;
+              padding: 0;
 
-            transition: 0.2s;
+              gap: 0.5em;
 
-            img {
-              width: 2em;
-            }
+              transition: 0.2s;
 
-            p {
-              text-align: center;
-              font-size: 10pt;
-              margin-bottom: 0;
-              padding-bottom: 1em;
-              border-bottom: 2px solid transparent;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            }
-
-            &:hover p {
-              border-bottom-color: gray;
-            }
-
-            &.selected p,
-            &:disabled {
-              cursor: default;
+              img {
+                width: 2em;
+              }
 
               p {
-                border-bottom-color: black;
+                text-align: center;
+                font-size: 10pt;
+                margin-bottom: 0;
+                border-bottom: 2px solid transparent;
+                white-space: nowrap;
+                text-overflow: ellipsis;
               }
-            }
 
-            &:hover,
-            &.selected p {
-              opacity: 1;
+              &:hover p {
+                border-bottom-color: gray;
+              }
+
+              &.selected p,
+              &:disabled {
+                cursor: default;
+
+                p {
+                  border-bottom-color: black;
+                }
+              }
+
+              &:hover,
+              &.selected p {
+                opacity: 1;
+              }
             }
           }
         }
       }
-    }
 
-    .arrow-container {
-      display: flex;
-      position: absolute;
-      width: 2em;
-      height: 100%;
-      z-index: 10;
-      background: white;
-      align-items: center;
-
-      &.hidden {
-        opacity: 0;
-        transition: opacity 0.2s ease;
-      }
-
-      &.left {
-        left: 0;
-
-        &::before {
-          content: "";
-          pointer-events: none;
-          position: absolute;
-          left: 2em;
-          width: 3em;
-          height: 100%;
-          z-index: 10;
-          background: linear-gradient(to right,
-              rgba(255, 255, 255, 1),
-              rgba(255, 255, 255, 0));
-        }
-      }
-
-      &.right {
-        right: 0;
-
-        &::before {
-          content: "";
-          pointer-events: none;
-          position: absolute;
-          right: 2em;
-          width: 3em;
-          height: 100%;
-          z-index: 10;
-          background: linear-gradient(to left,
-              rgba(255, 255, 255, 1),
-              rgba(255, 255, 255, 0));
-          // background: red;
-        }
-      }
-
-      .arrow-button {
+      .arrow-container {
+        display: flex;
         position: absolute;
+        width: 2em;
+        height: 100%;
+        z-index: 10;
+        background: white;
         align-items: center;
-        border: 1px solid rgb(0 0 0/0.3);
-        background-color: #ffffff;
-        padding: 0;
-        margin: 0;
-        // margin-top: -.6em;
-        scale: 0.8;
-        outline: 0;
-        border-radius: 50%;
-        z-index: 100;
-        width: 3em;
-        height: 3em;
-        opacity: 1;
-        color: black;
 
-        .arrow__icon {
-          scale: 1.5;
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          translate: -50% -50%;
-          // transform: rotate(180deg);
+        &.hidden {
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+
+        &.left {
+          left: 0;
+
+          &::before {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            left: 2em;
+            width: 3em;
+            height: 100%;
+            z-index: 10;
+            background: linear-gradient(
+              to right,
+              rgba(255, 255, 255, 1),
+              rgba(255, 255, 255, 0)
+            );
+          }
+        }
+
+        &.right {
+          right: 0;
+
+          &::before {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            right: 2em;
+            width: 3em;
+            height: 100%;
+            z-index: 10;
+            background: linear-gradient(
+              to left,
+              rgba(255, 255, 255, 1),
+              rgba(255, 255, 255, 0)
+            );
+          }
+        }
+
+        .arrow-button {
+          position: absolute;
+          align-items: center;
+          border: 1px solid rgb(0 0 0/0.3);
+          background-color: #ffffff;
+          padding: 0;
+          margin: 0;
+          scale: 0.8;
+          outline: 0;
+          border-radius: 50%;
+          z-index: 100;
+          width: 3em;
+          height: 3em;
+          opacity: 1;
+          color: black;
+
+          .arrow__icon {
+            scale: 1.5;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+          }
         }
       }
     }
   }
-
-
 }

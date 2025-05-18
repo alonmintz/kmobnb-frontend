@@ -38,8 +38,8 @@ export function StayIndex() {
   }, [bulkIdx]);
 
   return (
-    <section className="stay-index">
-      <StayFilter/>
+    <section className="stay-index main-container full">
+      <StayFilter />
       <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
     </section>
