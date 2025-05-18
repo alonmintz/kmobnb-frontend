@@ -103,10 +103,11 @@ async function _createDemoUserIfNone() {
   const existingUsers = await storageService.query(USERS_STORAGE_KEY)
   if (!existingUsers.length) {
     const demoUser = {
-      "username": "muki",
-      "fullname": "Muki Di",
-      "password": "1234",
-      "isAdmin": false
+      username: "muki",
+      fullname: "Muki Di",
+      password: "1234",
+      imgUrl: "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+      isAdmin: false
     }
     await storageService.post(USERS_STORAGE_KEY, demoUser)
   }

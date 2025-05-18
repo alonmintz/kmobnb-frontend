@@ -17,14 +17,12 @@ import { addDays } from "date-fns";
 import { NavMenu } from "../stay/NavMenu";
 
 export function AppHeader() {
-  // const user = useSelector((storeState) => storeState.userModule.user);
+  const user = useSelector((storeState) => storeState.userModule.user)
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeSearchControl, setActiveSearchControl] = useState("");
   const city = useSelector((storeState) => storeState.stayModule.filterBy.city);
   const [destination, setDestination] = useState(city || "");
-  const datesRange = useSelector(
-    (storeState) => storeState.stayModule.datesRange
-  );
+  const datesRange = useSelector((storeState) => storeState.stayModule.datesRange);
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
@@ -248,7 +246,7 @@ export function AppHeader() {
               <NavLink>Bnb your home</NavLink>
               <button className="user-info" onClick={handleUserIconClick}>
                 <FontAwesomeIcon icon={faBars} />
-                <img src={guestUnknown} alt="user-icon" />
+                <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
               </button>
               {isNavMenuVisible ? <NavMenu /> : ""}
             </nav>
