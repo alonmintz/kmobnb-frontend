@@ -1,6 +1,8 @@
 import { storageService } from "../async-storage.service";
 
-const STORAGE_KEY_LOGGEDIN_USER = "loggedinUser";
+const LOGGEDIN_USER_STORAGE_KEY = "loggedinUser_local";
+const USERS_STORAGE_KEY = "STAY_USERS"
+
 //TODO: refactor to fit our needs
 
 export const userService = {
@@ -16,7 +18,7 @@ export const userService = {
 };
 
 async function getUsers() {
-  const users = await storageService.query("user");
+  const users = await storageService.query(USERS_STORAGE_KEY);
   return users.map((user) => {
     delete user.password;
     return user;
@@ -24,17 +26,17 @@ async function getUsers() {
 }
 
 async function getById(userId) {
-  return await storageService.get("user", userId);
+  return await storageService.get(USERS_STORAGE_KEY, userId);
 }
 
 function remove(userId) {
-  return storageService.remove("user", userId);
+  return storageService.remove(USERS_STORAGE_KEY, userId);
 }
 
 async function update({ _id, score }) {
-  const user = await storageService.get("user", _id);
+  const user = await storageService.get(USERS_STORAGE_KEY, _id);
   user.score = score;
-  await storageService.put("user", user);
+  await storageService.put(USERS_STORAGE_KEY, user);
 
   // When admin updates other user's details, do not update loggedinUser
   const loggedinUser = getLoggedinUser();
@@ -44,7 +46,7 @@ async function update({ _id, score }) {
 }
 
 async function login(userCred) {
-  const users = await storageService.query("user");
+  const users = await storageService.query(USERS_STORAGE_KEY);
   const user = users.find((user) => user.username === userCred.username);
 
   if (user) return saveLoggedinUser(user);
@@ -56,16 +58,16 @@ async function signup(userCred) {
       "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png";
   userCred.score = 10000;
 
-  const user = await storageService.post("user", userCred);
+  const user = await storageService.post(USERS_STORAGE_KEY, userCred);
   return saveLoggedinUser(user);
 }
 
 async function logout() {
-  sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
+  sessionStorage.removeItem(LOGGEDIN_USER_STORAGE_KEY);
 }
 
 function getLoggedinUser() {
-  return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER));
+  return JSON.parse(sessionStorage.getItem(LOGGEDIN_USER_STORAGE_KEY));
 }
 
 function saveLoggedinUser(user) {
@@ -76,7 +78,7 @@ function saveLoggedinUser(user) {
     score: user.score,
     isAdmin: user.isAdmin,
   };
-  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user));
+  sessionStorage.setItem(LOGGEDIN_USER_STORAGE_KEY, JSON.stringify(user));
   return user;
 }
 
@@ -92,20 +94,21 @@ async function _createAdmin() {
     score: 10000,
   };
 
-  const newUser = await storageService.post("user", userCred);
+  const newUser = await storageService.post(USERS_STORAGE_KEY, userCred);
   console.log("newUser: ", newUser);
 }
 
-// To quickly create a demo user, uncomment the next line
-// _createDemoUser()
-async function _createDemoUser() {
-  const demoUser = {
-    "_id": "622f3407e36c59e6164fc004",
-    "username": "keisha",
-    "fullname": "Kiesha",
-    "password": "1234",
-    "isAdmin": false
+_createDemoUserIfNone()
+async function _createDemoUserIfNone() {
+  const existingUsers = await storageService.query(USERS_STORAGE_KEY)
+  if (!existingUsers.length) {
+    const demoUser = {
+      username: "muki",
+      fullname: "Muki Di",
+      password: "1234",
+      imgUrl: "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+      isAdmin: false
+    }
+    await storageService.post(USERS_STORAGE_KEY, demoUser)
   }
-  signup(demoUser)
-  console.log('local demo user created')
 }
