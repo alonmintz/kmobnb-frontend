@@ -2,7 +2,7 @@ import { Link, NavLink, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
-import { logout } from "../../store/actions/user.actions";
+import { userActions } from "../../store/actions/user.actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { SearchBar } from "../stay/SearchBar";
