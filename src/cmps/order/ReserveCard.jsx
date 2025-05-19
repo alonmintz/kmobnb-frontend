@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { format } from "date-fns";
 import {
   faX,
@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { StayDatePicker } from "../stay/StayDatePicker";
 
 //TODO: move to order service:
-const DAILY_FEE = 41;
+const DAILY_FEE = 4;
 
 export function ReserveCard({ stay, datesRange, blockedRanges, onDateSelect }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,8 +24,8 @@ export function ReserveCard({ stay, datesRange, blockedRanges, onDateSelect }) {
   const [guestsDisplay, setGuestsDisplay] = useState(renderGuestsDisplay());
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const [nonAdultsIncluded, setNonAdultsIncluded] = useState();
-
   const dateWrapperRef = useRef();
+  const navigate = useNavigate();
 
   const { price: pricePerNight } = stay;
 
@@ -174,7 +174,8 @@ export function ReserveCard({ stay, datesRange, blockedRanges, onDateSelect }) {
     if (!isDatesChosen) {
       setShowDatePicker(true);
     } else {
-      //TODO: complete with a call to order service / navigate to an order page
+      const queryString = searchParams.toString();
+      navigate(`/order/${stay._id}/?${queryString}`);
     }
   }
 
