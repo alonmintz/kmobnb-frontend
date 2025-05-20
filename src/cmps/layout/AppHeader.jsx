@@ -14,7 +14,7 @@ import logo from "../../assets/img/logo.png";
 import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
-import { NavMenu } from "../stay/NavMenu";
+import { NavMenu } from "./NavMenu";
 
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user)
