@@ -19,7 +19,6 @@ import { useLocation } from "react-router-dom";
 import { useMatch } from "react-router-dom";
 import { HeaderStayIndex } from "./HeaderStayIndex";
 import { HeaderStayDetails } from "./HeaderStayDetails";
-
 export function AppHeader() {
   // const user = useSelector((storeState) => storeState.userModule.user)
   // const [searchParams, setSearchParams] = useSearchParams();
