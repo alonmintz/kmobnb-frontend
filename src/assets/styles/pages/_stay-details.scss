@@ -50,6 +50,7 @@
     }
   }
   .img-section {
+    position: relative;
     display: grid;
     grid-template-areas:
       "main main side1 side2"
