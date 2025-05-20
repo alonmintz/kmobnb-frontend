@@ -32,6 +32,7 @@ export function HeaderStayIndex() {
   const searchBarRef = useRef();
   const miniSearchBarRef = useRef();
   const homesTitleRef = useRef();
+  const userIconRef = useRef();
 
   useEffect(() => {
     stayActions.setFilterBy(
@@ -233,11 +234,11 @@ export function HeaderStayIndex() {
           >
             Bnb your home
           </NavLink>
-          <button className="user-info" onClick={handleUserIconClick}>
+          <button className="user-info" onClick={handleUserIconClick} ref={userIconRef}>
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
-          {isNavMenuVisible ? <NavMenu onClose={() => setIsNavMenuVisible(false)} /> : ""}
+          {isNavMenuVisible ? <NavMenu onClose={() => setIsNavMenuVisible(false)} triggeringButtonRef={userIconRef} /> : ""}
         </nav>
       </section>
       {isSearchBarVisible && (

@@ -3,14 +3,15 @@ import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal"
 import { useSelector } from "react-redux"
 import { userActions } from "../../store/actions/user.actions"
 
-export function NavMenu({ onClose }) {
+export function NavMenu({ onClose, triggeringButtonRef }) {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
     const user = useSelector((storeState) => storeState.userModule.user)
     const navMenuRef = useRef(true)
 
     useEffect(() => {
         function handleClickOutside(event) {
-            if (navMenuRef.current && !navMenuRef.current.contains(event.target)) {
+            if (navMenuRef.current && !navMenuRef.current.contains(event.target) &&
+                triggeringButtonRef.current && !triggeringButtonRef.current.contains(event.target)) {
                 onClose();
             }
         }
