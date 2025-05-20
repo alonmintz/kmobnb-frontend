@@ -112,10 +112,10 @@ export function SearchBar({
     }
   }
 
-  function onSubmitSearch(event) {
+  async function onSubmitSearch(event) {
     event.preventDefault();
     setActiveSearchControl("");
-    updateFilterBy();
+    await updateFilterBy();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 

@@ -1,8 +1,5 @@
-import { Link, NavLink, useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
-import { userActions } from "../../store/actions/user.actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { SearchBar } from "../stay/SearchBar";
@@ -37,7 +34,6 @@ export function HeaderStayIndex() {
   const searchBarRef = useRef();
   const miniSearchBarRef = useRef();
   const homesTitleRef = useRef();
-  // const navigate = useNavigate();
 
   useEffect(() => {
     stayActions.setFilterBy(
@@ -201,15 +197,6 @@ export function HeaderStayIndex() {
     }, 100);
     setActiveSearchControl(controlType);
   }
-  // async function onLogout() {
-  //   try {
-  //     await logout();
-  //     navigate("/");
-  //     showSuccessMsg(`Bye now`);
-  //   } catch (err) {
-  //     showErrorMsg("Cannot logout");
-  //   }
-  // }
 
   function handleUserIconClick() {
     if (isNavMenuVisible) {
@@ -238,7 +225,16 @@ export function HeaderStayIndex() {
           </div>
         )}
         <nav>
-          <NavLink>Bnb your home</NavLink>
+          {/*this bnb your home is temporerally disabled*/}
+          <NavLink
+            to="#"
+            className="disabled"
+            onClick={(ev) => {
+              ev.preventDefault();
+            }}
+          >
+            Bnb your home
+          </NavLink>
           <button className="user-info" onClick={handleUserIconClick}>
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />

@@ -1,8 +1,6 @@
-import { Link, NavLink, useSearchParams } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
-import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
-import { userActions } from "../../store/actions/user.actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { SearchBar } from "../stay/SearchBar";
@@ -16,7 +14,8 @@ import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
 
-export function HeaderStayDetails({ showAnchor }) {
+//TODO: complete bnb your home link functionality and then undo the disable
+export function HeaderStayDetails() {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeSearchControl, setActiveSearchControl] = useState("");
@@ -28,16 +27,12 @@ export function HeaderStayDetails({ showAnchor }) {
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
-  // const [isAtTop, setIsAtTop] = useState(() => window.scrollY === 0);
-  // const [isManuallyTriggered, setIsManuallyTriggered] = useState(false);
   const [isNavMenuVisible, setIsNavMenuVisible] = useState(false);
-  // const isManuallyTriggeredRef = useRef(false);
-  // const justTriggeredManually = useRef(false);
-  // const shouldShowSearchBar = isAtTop || isManuallyTriggered;
+  const [isNewSearch, setIsNewSearch] = useState(false);
   const searchBarRef = useRef();
   const miniSearchBarRef = useRef();
   const homesTitleRef = useRef();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     stayActions.setFilterBy(
@@ -50,6 +45,16 @@ export function HeaderStayDetails({ showAnchor }) {
   }, [searchParams]);
 
   useEffect(() => {
+    if (isNewSearch) {
+      setIsNewSearch(false);
+      navigate({
+        pathname: "/",
+        search: searchParams.toString(),
+      });
+    }
+  }, [isNewSearch]);
+
+  useEffect(() => {
     const handleScroll = () => {
       setIsSearchBarVisible(false);
     };
@@ -58,49 +63,6 @@ export function HeaderStayDetails({ showAnchor }) {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const atTop = window.scrollY === 0;
-  //     setIsAtTop(atTop);
-
-  //     if (
-  //       !atTop &&
-  //       isManuallyTriggeredRef.current &&
-  //       !justTriggeredManually.current
-  //     ) {
-  //       setIsManuallyTriggered(false);
-  //       isManuallyTriggeredRef.current = false;
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   handleScroll(); // initialize
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (isAtTop) {
-  //     setIsManuallyTriggered(false); // clear manual override when back at top
-  //   }
-  // }, [isAtTop]);
-
-  // useEffect(() => {
-  //   if (shouldShowSearchBar) {
-  //     animateSearchBarEntrance();
-  //   } else {
-  //     animateSearchBarLeave();
-  //   }
-  //   async function animateSearchBarEntrance() {
-  //     await setIsSearchBarVisible(true);
-  //     animateCSS(searchBarRef.current, "fadeInDown");
-  //     animateCSS(homesTitleRef.current, "fadeInDown");
-  //   }
-
-  //   async function animateSearchBarLeave() {
-  //     setIsSearchBarVisible(false);
-  //   }
-  // }, [shouldShowSearchBar]);
 
   useEffect(() => {
     if (!isSearchBarVisible) {
@@ -200,30 +162,14 @@ export function HeaderStayDetails({ showAnchor }) {
     if (type) {
       newFilterBy.type = type;
     }
-
-    setSearchParams({ ...getExistingProperties(newFilterBy) });
+    await setSearchParams({ ...getExistingProperties(newFilterBy) });
+    setIsNewSearch(true);
   }
 
   function handleMiniSearchBarClick(controlType) {
     setIsSearchBarVisible(true);
     setActiveSearchControl(controlType);
-    // setIsManuallyTriggered(true);
-    // isManuallyTriggeredRef.current = true;
-    // justTriggeredManually.current = true;
-    // setTimeout(() => {
-    //   justTriggeredManually.current = false;
-    // }, 100);
-    // setActiveSearchControl(controlType);
   }
-  // async function onLogout() {
-  //   try {
-  //     await logout();
-  //     navigate("/");
-  //     showSuccessMsg(`Bye now`);
-  //   } catch (err) {
-  //     showErrorMsg("Cannot logout");
-  //   }
-  // }
 
   function handleUserIconClick() {
     if (isNavMenuVisible) {
@@ -251,7 +197,16 @@ export function HeaderStayDetails({ showAnchor }) {
         </div>
       )}
       <nav>
-        <NavLink>Bnb your home</NavLink>
+        {/*this bnb your home is temporerally disabled*/}
+        <NavLink
+          to="#"
+          className="disabled"
+          onClick={(ev) => {
+            ev.preventDefault();
+          }}
+        >
+          Bnb your home
+        </NavLink>
         <button className="user-info" onClick={handleUserIconClick}>
           <FontAwesomeIcon icon={faBars} />
           <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
@@ -261,13 +216,9 @@ export function HeaderStayDetails({ showAnchor }) {
     </>
   );
 
-  const secondaryHeader = <></>;
-
   return (
     <>
-      <section className="header-top">
-        {showAnchor ? secondaryHeader : mainHeader}
-      </section>
+      <section className="header-top">{mainHeader}</section>
       {isSearchBarVisible && (
         <div ref={searchBarRef}>
           <SearchBar
