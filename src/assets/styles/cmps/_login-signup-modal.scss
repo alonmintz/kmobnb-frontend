@@ -1,14 +1,102 @@
-.login-modal {
-    right: 50%;
-    padding: 2rem;
-}
+.login-modal-container {
+    // display: grid;
+    // grid-template-columns: 1fr;
+    // gap: 1rem;
+    // padding: 2rem;
+    // width: 100%;
+    // justify-items: center;
+    box-sizing: border-box;
+    width: 520px;
 
-.modal-button {
-    translate: 50%;
-    color: black;
-    width: rem(200px);
-    height: rem(60px);
-    border-radius: 1rem;
-    font-weight: 1000;
-    font-size: rem(20px);
+    .modal-header {
+        display: flex;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #000;
+        border-color: #ededed;
+        align-items: center;
+        justify-content: space-between;
+        justify-items: center;
+        min-height: 64px;
+
+        >h1 {
+            text-align: center;
+            margin: 0 auto;
+            font-weight: 550;
+            font-size: rem(16px);
+        }
+    }
+
+    .login-modal-content {
+        padding: 1.7rem;
+
+        >h2 {
+            font-size: rem(22px);
+            font-weight: 440;
+            padding-bottom: 1.5rem;
+        }
+
+        .modal-button {
+            width: 100%;
+            line-height: 1.25rem;
+            padding: 0.75rem;
+            background: $button-red-grandient;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .divider {
+            font-size: rem(12px);
+            line-height: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            text-align: center;
+            // color: #aaa;
+
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                width: 40%;
+                height: 1px;
+                background-color: #ccc;
+            }
+
+            &::before {
+                left: 0;
+            }
+
+            &::after {
+                right: 0;
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                padding: 0.75rem;
+                font-size: rem(14px);
+                border: 1px solid #000;
+                border-radius: 8px;
+                cursor: pointer;
+                background-color: white;
+
+                &.email::before {
+                    content: '✉️';
+                }
+            }
+        }
+
+    }
 }
