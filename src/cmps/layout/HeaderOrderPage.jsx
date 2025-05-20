@@ -44,7 +44,7 @@ export function HeaderOrderPage() {
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
-          {isNavMenuVisible ? <NavMenu /> : ""}
+          {isNavMenuVisible ? <NavMenu onClose={() => setIsNavMenuVisible(false)} /> : ""}
         </nav>
       </section>
     </>

@@ -19,9 +19,7 @@ export function HeaderStayIndex() {
   const [activeSearchControl, setActiveSearchControl] = useState("");
   const city = useSelector((storeState) => storeState.stayModule.filterBy.city);
   const [destination, setDestination] = useState(city || "");
-  const datesRange = useSelector(
-    (storeState) => storeState.stayModule.datesRange
-  );
+  const datesRange = useSelector((storeState) => storeState.stayModule.datesRange);
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
@@ -239,7 +237,7 @@ export function HeaderStayIndex() {
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
-          {isNavMenuVisible ? <NavMenu /> : ""}
+          {isNavMenuVisible ? <NavMenu onClose={() => setIsNavMenuVisible(false)} /> : ""}
         </nav>
       </section>
       {isSearchBarVisible && (
