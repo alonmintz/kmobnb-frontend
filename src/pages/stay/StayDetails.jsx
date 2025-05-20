@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import starIcon from "../../assets/img/rating-star.svg";
 import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { useEffect, useRef, useState } from "react";
@@ -7,15 +6,9 @@ import { Amenity } from "../../cmps/stay/Amenity";
 import { StayDatePicker } from "../../cmps/stay/StayDatePicker";
 import { useParams, useSearchParams } from "react-router-dom";
 import { stayService } from "../../services/stay/stay.service.local";
-import { useSelector } from "react-redux";
 import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
 import { format } from "date-fns";
-import {
-  eventBus,
-  ANCHOR_HEADER_TRIGGER_EVENT,
-} from "../../services/event-bus.service";
-import { debounce } from "../../services/util.service";
 
 const conclusionList = [
   {
@@ -95,102 +88,30 @@ export function StayDetails() {
     searchParams.get("endDate"),
   ]);
   const [heartClicked, setHeartClicked] = useState(false);
+  const [showAnchorNav, setShowAnchorNav] = useState(false);
 
-  const anchorNavRef = useRef();
-  // const lastVisibleRef = useRef(true); // to prevent redundant emits
-
-  // const debouncedEmit = debounce((entries) => {
-  //   const entry = entries[0];
-  //   const { top, bottom } = entry.boundingClientRect;
-  //   const isVisible = entry.isIntersecting;
-
-  //   if (!isVisible && bottom < 0) {
-  //     // Element has passed above viewport
-  //     eventBus.emit("header-observer-event", { visible: false });
-  //     console.log("is over");
-  //   } else if (isVisible) {
-  //     // Element is visible again (i.e. back down into view)
-  //     eventBus.emit("header-observer-event", { visible: true });
-  //     console.log("is visible");
-  //   }
-  // }, 100);
+  const imgSectionRef = useRef();
 
   useEffect(() => {
     loadStay();
   }, [params.stayId]);
 
   useEffect(() => {
-    const el = anchorNavRef.current;
-    console.log("🔍 anchorNavRef.current = ", el);
+    function handleScroll() {
+      const el = imgSectionRef.current;
+      if (!el) return;
 
-    if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const isVisible = rect.bottom > 0;
+      setShowAnchorNav(!isVisible);
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        console.log("👀 observer triggered");
-        console.log("isIntersecting:", entry.isIntersecting);
-        console.log("top:", entry.boundingClientRect.top);
-        console.log("bottom:", entry.boundingClientRect.bottom);
-      },
-      { threshold: 0 }
-    );
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    observer.observe(el);
+    handleScroll();
 
-    return () => observer.disconnect();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // useEffect(() => {
-  //   const el = anchorNavRef.current;
-  //   console.log({ el });
-
-  //   if (!el) return;
-  //   const observer = new IntersectionObserver((entries) => {
-  //     const entry = entries[0];
-  //     if (entry.isIntersecting) {
-  //       console.log("intersecting");
-  //     }
-  //   });
-
-  //   observer.observe(el);
-
-  //   return () => observer.disconnect();
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log("👀 Anchor ref value:", anchorNavRef.current);
-  //   if (!anchorNavRef.current) return;
-
-  //   const observer = new IntersectionObserver(
-  //     ([entry]) => {
-  //       const { isIntersecting, boundingClientRect } = entry;
-
-  //       const isAboveViewport =
-  //         !isIntersecting && boundingClientRect.bottom < 0;
-  //       const isVisible = isIntersecting;
-
-  //       // Only emit when the state changes
-  //       // if (isAboveViewport && lastVisibleRef.current) {
-  //       if (isAboveViewport) {
-  //         // lastVisibleRef.current = false;
-  //         eventBus.emit(ANCHOR_HEADER_TRIGGER_EVENT, { visible: false });
-  //         console.log("🔴 Element scrolled above viewport");
-  //         // } else if (isVisible && !lastVisibleRef.current) {
-  //       } else if (isVisible) {
-  //         // lastVisibleRef.current = true;
-  //         eventBus.emit(ANCHOR_HEADER_TRIGGER_EVENT, { visible: true });
-  //         console.log("🟢 Element visible again");
-  //       }
-  //     },
-  //     { threshold: 0 }
-  //   );
-
-  //   observer.observe(anchorNavRef.current);
-
-  //   return () => {
-  //     observer.disconnect();
-  //   };
-  // }, []);
 
   useEffect(() => {
     if (datesRange[0] && datesRange[1]) {
@@ -215,8 +136,6 @@ export function StayDetails() {
     setIsLoading(true);
     try {
       const stay = await stayService.getById(params.stayId);
-      console.log({ stay });
-
       setStay(stay);
     } catch (err) {
       alert("Error loading your request");
@@ -308,122 +227,142 @@ export function StayDetails() {
   }
 
   return (
-    <section className="stay-details">
-      <section className="title-section">
-        <h1>{name}</h1>
-        <button className="save-btn" onClick={onHeartClick}>
-          <div className={`heart-icon ${heartClicked ? "clicked" : ""}`}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 32 32"
-              aria-hidden="true"
-              role="presentation"
-              focusable="false"
-            >
-              <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
-            </svg>
+    <>
+      {showAnchorNav && (
+        <header className="anchor-header main-container full">
+          <nav className="anchor-nav">
+            <a className="anchor-link" href="#img-section">
+              <span className="anchor-name">Photos</span>
+              <span className="anchor-hover-line"></span>
+            </a>
+            <a className="anchor-link" href="#amenities-container">
+              <span className="anchor-name">Amenities</span>
+              <span className="anchor-hover-line"></span>
+            </a>
+            <a className="anchor-link" href="#reviews-section">
+              <span className="anchor-name">Reviews</span>
+              <span className="anchor-hover-line"></span>
+            </a>
+            <a className="anchor-link" href="#map-section">
+              <span className="anchor-name">Location</span>
+              <span className="anchor-hover-line"></span>
+            </a>
+          </nav>
+        </header>
+      )}
+      <section className="stay-details">
+        <section className="title-section">
+          <h1>{name}</h1>
+          <button className="save-btn" onClick={onHeartClick}>
+            <div className={`heart-icon ${heartClicked ? "clicked" : ""}`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+              >
+                <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
+              </svg>
+            </div>
+            <span className="save-btn-text">{`Save${
+              heartClicked ? "d" : ""
+            }`}</span>
+          </button>
+        </section>
+        <section className="img-section" id="img-section" ref={imgSectionRef}>
+          {imgUrls.slice(0, 5).map((url, idx) => (
+            <div key={url} className={`img-wrapper img-${idx + 1}`}>
+              <img src={url} alt={`stay-img-${idx}`} />
+            </div>
+          ))}
+        </section>
+        <section className="details-section">
+          <div className="reserve-container">
+            <ReserveCard
+              stay={stay}
+              datesRange={datesRange}
+              blockedRanges={getBlockedRanges()}
+              onDateSelect={handleDatesSelect}
+            />
           </div>
-          <span className="save-btn-text">{`Save${
-            heartClicked ? "d" : ""
-          }`}</span>
-        </button>
-      </section>
-      <section className="img-section">
-        {imgUrls.slice(0, 5).map((url, idx) => (
-          <div key={url} className={`img-wrapper img-${idx + 1}`}>
-            <img src={url} alt={`stay-img-${idx}`} />
+          <div className="room-details-container">
+            <h2 className="room-type">{`${roomType} in ${loc.city}, ${loc.country}`}</h2>
+            <ol className="room-details-ol">
+              <li>
+                {`${capacity} guest`}
+                {capacity > 1 && "s"}
+              </li>
+              <li>
+                {`${bedrooms} bedroom`}
+                {bedrooms > 1 && "s"}
+              </li>
+              <li>
+                {`${bathrooms} bath`}
+                {bathrooms > 1 && "s"}
+              </li>
+            </ol>
+            <span className="avg-rate">
+              <img src={starIcon} />
+              {getAverageRate()}
+            </span>
           </div>
-        ))}
-      </section>
-      <div
-        ref={anchorNavRef}
-        style={{
-          width: "100%",
-          height: "1px",
-          backgroundColor: "red",
-        }}
-      ></div>
-      <section className="details-section">
-        <div className="reserve-container">
-          <ReserveCard
-            stay={stay}
-            datesRange={datesRange}
-            blockedRanges={getBlockedRanges()}
-            onDateSelect={handleDatesSelect}
-          />
-        </div>
-        <div className="room-details-container">
-          <h2 className="room-type">{`${roomType} in ${loc.city}, ${loc.country}`}</h2>
-          <ol className="room-details-ol">
-            <li>
-              {`${capacity} guest`}
-              {capacity > 1 && "s"}
-            </li>
-            <li>
-              {`${bedrooms} bedroom`}
-              {bedrooms > 1 && "s"}
-            </li>
-            <li>
-              {`${bathrooms} bath`}
-              {bathrooms > 1 && "s"}
-            </li>
-          </ol>
-          <span className="avg-rate">
-            <img src={starIcon} />
-            {getAverageRate()}
-          </span>
-        </div>
-        <div className="host-conclusions-grid">
-          <div className="host-container">
-            {/* <img src={host.pictureUrl} alt={"host-img"} /> */}
-            <img src={guestUnknown} alt={"host-img"} />
-            <div className="host-dec">
-              <h2 className="host">{`Hosted by ${host.fullname}`}</h2>
-              {host.isSuperhost && <span>Superhost</span>}
+          <div className="host-conclusions-grid">
+            <div className="host-container">
+              {/* <img src={host.pictureUrl} alt={"host-img"} /> */}
+              <img src={guestUnknown} alt={"host-img"} />
+              <div className="host-dec">
+                <h2 className="host">{`Hosted by ${host.fullname}`}</h2>
+                {host.isSuperhost && <span>Superhost</span>}
+              </div>
+            </div>
+            <div className="conclusions-container">
+              {conclusionList.map((conclusion) => (
+                <Conclusion key={conclusion.title} conclusion={conclusion} />
+              ))}
             </div>
           </div>
-          <div className="conclusions-container">
-            {conclusionList.map((conclusion) => (
-              <Conclusion key={conclusion.title} conclusion={conclusion} />
-            ))}
+          <div className="summary-container">
+            <Summary
+              summary={summary}
+              onShowMore={() => {
+                setModalContentType("summary");
+              }}
+            />
           </div>
-        </div>
-        <div className="summary-container">
-          <Summary
-            summary={summary}
-            onShowMore={() => {
-              setModalContentType("summary");
-            }}
+          <div className="amenities-container" id="amenities-container">
+            <AmenitiesPreview
+              amenities={amenities}
+              onShowMore={() => {
+                setModalContentType("amenities");
+              }}
+            />
+          </div>
+          <div className="date-picker-container">
+            <h2 className="date-picker-title">{renderDatePickerTitle()}</h2>
+            <h2 className="date-picker-subtitle">
+              {renderDatePickerSubTitle()}
+            </h2>
+            <StayDatePicker
+              dates={datesRange}
+              blockedRanges={getBlockedRanges()}
+              onSelect={handleDatesSelect}
+            />
+          </div>
+        </section>
+        <section className="reviews-section" id="reviews-section">
+          reviews section
+        </section>
+        <section className="map-section" id="map-section">
+          <StayDetailsMap
+            city={loc.city}
+            country={loc.country}
+            lat={loc.lat}
+            lng={loc.lan}
           />
-        </div>
-        <div className="amenities-container">
-          <AmenitiesPreview
-            amenities={amenities}
-            onShowMore={() => {
-              setModalContentType("amenities");
-            }}
-          />
-        </div>
-        <div className="date-picker-container">
-          <h2 className="date-picker-title">{renderDatePickerTitle()}</h2>
-          <h2 className="date-picker-subtitle">{renderDatePickerSubTitle()}</h2>
-          <StayDatePicker
-            dates={datesRange}
-            blockedRanges={getBlockedRanges()}
-            onSelect={handleDatesSelect}
-          />
-        </div>
+        </section>
       </section>
-      <section className="reviews-section">reviews section</section>
-      <section className="map-section">
-        <StayDetailsMap
-          city={loc.city}
-          country={loc.country}
-          lat={loc.lat}
-          lng={loc.lan}
-        />
-      </section>
-    </section>
+    </>
   );
 }
 

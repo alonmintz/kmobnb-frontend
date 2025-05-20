@@ -1,0 +1,50 @@
+#img-section,
+#amenities-container,
+#reviews-section,
+#map-section {
+  scroll-margin-top: 80px;
+}
+.anchor-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+  z-index: 100;
+  .anchor-nav {
+    height: 5rem;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: start;
+    gap: 1.5rem;
+    .anchor-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      height: 100%;
+      color: #222222;
+      font-weight: 500;
+      font-size: 0.85rem;
+      &:hover {
+        text-decoration: none;
+        cursor: pointer;
+        .anchor-hover-line {
+          background-color: #222222;
+        }
+      }
+      .active {
+        color: inherit;
+      }
+      .anchor-hover-line {
+        position: absolute;
+        bottom: 0;
+        height: 0.25rem;
+        width: 100%;
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+      }
+    }
+  }
+}
