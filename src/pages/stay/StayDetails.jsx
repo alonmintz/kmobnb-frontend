@@ -311,9 +311,11 @@ export function StayDetails() {
             <div className="host-container">
               {/* <img src={host.pictureUrl} alt={"host-img"} /> */}
               <img src={guestUnknown} alt={"host-img"} />
-              <div className="host-dec">
+              <div className="host-desc">
                 <h2 className="host">{`Hosted by ${host.fullname}`}</h2>
-                {host.isSuperhost && <span>Superhost</span>}
+                {host.isSuperhost && (
+                  <span className="super-host">Superhost</span>
+                )}
               </div>
             </div>
             <div className="conclusions-container">

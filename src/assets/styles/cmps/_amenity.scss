@@ -1,0 +1,13 @@
+.amenity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: fit-content;
+  font-weight: 400;
+  .amenity-icon {
+    display: block;
+    height: 24px;
+    width: 24px;
+    fill: currentColor;
+  }
+}

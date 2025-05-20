@@ -1,6 +1,9 @@
 .main-container {
   display: grid;
-  grid-template-columns: 5rem 1fr 5rem;
+  grid-template-columns:
+    minmax(5rem, 1fr)
+    minmax(0, 80rem)
+    minmax(5rem, 1fr);
   position: relative;
   max-width: 100vw;
 
