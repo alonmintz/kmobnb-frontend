@@ -8,6 +8,18 @@
     box-sizing: border-box;
     width: 520px;
 
+    .close-btn {
+        position: absolute;
+        color: black;
+        height: rem(12px);
+        left: 25px;
+        top: 25px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
     .modal-header {
         display: flex;
         width: 100%;

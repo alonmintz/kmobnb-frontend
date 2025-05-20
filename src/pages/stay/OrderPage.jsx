@@ -12,6 +12,7 @@ import { subDays, format } from "date-fns";
 import starIcon from "../../assets/img/rating-star.svg";
 import visaIcon from "../../assets/img/order/visa.svg";
 import { orderService } from "../../services/order/order,service.local";
+import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
 
 //TODO: move to order service:
 const DAILY_FEE = 4;
@@ -19,6 +20,7 @@ const DAILY_FEE = 4;
 export function OrderPage() {
   const [isLoading, setIsLoading] = useState(true);
   const loggedInUser = useSelector((storeState) => storeState.userModule.user);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams();
   const params = useParams();
   const [stayToOrder, setStayToOrder] = useState();
@@ -254,10 +256,6 @@ export function OrderPage() {
     </section>
   );
 
-  function onLoginClick() {
-    //TODO: Eyal complete :)
-  }
-
   function onSubmit() {
     if (isOrderComplete) {
       navigate("/");
@@ -282,7 +280,7 @@ export function OrderPage() {
   function renderOrderButton() {
     if (!loggedInUser) {
       return (
-        <button className="submit-btn" onClick={onLoginClick}>
+        <button className="submit-btn" onClick={() => setIsLoginModalVisible(true)}>
           Please login
         </button>
       );
@@ -300,6 +298,7 @@ export function OrderPage() {
 
   return (
     <section className="order-page">
+      {!isLoginModalVisible ? "" : <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />}
       <div className="back-container">
         <Link
           className="back-link"
