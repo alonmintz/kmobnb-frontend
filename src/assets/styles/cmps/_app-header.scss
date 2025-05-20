@@ -1,6 +1,4 @@
 .app-header {
-  position: sticky;
-  top: 0;
   display: grid;
   grid-template-columns: subgrid;
   align-items: center;
@@ -9,6 +7,10 @@
   background-color: white;
   z-index: 10;
   border-bottom: 1px solid lightgray;
+  &.stay-index-header {
+    position: sticky;
+    top: 0;
+  }
   .header-container {
     grid-column: 2;
     .animate__animated.animate__fadeOutUp {
