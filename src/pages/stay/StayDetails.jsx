@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import starIcon from "../../assets/img/rating-star.svg";
 import guestUnknown from "../../assets/img/guest-unknown.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { Amenity } from "../../cmps/stay/Amenity";
 import { StayDatePicker } from "../../cmps/stay/StayDatePicker";
@@ -11,6 +11,11 @@ import { useSelector } from "react-redux";
 import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
 import { format } from "date-fns";
+import {
+  eventBus,
+  ANCHOR_HEADER_TRIGGER_EVENT,
+} from "../../services/event-bus.service";
+import { debounce } from "../../services/util.service";
 
 const conclusionList = [
   {
@@ -91,9 +96,101 @@ export function StayDetails() {
   ]);
   const [heartClicked, setHeartClicked] = useState(false);
 
+  const anchorNavRef = useRef();
+  // const lastVisibleRef = useRef(true); // to prevent redundant emits
+
+  // const debouncedEmit = debounce((entries) => {
+  //   const entry = entries[0];
+  //   const { top, bottom } = entry.boundingClientRect;
+  //   const isVisible = entry.isIntersecting;
+
+  //   if (!isVisible && bottom < 0) {
+  //     // Element has passed above viewport
+  //     eventBus.emit("header-observer-event", { visible: false });
+  //     console.log("is over");
+  //   } else if (isVisible) {
+  //     // Element is visible again (i.e. back down into view)
+  //     eventBus.emit("header-observer-event", { visible: true });
+  //     console.log("is visible");
+  //   }
+  // }, 100);
+
   useEffect(() => {
     loadStay();
   }, [params.stayId]);
+
+  useEffect(() => {
+    const el = anchorNavRef.current;
+    console.log("🔍 anchorNavRef.current = ", el);
+
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        console.log("👀 observer triggered");
+        console.log("isIntersecting:", entry.isIntersecting);
+        console.log("top:", entry.boundingClientRect.top);
+        console.log("bottom:", entry.boundingClientRect.bottom);
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // useEffect(() => {
+  //   const el = anchorNavRef.current;
+  //   console.log({ el });
+
+  //   if (!el) return;
+  //   const observer = new IntersectionObserver((entries) => {
+  //     const entry = entries[0];
+  //     if (entry.isIntersecting) {
+  //       console.log("intersecting");
+  //     }
+  //   });
+
+  //   observer.observe(el);
+
+  //   return () => observer.disconnect();
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log("👀 Anchor ref value:", anchorNavRef.current);
+  //   if (!anchorNavRef.current) return;
+
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       const { isIntersecting, boundingClientRect } = entry;
+
+  //       const isAboveViewport =
+  //         !isIntersecting && boundingClientRect.bottom < 0;
+  //       const isVisible = isIntersecting;
+
+  //       // Only emit when the state changes
+  //       // if (isAboveViewport && lastVisibleRef.current) {
+  //       if (isAboveViewport) {
+  //         // lastVisibleRef.current = false;
+  //         eventBus.emit(ANCHOR_HEADER_TRIGGER_EVENT, { visible: false });
+  //         console.log("🔴 Element scrolled above viewport");
+  //         // } else if (isVisible && !lastVisibleRef.current) {
+  //       } else if (isVisible) {
+  //         // lastVisibleRef.current = true;
+  //         eventBus.emit(ANCHOR_HEADER_TRIGGER_EVENT, { visible: true });
+  //         console.log("🟢 Element visible again");
+  //       }
+  //     },
+  //     { threshold: 0 }
+  //   );
+
+  //   observer.observe(anchorNavRef.current);
+
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (datesRange[0] && datesRange[1]) {
@@ -238,6 +335,14 @@ export function StayDetails() {
           </div>
         ))}
       </section>
+      <div
+        ref={anchorNavRef}
+        style={{
+          width: "100%",
+          height: "1px",
+          backgroundColor: "red",
+        }}
+      ></div>
       <section className="details-section">
         <div className="reserve-container">
           <ReserveCard

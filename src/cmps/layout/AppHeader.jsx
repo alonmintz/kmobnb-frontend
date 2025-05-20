@@ -14,7 +14,7 @@ import logo from "../../assets/img/logo.png";
 import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
-import { NavMenu } from "../stay/NavMenu";
+// import { NavMenu } from "../stay/NavMenu";
 import { useLocation } from "react-router-dom";
 import { useMatch } from "react-router-dom";
 import { HeaderStayIndex } from "./HeaderStayIndex";
