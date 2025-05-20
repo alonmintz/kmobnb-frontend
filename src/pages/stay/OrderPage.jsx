@@ -235,7 +235,7 @@ export function OrderPage() {
       <div className="price-calc">
         <h4 className="title">price details</h4>
         <h4 className="desc">
-          <span>{`${pricePerNight}x${nightsCount} night${
+          <span>{`$${pricePerNight}x${nightsCount} night${
             nightsCount > 1 && "s"
           }`}</span>
           <span>{`$${pricePerNights}`}</span>
