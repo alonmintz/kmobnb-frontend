@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal"
 import { useSelector } from "react-redux"
+import { userActions } from "../../store/actions/user.actions"
 
 export function NavMenu() {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
@@ -10,14 +11,16 @@ export function NavMenu() {
         <div className="nav-menu">
             {!isLoginModalVisible ? "" : <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />}
             <ul className="buttons-container">
-                {!user ? "" :
+                {!user ?
+                    <li onClick={() => setIsLoginModalVisible(true)}>Log in or sign up</li>
+                    :
                     <>
                         <li>Wishlist</li>
                         <li>My Trips</li>
                         <li className="menu-divider" />
+                        <li onClick={() => userActions.logout()}>Logout</li>
                     </>
                 }
-                <li onClick={() => setIsLoginModalVisible(true)}>Log in or sign up</li>
             </ul>
         </div>
     )
