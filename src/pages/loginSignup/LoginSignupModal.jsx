@@ -3,6 +3,11 @@ import { userActions } from "../../store/actions/user.actions";
 
 export function LoginSignupModal({ onClose }) {
 
+  async function handleDemoUserLoginClick() {
+    await userActions.login({ username: "muki" })
+    onClose()
+  }
+
   return (
     <Modal isBackdrop onClose={() => onClose()}>
       <div className="login-modal-container">
@@ -11,7 +16,7 @@ export function LoginSignupModal({ onClose }) {
         </header>
         <div className="login-modal-content">
           <h2>Welcome to Kmobnb</h2>
-          <button className="modal-button" onClick={() => userActions.login({ username: "muki" })}>Login as demo guest</button>
+          <button className="modal-button" onClick={() => handleDemoUserLoginClick()}>Login as demo guest</button>
           <div className="divider">or</div>
           <div className="auth-buttons">
             <button className="email">Continue with email</button>
