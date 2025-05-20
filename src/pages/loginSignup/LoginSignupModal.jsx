@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "../../cmps/general/Modal";
 import { userActions } from "../../store/actions/user.actions";
 
@@ -11,6 +13,7 @@ export function LoginSignupModal({ onClose }) {
   return (
     <Modal isBackdrop onClose={() => onClose()}>
       <div className="login-modal-container">
+        <FontAwesomeIcon className="close-btn" icon={faX} onClick={() => onClose()} />
         <header className="modal-header">
           <h1>Log in or sign up</h1>
         </header>
