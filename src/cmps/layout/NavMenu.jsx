@@ -19,23 +19,32 @@ export function NavMenu({ onClose, triggeringButtonRef }) {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
-            onClose()
         };
     }, []);
 
+    function onModalClose() {
+        setIsLoginModalVisible(false)
+        onClose()
+    }
+
+    function onLogout() {
+        onClose()
+        userActions.logout()
+    }
+
     return (
         <div className="nav-menu" ref={navMenuRef}>
-            {!isLoginModalVisible ? "" : <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />}
+            {!isLoginModalVisible ? "" : <LoginSignupModal onClose={() => onModalClose()} />}
             <ul className="buttons-container">
-                {!user ?
-                    <li onClick={() => setIsLoginModalVisible(true)}>Log in or sign up</li>
-                    :
+                {user ?
                     <>
-                        <li>Wishlist</li>
-                        <li>My Trips</li>
+                        <li onClick={() => onClose()}>Wishlist</li>
+                        <li onClick={() => onClose()}>My Trips</li>
                         <li className="menu-divider" />
-                        <li onClick={() => userActions.logout()}>Logout</li>
+                        <li onClick={() => onLogout()}>Log out</li>
                     </>
+                    :
+                    <li onClick={() => { setIsLoginModalVisible(true) }}>Log in or sign up</li>
                 }
             </ul>
         </div>

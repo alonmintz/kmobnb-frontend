@@ -6,8 +6,8 @@ import { userActions } from "../../store/actions/user.actions";
 export function LoginSignupModal({ onClose }) {
 
   async function handleDemoUserLoginClick() {
-    await userActions.login({ username: "muki" })
     onClose()
+    await userActions.login({ username: "muki" })
   }
 
   return (
