@@ -13,13 +13,15 @@ import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
 
-export function HeaderStayIndex() {
+export function HeaderStayIndex({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeSearchControl, setActiveSearchControl] = useState("");
   const city = useSelector((storeState) => storeState.stayModule.filterBy.city);
   const [destination, setDestination] = useState(city || "");
-  const datesRange = useSelector((storeState) => storeState.stayModule.datesRange);
+  const datesRange = useSelector(
+    (storeState) => storeState.stayModule.datesRange
+  );
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
@@ -211,7 +213,7 @@ export function HeaderStayIndex() {
         <NavLink className={"logo-link"} to={""}>
           <div className="logo-container">
             <img className="logo" src={logo} alt="logo" />
-            <h3>kmobnb</h3>
+            {viewport === "desktop" && <h3>kmobnb</h3>}
           </div>
         </NavLink>
         {isSearchBarVisible ? (
@@ -234,11 +236,22 @@ export function HeaderStayIndex() {
           >
             Bnb your home
           </NavLink>
-          <button className="user-info" onClick={handleUserIconClick} ref={userIconRef}>
+          <button
+            className="user-info"
+            onClick={handleUserIconClick}
+            ref={userIconRef}
+          >
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
-          {isNavMenuVisible ? <NavMenu onClose={() => setIsNavMenuVisible(false)} triggeringButtonRef={userIconRef} /> : ""}
+          {isNavMenuVisible ? (
+            <NavMenu
+              onClose={() => setIsNavMenuVisible(false)}
+              triggeringButtonRef={userIconRef}
+            />
+          ) : (
+            ""
+          )}
         </nav>
       </section>
       {isSearchBarVisible && (

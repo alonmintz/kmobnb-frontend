@@ -229,7 +229,7 @@ export function StayDetails() {
   return (
     <>
       {showAnchorNav && (
-        <header className="anchor-header main-container full">
+        <header className="anchor-header layout secondary full">
           <nav className="anchor-nav">
             <a className="anchor-link" href="#img-section">
               <span className="anchor-name">Photos</span>

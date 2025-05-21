@@ -49,22 +49,27 @@ export function StayFilter() {
       partialVisibilityGutter: 40,
     },
     desktop: {
-      breakpoint: { max: 1600, min: 1200 },
+      breakpoint: { max: 1600, min: 1300 },
       items: 11,
       partialVisibilityGutter: 40,
     },
     smallDesktop: {
-      breakpoint: { max: 1200, min: 1024 },
+      breakpoint: { max: 1300, min: 1024 },
       items: 9,
       partialVisibilityGutter: 30,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 600 },
+      breakpoint: { max: 1024, min: 900 },
       items: 7,
       partialVisibilityGutter: 30,
     },
+    smallTablet: {
+      breakpoint: { max: 900, min: 750 },
+      items: 5,
+      partialVisibilityGutter: 30,
+    },
     mobile: {
-      breakpoint: { max: 600, min: 0 },
+      breakpoint: { max: 750, min: 0 },
       items: 3,
       partialVisibilityGutter: 30,
     },
@@ -178,8 +183,12 @@ export function StayFilter() {
               disabled={type === selectedType}
               onClick={() => onClickType(type)}
             >
-              <img src={`${IMG_URL_PATH}${type}.jpg`} alt={`${type}-icon`} />
-              <p>{type}</p>
+              <img
+                className="type-img"
+                src={`${IMG_URL_PATH}${type}.jpg`}
+                alt={`${type}-icon`}
+              />
+              <p className="type-name">{type}</p>
             </button>
           ))}
         </Carousel>
