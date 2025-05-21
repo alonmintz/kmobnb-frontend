@@ -24,12 +24,24 @@
       background: white;
     }
 
-    &.react-multi-carousel-dot--active button {
-      opacity: 1;
-    }
+    // &.react-multi-carousel-dot--active button {
+    //   opacity: 1;
+    // }
   }
+
   .react-multiple-carousel__arrow {
     z-index: 2;
+    opacity: 0;
+    transition-duration: 250ms;
+    border: 1px solid gray;
+    filter: invert(1);
+    background: rgba(0, 0, 0, 1);
+    min-width: 2.2rem;
+    min-height: 2.2rem;
+    
+    &::before {
+      font-size: 0.8rem;
+    }
   }
 
   img {
@@ -37,5 +49,11 @@
     width: 100%;
     object-position: center;
     object-fit: cover;
+  }
+
+  &:hover {
+    .react-multiple-carousel__arrow {
+      opacity: 1;
+    }
   }
 }
