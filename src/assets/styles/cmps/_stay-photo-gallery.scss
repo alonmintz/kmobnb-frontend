@@ -28,8 +28,11 @@
       opacity: 1;
     }
   }
+
   .react-multiple-carousel__arrow {
     z-index: 2;
+    opacity: 0;
+    transition-duration: 250ms;
   }
 
   img {
@@ -37,5 +40,11 @@
     width: 100%;
     object-position: center;
     object-fit: cover;
+  }
+
+  &:hover {
+    .react-multiple-carousel__arrow {
+      opacity: 1;
+    }
   }
 }
