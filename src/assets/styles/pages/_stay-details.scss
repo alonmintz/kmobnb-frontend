@@ -298,6 +298,7 @@
     }
     .date-picker-container {
       grid-area: date-picker;
+      scroll-margin-top: 80px;
       padding-block: 2rem;
       border-bottom: 1px solid lightgray;
       .date-picker-title {

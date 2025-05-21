@@ -12,7 +12,7 @@ import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
-
+//todo: add backdrop when search is opened in mid page
 export function HeaderStayIndex({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [searchParams, setSearchParams] = useSearchParams();

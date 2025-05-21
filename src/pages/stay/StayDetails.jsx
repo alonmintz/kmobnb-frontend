@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { Amenity } from "../../cmps/stay/Amenity";
 import { StayDatePicker } from "../../cmps/stay/StayDatePicker";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { stayService } from "../../services/stay/stay.service.local";
 import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
@@ -87,10 +87,14 @@ export function StayDetails() {
     searchParams.get("startDate"),
     searchParams.get("endDate"),
   ]);
+  const [isDatesChosen, setIsDatesChosen] = useState(checkDatesRange());
   const [heartClicked, setHeartClicked] = useState(false);
   const [showAnchorNav, setShowAnchorNav] = useState(false);
+  const [showMiniReserve, setShowMiniReserve] = useState(false);
 
   const imgSectionRef = useRef();
+  const datePickerSectionRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadStay();
@@ -114,6 +118,7 @@ export function StayDetails() {
   }, []);
 
   useEffect(() => {
+    setIsDatesChosen(checkDatesRange());
     if (datesRange[0] && datesRange[1]) {
       setSearchParams((prev) => {
         const params = new URLSearchParams(prev);
@@ -143,6 +148,10 @@ export function StayDetails() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function checkDatesRange() {
+    return datesRange[0] && datesRange[1];
   }
 
   function toggleIsDetailsModalOpen() {
@@ -216,7 +225,17 @@ export function StayDetails() {
   function getAverageRate() {
     const starSum = reviews.reduce((acc, review) => acc + review.starsRate, 0);
     const avg = starSum / reviews.length;
-    return parseFloat(avg.toFixed(2));
+    const rounded = parseFloat(avg.toFixed(2));
+
+    if (Number.isInteger(rounded)) {
+      return rounded.toFixed(1);
+    }
+
+    if (String(rounded).endsWith("0")) {
+      return parseFloat(rounded.toFixed(1));
+    }
+
+    return rounded;
   }
 
   function getBlockedRanges() {
@@ -226,28 +245,131 @@ export function StayDetails() {
     ]);
   }
 
+  function onReserveClick() {
+    if (!isDatesChosen) {
+      datePickerSectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    } else {
+      const queryString = searchParams.toString();
+      navigate(`/order/${stay._id}/?${queryString}`);
+    }
+  }
+
+  function MiniReserve() {
+    return (
+      <div className="mini-reserve">
+        <div className="mini-details">
+          <h4 className="title">
+            {isDatesChosen ? (
+              <>
+                ${price} <span>night</span>
+              </>
+            ) : (
+              "Add dates for prices"
+            )}
+          </h4>
+          <ol className="mini-details-ol">
+            <li>
+              <span className="mini-avg-rate">
+                <img src={starIcon} />
+                {getAverageRate()}
+              </span>
+            </li>
+            <li>
+              <span className="mini-reviews">
+                {reviews.length ? `${reviews.length} reviews` : "no reviews"}
+                {}
+              </span>
+            </li>
+          </ol>
+        </div>
+        <button className="reserve-btn" onClick={onReserveClick}>
+          <span>{isDatesChosen ? "Reserve" : "Check availability"}</span>
+        </button>
+      </div>
+    );
+  }
+
+  function Conclusion({ conclusion }) {
+    const { title, desc, svg } = conclusion;
+    return (
+      <div className="conclusion">
+        <div className="conclusion-icon">{svg}</div>
+        <div className="conclusion-details">
+          <h3>{title}</h3>
+          <span>{desc}</span>
+        </div>
+      </div>
+    );
+  }
+
+  function Summary({ summary, onShowMore }) {
+    const isSummaryLong = summary.length > 300;
+    const summaryToDisplay = isSummaryLong
+      ? summary.slice(0, 300) + "..."
+      : summary;
+    return (
+      <div className="summary">
+        <p>{summaryToDisplay}</p>
+        {isSummaryLong && (
+          <button className="show-more-btn" onClick={onShowMore}>
+            Show more
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  function AmenitiesPreview({ amenities, onShowMore }) {
+    const isAmenitiesLong = amenities.length > 10;
+    const amenitiesToDisplay = isAmenitiesLong
+      ? amenities.slice(0, 10)
+      : amenities;
+    return (
+      <div className="amenities-preview">
+        <h2>What this place offers</h2>
+        <div className="amenities-preview-display">
+          {amenitiesToDisplay.map((amenity) => (
+            <Amenity key={amenity} amenityName={amenity} />
+          ))}
+        </div>
+        {isAmenitiesLong && (
+          <button className="show-more-btn" onClick={onShowMore}>
+            Show all {amenities.length} amenities
+          </button>
+        )}
+      </div>
+    );
+  }
+
   return (
     <>
       {showAnchorNav && (
         <header className="anchor-header layout secondary full">
-          <nav className="anchor-nav">
-            <a className="anchor-link" href="#img-section">
-              <span className="anchor-name">Photos</span>
-              <span className="anchor-hover-line"></span>
-            </a>
-            <a className="anchor-link" href="#amenities-container">
-              <span className="anchor-name">Amenities</span>
-              <span className="anchor-hover-line"></span>
-            </a>
-            <a className="anchor-link" href="#reviews-section">
-              <span className="anchor-name">Reviews</span>
-              <span className="anchor-hover-line"></span>
-            </a>
-            <a className="anchor-link" href="#map-section">
-              <span className="anchor-name">Location</span>
-              <span className="anchor-hover-line"></span>
-            </a>
-          </nav>
+          <div className="anchor-header-container">
+            <nav className="anchor-nav">
+              <a className="anchor-link" href="#img-section">
+                <span className="anchor-name">Photos</span>
+                <span className="anchor-hover-line"></span>
+              </a>
+              <a className="anchor-link" href="#amenities-container">
+                <span className="anchor-name">Amenities</span>
+                <span className="anchor-hover-line"></span>
+              </a>
+              <a className="anchor-link" href="#reviews-section">
+                <span className="anchor-name">Reviews</span>
+                <span className="anchor-hover-line"></span>
+              </a>
+              <a className="anchor-link" href="#map-section">
+                <span className="anchor-name">Location</span>
+                <span className="anchor-hover-line"></span>
+              </a>
+            </nav>
+            <MiniReserve />
+            {/* {showMiniReserve && <MiniReserve />} */}
+          </div>
         </header>
       )}
       <section className="stay-details">
@@ -284,6 +406,7 @@ export function StayDetails() {
               datesRange={datesRange}
               blockedRanges={getBlockedRanges()}
               onDateSelect={handleDatesSelect}
+              setShowMiniReserve={setShowMiniReserve}
             />
           </div>
           <div className="room-details-container">
@@ -340,7 +463,7 @@ export function StayDetails() {
               }}
             />
           </div>
-          <div className="date-picker-container">
+          <div ref={datePickerSectionRef} className="date-picker-container">
             <h2 className="date-picker-title">{renderDatePickerTitle()}</h2>
             <h2 className="date-picker-subtitle">
               {renderDatePickerSubTitle()}
@@ -365,57 +488,5 @@ export function StayDetails() {
         </section>
       </section>
     </>
-  );
-}
-
-function Conclusion({ conclusion }) {
-  const { title, desc, svg } = conclusion;
-  return (
-    <div className="conclusion">
-      <div className="conclusion-icon">{svg}</div>
-      <div className="conclusion-details">
-        <h3>{title}</h3>
-        <span>{desc}</span>
-      </div>
-    </div>
-  );
-}
-
-function Summary({ summary, onShowMore }) {
-  const isSummaryLong = summary.length > 300;
-  const summaryToDisplay = isSummaryLong
-    ? summary.slice(0, 300) + "..."
-    : summary;
-  return (
-    <div className="summary">
-      <p>{summaryToDisplay}</p>
-      {isSummaryLong && (
-        <button className="show-more-btn" onClick={onShowMore}>
-          Show more
-        </button>
-      )}
-    </div>
-  );
-}
-
-function AmenitiesPreview({ amenities, onShowMore }) {
-  const isAmenitiesLong = amenities.length > 10;
-  const amenitiesToDisplay = isAmenitiesLong
-    ? amenities.slice(0, 10)
-    : amenities;
-  return (
-    <div className="amenities-preview">
-      <h2>What this place offers</h2>
-      <div className="amenities-preview-display">
-        {amenitiesToDisplay.map((amenity) => (
-          <Amenity key={amenity} amenityName={amenity} />
-        ))}
-      </div>
-      {isAmenitiesLong && (
-        <button className="show-more-btn" onClick={onShowMore}>
-          Show all {amenities.length} amenities
-        </button>
-      )}
-    </div>
   );
 }
