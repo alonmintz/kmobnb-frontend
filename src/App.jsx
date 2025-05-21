@@ -16,8 +16,7 @@ import { NotFound } from "./pages/NotFound";
 
 export function App() {
   return (
-    //todo: fix main layout!!! critical!!!
-    // <div className="root">
+    //todo: add listener to current page to render main/secondary layouts
     <main className="main-container">
       <AppHeader />
       <Routes>
@@ -37,6 +36,5 @@ export function App() {
       <AppFooter />
       <UserMsg />
     </main>
-    // </div>
   );
 }
