@@ -1,12 +1,11 @@
 .app-header {
   display: grid;
   grid-template-columns: subgrid;
+  grid-template-rows: auto;
   align-items: center;
-  // gap: 1rem;
   min-height: 3.5rem;
   background-color: white;
   z-index: 10;
-  border-bottom: 1px solid lightgray;
   &.stay-index-header {
     position: sticky;
     top: 0;
@@ -23,7 +22,7 @@
       grid-template-columns: repeat(3, 1fr);
       align-items: center;
       justify-content: space-between;
-      padding-block: 1rem;
+      padding-block: 1.5rem;
       overflow: hidden;
       a {
         cursor: default;

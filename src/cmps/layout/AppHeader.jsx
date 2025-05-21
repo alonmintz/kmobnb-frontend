@@ -4,12 +4,15 @@ import { useMatch } from "react-router-dom";
 import { HeaderStayIndex } from "./HeaderStayIndex";
 import { HeaderStayDetails } from "./HeaderStayDetails";
 import { HeaderOrderPage } from "./HeaderOrderPage";
+import { useViewport } from "../../context/ViewportContext";
+import { StayFilter } from "../stay/StayFilter";
 export function AppHeader() {
   const location = useLocation();
   const pathname = location.pathname;
   const isStayDetailsPage = useMatch("stay/:stayId");
   const isOrderPage = useMatch("order/:stayId");
   const [pageClass, setPageClass] = useState(getPageClass());
+  const { viewport } = useViewport();
 
   useEffect(() => {
     setPageClass(getPageClass());
@@ -22,15 +25,20 @@ export function AppHeader() {
   }
 
   function headerRenderSwitch() {
-    if (pathname === "/") return <HeaderStayIndex />;
-    if (isStayDetailsPage) return <HeaderStayDetails />;
-    if (isOrderPage) return <HeaderOrderPage />;
+    if (pathname === "/") return <HeaderStayIndex viewport={viewport} />;
+    if (isStayDetailsPage) return <HeaderStayDetails viewport={viewport} />;
+    if (isOrderPage) return <HeaderOrderPage viewport={viewport} />;
   }
 
   return (
     <>
       <header className={`app-header ${pageClass} full`}>
         <div className="header-container">{headerRenderSwitch()}</div>
+        <div
+          className="app-header-bottom full"
+          style={{ gridColumn: "1/-1", borderBottom: "1px solid lightgray" }}
+        ></div>
+        {pathname === "/" && <StayFilter />}
       </header>
     </>
   );

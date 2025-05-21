@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import { StayIndex } from "./pages/stay/StayIndex";
 import { StayDetails } from "./pages/stay/StayDetails";
 import { OrderPage } from "./pages/stay/OrderPage";
@@ -13,11 +13,22 @@ import { AppHeader } from "./cmps/layout/AppHeader";
 import { AppFooter } from "./cmps/layout/AppFooter";
 import { UserMsg } from "./cmps/general/UserMsg";
 import { NotFound } from "./pages/NotFound";
+import { useEffect, useState } from "react";
 
 export function App() {
+  const location = useLocation();
+  const [layoutClass, setLayoutClass] = useState(getLayoutClass());
+
+  useEffect(() => {
+    setLayoutClass(getLayoutClass());
+  }, [location]);
+
+  function getLayoutClass() {
+    return location.pathname === "/" ? "main" : "secondary";
+  }
   return (
     //todo: add listener to current page to render main/secondary layouts
-    <main className="main-container">
+    <main className={`layout ${layoutClass}`}>
       <AppHeader />
       <Routes>
         <Route path="" element={<StayIndex />} />

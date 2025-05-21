@@ -8,7 +8,7 @@ import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { NavMenu } from "../layout/NavMenu";
 
 //TODO: complete bnb your home link functionality and then undo the disable
-export function HeaderOrderPage() {
+export function HeaderOrderPage({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [isNavMenuVisible, setIsNavMenuVisible] = useState(false);
 
@@ -26,7 +26,7 @@ export function HeaderOrderPage() {
         <NavLink className={"logo-link"} to={""}>
           <div className="logo-container">
             <img className="logo" src={logo} alt="logo" />
-            <h3>kmobnb</h3>
+            {viewport === "desktop" && <h3>kmobnb</h3>}{" "}
           </div>
         </NavLink>
         <nav>
@@ -44,7 +44,11 @@ export function HeaderOrderPage() {
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
-          {isNavMenuVisible ? <NavMenu onClose={() => setIsNavMenuVisible(false)} /> : ""}
+          {isNavMenuVisible ? (
+            <NavMenu onClose={() => setIsNavMenuVisible(false)} />
+          ) : (
+            ""
+          )}
         </nav>
       </section>
     </>

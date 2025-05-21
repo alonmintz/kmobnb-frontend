@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { StayFilter } from "../../cmps/stay/StayFilter";
 import { StayList } from "../../cmps/stay/StayList";
 import { stayActions } from "../../store/actions/stay.actions";
 import { useEffect, useRef, useState } from "react";
@@ -38,8 +37,7 @@ export function StayIndex() {
   }, [bulkIdx]);
 
   return (
-    <section className="stay-index main-container full">
-      <StayFilter />
+    <section className="stay-index layout main full">
       <StayList stays={stays} />
       <div ref={bottomDiv} className="bottom-div"></div>
     </section>

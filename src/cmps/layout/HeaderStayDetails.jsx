@@ -15,21 +15,21 @@ import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
 
 //TODO: complete bnb your home link functionality and then undo the disable
-export function HeaderStayDetails() {
+export function HeaderStayDetails({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeSearchControl, setActiveSearchControl] = useState("");
   const city = useSelector((storeState) => storeState.stayModule.filterBy.city);
   const [destination, setDestination] = useState(city || "");
-  const datesRange = useSelector((storeState) => storeState.stayModule.datesRange);
+  const datesRange = useSelector(
+    (storeState) => storeState.stayModule.datesRange
+  );
   const guests = useSelector((storeState) => storeState.stayModule.guests);
   const [guestsDisplay, setGuestsDisplay] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
   const [isNavMenuVisible, setIsNavMenuVisible] = useState(false);
   const [isNewSearch, setIsNewSearch] = useState(false);
-  // const isManuallyTriggeredRef = useRef(false);
-  // const justTriggeredManually = useRef(false);
-  // const shouldShowSearchBar = isAtTop || isManuallyTriggered;
+
   const searchBarRef = useRef();
   const miniSearchBarRef = useRef();
   const homesTitleRef = useRef();
@@ -180,46 +180,47 @@ export function HeaderStayDetails() {
     }
   }
 
-  const mainHeader = (
-    <>
-      <NavLink className={"logo-link"} to={""}>
-        <div className="logo-container">
-          <img className="logo" src={logo} alt="logo" />
-          <h3>kmobnb</h3>
-        </div>
-      </NavLink>
-      {isSearchBarVisible ? (
-        <div ref={homesTitleRef} className="homes-title-container">
-          <h2>Homes</h2>
-        </div>
-      ) : (
-        <div ref={miniSearchBarRef} className="mini-search-bar-container">
-          <SearchBarMini onSelect={handleMiniSearchBarClick} />
-        </div>
-      )}
-      <nav>
-        {/*this bnb your home is temporerally disabled*/}
-        <NavLink
-          to="#"
-          className="disabled"
-          onClick={(ev) => {
-            ev.preventDefault();
-          }}
-        >
-          Bnb your home
-        </NavLink>
-        <button className="user-info" onClick={handleUserIconClick}>
-          <FontAwesomeIcon icon={faBars} />
-          <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
-        </button>
-        {isNavMenuVisible ? <NavMenu onClose={() => setIsNavMenuVisible(false)} /> : ""}
-      </nav>
-    </>
-  );
-
   return (
     <>
-      <section className="header-top">{mainHeader}</section>
+      <section className="header-top">
+        <NavLink className={"logo-link"} to={""}>
+          <div className="logo-container">
+            <img className="logo" src={logo} alt="logo" />
+            {viewport === "desktop" && <h3>kmobnb</h3>}{" "}
+          </div>
+        </NavLink>
+        {isSearchBarVisible ? (
+          <div ref={homesTitleRef} className="homes-title-container">
+            <h2>Homes</h2>
+          </div>
+        ) : (
+          <div ref={miniSearchBarRef} className="mini-search-bar-container">
+            <SearchBarMini onSelect={handleMiniSearchBarClick} />
+          </div>
+        )}
+        <nav>
+          {/*this bnb your home is temporerally disabled*/}
+          <NavLink
+            to="#"
+            className="disabled"
+            onClick={(ev) => {
+              ev.preventDefault();
+            }}
+          >
+            Bnb your home
+          </NavLink>
+          <button className="user-info" onClick={handleUserIconClick}>
+            <FontAwesomeIcon icon={faBars} />
+            <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
+          </button>
+          {isNavMenuVisible ? (
+            <NavMenu onClose={() => setIsNavMenuVisible(false)} />
+          ) : (
+            ""
+          )}
+        </nav>
+      </section>
+
       {isSearchBarVisible && (
         <div ref={searchBarRef}>
           <SearchBar
