@@ -10,6 +10,8 @@ import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
 import { format } from "date-fns";
 import { Modal } from "../../cmps/general/Modal";
+import { ReviewList } from "../../cmps/review/ReviewList";
+import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
 
 const conclusionList = [
   {
@@ -238,6 +240,10 @@ export function StayDetails() {
     }
 
     return rounded;
+  }
+
+  function getLimitedReviews() {
+    return reviews.length > 4 ? reviews.slice(0, 4) : reviews;
   }
 
   function getBlockedRanges() {
@@ -522,7 +528,20 @@ export function StayDetails() {
           </div>
         </section>
         <section className="reviews-section" id="reviews-section">
-          reviews section
+          <h2 className="title reviews-title">
+            <span className="avg-rate">
+              <img src={starIcon} />
+              {getAverageRate()}
+            </span>
+            <span className="dot"></span>
+            <span>{`${reviews.length} reviews`}</span>
+          </h2>
+          <RatingsDisplay />
+          <ReviewList
+            reviews={getLimitedReviews()}
+            isPreview
+            onShowMore={() => setModalContentType("reviews")}
+          />
         </section>
         <section className="map-section" id="map-section">
           <StayDetailsMap
