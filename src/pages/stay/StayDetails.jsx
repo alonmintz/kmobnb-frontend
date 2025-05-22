@@ -13,6 +13,8 @@ import { Modal } from "../../cmps/general/Modal";
 import { useSelector } from "react-redux";
 import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
 import { getAverageRating } from "../../services/util.service";
+import { ReviewList } from "../../cmps/review/ReviewList";
+import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
 
 const conclusionList = [
   {
@@ -95,10 +97,9 @@ export function StayDetails() {
   const [heartClicked, setHeartClicked] = useState(false);
   const [showAnchorNav, setShowAnchorNav] = useState(false);
   const [showMiniReserve, setShowMiniReserve] = useState(false);
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
-  const user = useSelector((storeState) => storeState.userModule.user)
-
+  const user = useSelector((storeState) => storeState.userModule.user);
 
   const imgSectionRef = useRef();
   const datePickerSectionRef = useRef();
@@ -173,8 +174,8 @@ export function StayDetails() {
 
   function onHeartClick() {
     if (!user) {
-      setIsLoginModalVisible(true)
-      return
+      setIsLoginModalVisible(true);
+      return;
     }
     if (heartClicked) {
       setHeartClicked(false);
@@ -242,6 +243,10 @@ export function StayDetails() {
     ]);
   }
 
+  function getLimitedReviews() {
+    return reviews.length > 4 ? reviews.slice(0, 4) : reviews;
+  }
+
   function onReserveClick() {
     if (!isDatesChosen) {
       datePickerSectionRef.current?.scrollIntoView({
@@ -277,7 +282,7 @@ export function StayDetails() {
             <li>
               <span className="mini-reviews">
                 {reviews.length ? `${reviews.length} reviews` : "no reviews"}
-                { }
+                {}
               </span>
             </li>
           </ol>
@@ -388,7 +393,11 @@ export function StayDetails() {
 
   return (
     <>
-      {!isLoginModalVisible ? "" : <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />}
+      {!isLoginModalVisible ? (
+        ""
+      ) : (
+        <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />
+      )}
       {showAnchorNav && (
         <header className="anchor-header layout secondary full">
           <div className="anchor-header-container">
@@ -429,8 +438,9 @@ export function StayDetails() {
                 <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
               </svg>
             </div>
-            <span className="save-btn-text">{`Save${heartClicked ? "d" : ""
-              }`}</span>
+            <span className="save-btn-text">{`Save${
+              heartClicked ? "d" : ""
+            }`}</span>
           </button>
         </section>
         <section className="img-section" id="img-section" ref={imgSectionRef}>
@@ -517,7 +527,28 @@ export function StayDetails() {
           </div>
         </section>
         <section className="reviews-section" id="reviews-section">
-          reviews section
+          <h2 className="title reviews-title">
+            <span className="avg-rate">
+              <img src={starIcon} />
+              {getAverageRating(reviews)}
+            </span>
+            <span className="dot"></span>
+            <span>{`${reviews.length} reviews`}</span>
+          </h2>
+          <RatingsDisplay />
+          <ReviewList
+            reviews={getLimitedReviews()}
+            isPreview
+            onShowMore={() => setModalContentType("reviews")}
+          />
+          <button
+            className="show-more-btn"
+            onClick={() => {
+              setModalContentType("reviews");
+            }}
+          >
+            Show all {reviews.length} reviews
+          </button>
         </section>
         <section className="map-section" id="map-section">
           <StayDetailsMap
