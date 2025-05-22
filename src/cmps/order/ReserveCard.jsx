@@ -15,7 +15,13 @@ import { StayDatePicker } from "../stay/StayDatePicker";
 //TODO: move to order service:
 const DAILY_FEE = 4;
 
-export function ReserveCard({ stay, datesRange, blockedRanges, onDateSelect }) {
+export function ReserveCard({
+  stay,
+  datesRange,
+  blockedRanges,
+  onDateSelect,
+  setShowMiniReserve,
+}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isDatesChosen, setIsDatesChosen] = useState(checkDatesRange());
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -25,6 +31,7 @@ export function ReserveCard({ stay, datesRange, blockedRanges, onDateSelect }) {
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const [nonAdultsIncluded, setNonAdultsIncluded] = useState();
   const dateWrapperRef = useRef();
+  const reserveButtonRef = useRef();
   const navigate = useNavigate();
 
   const { price: pricePerNight } = stay;
@@ -56,6 +63,23 @@ export function ReserveCard({ stay, datesRange, blockedRanges, onDateSelect }) {
     setGuestsDisplay(renderGuestsDisplay());
     checkForNonAdults();
   }, [guests]);
+
+  useEffect(() => {
+    function handleScroll() {
+      const el = reserveButtonRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const isVisible = rect.bottom > 0;
+      setShowMiniReserve(!isVisible);
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function checkDatesRange() {
     return datesRange[0] && datesRange[1];
@@ -284,7 +308,11 @@ export function ReserveCard({ stay, datesRange, blockedRanges, onDateSelect }) {
           )}
         </div>
       </section>
-      <button className="reserve-btn" onClick={onReserveClick}>
+      <button
+        ref={reserveButtonRef}
+        className="reserve-btn"
+        onClick={onReserveClick}
+      >
         <span>{isDatesChosen ? "Reserve" : "Check availability"}</span>
       </button>
       {isDatesChosen && (
