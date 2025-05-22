@@ -1,0 +1,31 @@
+.stay-details-modal {
+  box-sizing: border-box;
+  max-height: 70vh;
+  width: 60vw;
+  padding-block-start: 2.5rem;
+  overflow-y: auto;
+  .content {
+    width: 100%;
+    letter-spacing: 0.05rem;
+    .title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-block-end: 1.7rem;
+    }
+  }
+  .amenities-modal {
+    display: grid;
+    padding-inline-end: 1.7rem;
+    .amenity-wrapper {
+      border-bottom: 1px solid lightgray;
+      .amenity {
+        padding-block: 1.5rem;
+      }
+    }
+  }
+  .summary-modal {
+    p {
+      line-height: 1.5;
+    }
+  }
+}

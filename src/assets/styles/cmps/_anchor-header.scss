@@ -54,11 +54,85 @@
       }
     }
     .mini-reserve {
-      display: flex;
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: repeat(2, 1fr);
       align-items: center;
+      gap: 0.25rem;
+      height: 100%;
+      min-width: 300px;
       .mini-details {
+        display: grid;
+        gap: 0.25rem;
+        .title {
+          font-size: 1rem;
+          color: #222222;
+          font-weight: 500;
+          span {
+            padding-inline-start: 0.3rem;
+            font-weight: 400;
+            font-size: 0.8rem;
+          }
+        }
+        .mini-details-ol {
+          display: flex;
+          margin: 0;
+          list-style: none;
+          li {
+            display: flex;
+            align-items: center;
+            position: relative;
+            &::after {
+              content: "·";
+              margin: 0 0.5rem;
+            }
+
+            &:last-child::after {
+              content: ""; // no dot after last item
+            }
+            span {
+              height: 0.7em;
+              font-size: 0.7em;
+            }
+            .mini-avg-rate {
+              display: flex;
+              font-weight: bold;
+              img {
+                display: inline-block;
+                margin-inline-end: 0.2rem;
+              }
+            }
+            .mini-reviews {
+              color: #6a6a6a;
+            }
+          }
+        }
       }
       .reserve-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        // width: 3rem;
+        height: 3rem;
+        color: white;
+        background-color: #ff385c;
+        border: none;
+        border-radius: 2em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease,
+          width 0.3s ease;
+
+        &:hover {
+          background-color: #e31c5f;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        span {
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          padding-inline-start: 0.2rem;
+        }
       }
     }
   }

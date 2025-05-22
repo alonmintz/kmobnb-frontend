@@ -9,6 +9,7 @@ import { stayService } from "../../services/stay/stay.service.local";
 import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
 import { format } from "date-fns";
+import { Modal } from "../../cmps/general/Modal";
 
 const conclusionList = [
   {
@@ -82,7 +83,7 @@ export function StayDetails() {
   const [stay, setStay] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-  const [modalContentType, setModalContentType] = useState(false);
+  const [modalContentType, setModalContentType] = useState("");
   const [datesRange, setDatesRange] = useState([
     searchParams.get("startDate"),
     searchParams.get("endDate"),
@@ -106,7 +107,7 @@ export function StayDetails() {
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
-      const isVisible = rect.bottom > 0;
+      const isVisible = rect.bottom > 80;
       setShowAnchorNav(!isVisible);
     }
 
@@ -134,7 +135,8 @@ export function StayDetails() {
   }, [searchParams]);
 
   useEffectUpdate(() => {
-    toggleIsDetailsModalOpen();
+    setIsDetailsModalOpen(modalContentType ? true : false);
+    // toggleIsDetailsModalOpen();
   }, [modalContentType]);
 
   async function loadStay() {
@@ -344,6 +346,51 @@ export function StayDetails() {
     );
   }
 
+  function DynamicDetailsModal({ children }) {
+    return (
+      <Modal
+        lockScroll
+        isBackdrop
+        onClose={() => {
+          setIsDetailsModalOpen(false);
+          setModalContentType("");
+        }}
+      >
+        <section className="stay-details-modal">{children}</section>
+      </Modal>
+    );
+  }
+
+  function renderModalContent() {
+    switch (modalContentType) {
+      case "summary":
+        return (
+          <div className="summary-modal content">
+            <h2 className="title">About this space</h2>
+            <p>{summary}</p>
+          </div>
+        );
+
+      case "amenities":
+        return (
+          <div className="amenities-modal content">
+            <h2 className="title"> What this place offers</h2>
+            {amenities.map((amenity) => (
+              <div key={amenity} className="amenity-wrapper">
+                <Amenity amenityName={amenity} />
+              </div>
+            ))}
+          </div>
+        );
+
+      case "reviews":
+        return <div className="reviews-modal content"></div>;
+
+      default:
+        break;
+    }
+  }
+
   return (
     <>
       {showAnchorNav && (
@@ -367,8 +414,7 @@ export function StayDetails() {
                 <span className="anchor-hover-line"></span>
               </a>
             </nav>
-            <MiniReserve />
-            {/* {showMiniReserve && <MiniReserve />} */}
+            {showMiniReserve && <MiniReserve />}
           </div>
         </header>
       )}
@@ -486,6 +532,9 @@ export function StayDetails() {
             lng={loc.lan}
           />
         </section>
+        {isDetailsModalOpen && (
+          <DynamicDetailsModal>{renderModalContent()}</DynamicDetailsModal>
+        )}
       </section>
     </>
   );

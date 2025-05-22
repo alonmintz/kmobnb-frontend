@@ -165,7 +165,7 @@
       }
       .room-details-ol {
         display: flex;
-        // gap: 0.5rem;
+        gap: 3rem;
         padding-block-end: 0.5rem;
         margin: 0;
         list-style: none;
@@ -181,7 +181,6 @@
 
           &:last-child::after {
             content: ""; // no dot after last item
-            // margin: 0;
           }
         }
       }
