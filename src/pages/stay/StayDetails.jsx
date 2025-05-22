@@ -10,6 +10,8 @@ import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
 import { format } from "date-fns";
 import { Modal } from "../../cmps/general/Modal";
+import { useSelector } from "react-redux";
+import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
 
 const conclusionList = [
   {
@@ -92,6 +94,10 @@ export function StayDetails() {
   const [heartClicked, setHeartClicked] = useState(false);
   const [showAnchorNav, setShowAnchorNav] = useState(false);
   const [showMiniReserve, setShowMiniReserve] = useState(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
+
+  const user = useSelector((storeState) => storeState.userModule.user)
+
 
   const imgSectionRef = useRef();
   const datePickerSectionRef = useRef();
@@ -165,6 +171,10 @@ export function StayDetails() {
   }
 
   function onHeartClick() {
+    if (!user) {
+      setIsLoginModalVisible(true)
+      return
+    }
     if (heartClicked) {
       setHeartClicked(false);
     } else {
@@ -282,7 +292,7 @@ export function StayDetails() {
             <li>
               <span className="mini-reviews">
                 {reviews.length ? `${reviews.length} reviews` : "no reviews"}
-                {}
+                { }
               </span>
             </li>
           </ol>
@@ -393,6 +403,7 @@ export function StayDetails() {
 
   return (
     <>
+      {!isLoginModalVisible ? "" : <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />}
       {showAnchorNav && (
         <header className="anchor-header layout secondary full">
           <div className="anchor-header-container">
@@ -433,9 +444,8 @@ export function StayDetails() {
                 <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
               </svg>
             </div>
-            <span className="save-btn-text">{`Save${
-              heartClicked ? "d" : ""
-            }`}</span>
+            <span className="save-btn-text">{`Save${heartClicked ? "d" : ""
+              }`}</span>
           </button>
         </section>
         <section className="img-section" id="img-section" ref={imgSectionRef}>
