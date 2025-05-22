@@ -10,6 +10,9 @@ import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
 import { format } from "date-fns";
 import { Modal } from "../../cmps/general/Modal";
+import { useSelector } from "react-redux";
+import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
+import { getAverageRating } from "../../services/util.service";
 import { ReviewList } from "../../cmps/review/ReviewList";
 import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
 
@@ -94,6 +97,9 @@ export function StayDetails() {
   const [heartClicked, setHeartClicked] = useState(false);
   const [showAnchorNav, setShowAnchorNav] = useState(false);
   const [showMiniReserve, setShowMiniReserve] = useState(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+
+  const user = useSelector((storeState) => storeState.userModule.user);
 
   const imgSectionRef = useRef();
   const datePickerSectionRef = useRef();
@@ -167,6 +173,10 @@ export function StayDetails() {
   }
 
   function onHeartClick() {
+    if (!user) {
+      setIsLoginModalVisible(true);
+      return;
+    }
     if (heartClicked) {
       setHeartClicked(false);
     } else {
@@ -226,26 +236,6 @@ export function StayDetails() {
     occupancy,
   } = stay;
 
-  function getAverageRate() {
-    const starSum = reviews.reduce((acc, review) => acc + review.starsRate, 0);
-    const avg = starSum / reviews.length;
-    const rounded = parseFloat(avg.toFixed(2));
-
-    if (Number.isInteger(rounded)) {
-      return rounded.toFixed(1);
-    }
-
-    if (String(rounded).endsWith("0")) {
-      return parseFloat(rounded.toFixed(1));
-    }
-
-    return rounded;
-  }
-
-  function getLimitedReviews() {
-    return reviews.length > 4 ? reviews.slice(0, 4) : reviews;
-  }
-
   function getBlockedRanges() {
     return occupancy.map(({ startDate, endDate }) => [
       new Date(startDate),
@@ -282,7 +272,7 @@ export function StayDetails() {
             <li>
               <span className="mini-avg-rate">
                 <img src={starIcon} />
-                {getAverageRate()}
+                {getAverageRating(reviews)}
               </span>
             </li>
             <li>
@@ -399,6 +389,11 @@ export function StayDetails() {
 
   return (
     <>
+      {!isLoginModalVisible ? (
+        ""
+      ) : (
+        <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />
+      )}
       {showAnchorNav && (
         <header className="anchor-header layout secondary full">
           <div className="anchor-header-container">
@@ -479,7 +474,7 @@ export function StayDetails() {
             </ol>
             <span className="avg-rate">
               <img src={starIcon} />
-              {getAverageRate()}
+              {getAverageRating(reviews)}
             </span>
           </div>
           <div className="host-conclusions-grid">
