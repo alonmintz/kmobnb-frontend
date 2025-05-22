@@ -15,6 +15,7 @@ import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
 import { getAverageRating } from "../../services/util.service";
 import { ReviewList } from "../../cmps/review/ReviewList";
 import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
+import { ReviewDisplay } from "../../cmps/review/ReviewDisplay";
 
 const conclusionList = [
   {
@@ -144,7 +145,6 @@ export function StayDetails() {
 
   useEffectUpdate(() => {
     setIsDetailsModalOpen(modalContentType ? true : false);
-    // toggleIsDetailsModalOpen();
   }, [modalContentType]);
 
   async function loadStay() {
@@ -366,25 +366,45 @@ export function StayDetails() {
       case "summary":
         return (
           <div className="summary-modal content">
-            <h2 className="title">About this space</h2>
-            <p>{summary}</p>
+            <div className="summary-container">
+              <h2 className="title">About this space</h2>
+              <p>{summary}</p>
+            </div>
           </div>
         );
 
       case "amenities":
         return (
           <div className="amenities-modal content">
-            <h2 className="title"> What this place offers</h2>
-            {amenities.map((amenity) => (
-              <div key={amenity} className="amenity-wrapper">
-                <Amenity amenityName={amenity} />
-              </div>
-            ))}
+            <div className="amenities-container">
+              <h2 className="title"> What this place offers</h2>
+              {amenities.map((amenity) => (
+                <div key={amenity} className="amenity-wrapper">
+                  <Amenity amenityName={amenity} />
+                </div>
+              ))}
+            </div>
           </div>
         );
 
       case "reviews":
-        return <div className="reviews-modal content"></div>;
+        return (
+          <div className="reviews-modal content">
+            <div className="ratings-container">
+              <h2 className="title">
+                <img src={starIcon} />
+                <span>{getAverageRating(reviews)}</span>
+              </h2>
+              <RatingsDisplay />
+            </div>
+            <div className="reviews-container">
+              <h2 className="title">{`${reviews.length} reviews`}</h2>
+              {reviews.map((review) => (
+                <ReviewDisplay key={review.id} review={review} />
+              ))}
+            </div>
+          </div>
+        );
 
       default:
         break;
