@@ -12,6 +12,8 @@ import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
+import { BnbYourButton } from "./BnbYourButton";
+
 //todo: add backdrop when search is opened in mid page
 export function HeaderStayIndex({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
@@ -226,16 +228,7 @@ export function HeaderStayIndex({ viewport }) {
           </div>
         )}
         <nav>
-          {/*this bnb your home is temporerally disabled*/}
-          <NavLink
-            to="#"
-            className="disabled"
-            onClick={(ev) => {
-              ev.preventDefault();
-            }}
-          >
-            Bnb your home
-          </NavLink>
+          <BnbYourButton />
           <button
             className="user-info"
             onClick={handleUserIconClick}

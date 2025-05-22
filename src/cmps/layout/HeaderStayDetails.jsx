@@ -13,6 +13,7 @@ import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { stayService } from "../../services/stay";
 import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
+import { BnbYourButton } from "./BnbYourButton";
 
 //TODO: complete bnb your home link functionality and then undo the disable
 export function HeaderStayDetails({ viewport }) {
@@ -199,16 +200,7 @@ export function HeaderStayDetails({ viewport }) {
           </div>
         )}
         <nav>
-          {/*this bnb your home is temporerally disabled*/}
-          <NavLink
-            to="#"
-            className="disabled"
-            onClick={(ev) => {
-              ev.preventDefault();
-            }}
-          >
-            Bnb your home
-          </NavLink>
+          <BnbYourButton />
           <button className="user-info" onClick={handleUserIconClick}>
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />

@@ -74,9 +74,11 @@ function saveLoggedinUser(user) {
   user = {
     _id: user._id,
     fullname: user.fullname,
+    username: user.username,
     imgUrl: user.imgUrl,
     score: user.score,
     isAdmin: user.isAdmin,
+    isHost: user.isHost
   };
   sessionStorage.setItem(LOGGEDIN_USER_STORAGE_KEY, JSON.stringify(user));
   return user;
@@ -98,17 +100,28 @@ async function _createAdmin() {
   console.log("newUser: ", newUser);
 }
 
-_createDemoUserIfNone()
-async function _createDemoUserIfNone() {
+_populateDemoUserData()
+async function _populateDemoUserData() {
   const existingUsers = await storageService.query(USERS_STORAGE_KEY)
   if (!existingUsers.length) {
-    const demoUser = {
-      username: "muki",
-      fullname: "Muki Di",
-      password: "1234",
-      imgUrl: "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
-      isAdmin: false
-    }
-    await storageService.post(USERS_STORAGE_KEY, demoUser)
+    const demoUsers = [
+      {
+        "_id": "622f3403e36c59e6164faf93",
+        "username": "patty",
+        "fullname": "Patty And Beckett",
+        "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+        "isAdmin": false,
+        "isHost": true
+      },
+      {
+        "_id": "622f3407e36c59e6164fbf76",
+        "username": "dan",
+        "fullname": "Dan",
+        "imgUrl": "https://robohash.org/6460525?set=set1",
+        "isAdmin": false,
+        "isHost": false
+      }
+    ]
+    await storageService.postWithoutMakeId(USERS_STORAGE_KEY, demoUsers)
   }
 }
