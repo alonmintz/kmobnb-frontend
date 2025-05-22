@@ -4,6 +4,7 @@ export const storageService = {
     post,
     put,
     remove,
+    postWithoutMakeId
 }
 
 function query(entityType, delay = 100) {
@@ -46,6 +47,10 @@ function remove(entityType, entityId) {
         entities.splice(idx, 1)
         _save(entityType, entities)
     })
+}
+
+function postWithoutMakeId(entityType, newEntity) {
+    _save(entityType, newEntity)
 }
 
 // Private functions
