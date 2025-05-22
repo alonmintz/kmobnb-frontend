@@ -2,6 +2,7 @@ import { useSelector } from "react-redux"
 import { StayPhotoGallery } from "./StayPhotoGallery"
 import { useState } from "react"
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal"
+import { getAverageRating } from "../../services/util.service"
 
 export function StayPreview({ stay }) {
 
@@ -11,7 +12,6 @@ export function StayPreview({ stay }) {
     const [heartClicked, setHeartClicked] = useState(false)
     const user = useSelector((storeState) => storeState.userModule.user)
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
-
 
     function calcDistance(lat1, lon1, lat2, lon2) {
         const EARTH_RADIUS_KM = 6371
@@ -37,12 +37,6 @@ export function StayPreview({ stay }) {
         const distance = Math.round(EARTH_RADIUS_KM * c)
 
         return distance
-    }
-
-    function calcAverageRate(reviews) {
-        const sum = reviews.reduce((acc, review) => acc + review.starsRate, 0)
-        const avg = sum / reviews.length
-        return parseFloat(avg.toFixed(2))
     }
 
     function onHeartClick() {
@@ -75,7 +69,7 @@ export function StayPreview({ stay }) {
                 <div className="normal-text">Apr 3 – 8</div>
                 <div className="price">$<span className="bold-text">{stay.price}</span> night</div>
                 <div className="rating">
-                    <span><img className="star-image" src="src/assets/img/rating-star.svg" /> {calcAverageRate(stay.reviews)}</span>
+                    <span><img className="star-image" src="src/assets/img/rating-star.svg" /> {getAverageRating(stay.reviews)}</span>
                 </div>
             </div>
         </div>

@@ -116,3 +116,19 @@ export function getExistingProperties(obj) {
   }
   return truthyObj;
 }
+
+export function getAverageRating(reviews) {
+  const starSum = reviews.reduce((acc, review) => acc + review.starsRate, 0);
+  const avg = starSum / reviews.length;
+  const rounded = parseFloat(avg.toFixed(2));
+
+  if (Number.isInteger(rounded)) {
+    return rounded.toFixed(1);
+  }
+
+  if (String(rounded).endsWith("0")) {
+    return parseFloat(rounded.toFixed(1));
+  }
+
+  return rounded;
+}

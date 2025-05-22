@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import { Modal } from "../../cmps/general/Modal";
 import { useSelector } from "react-redux";
 import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
+import { getAverageRating } from "../../services/util.service";
 
 const conclusionList = [
   {
@@ -234,22 +235,6 @@ export function StayDetails() {
     occupancy,
   } = stay;
 
-  function getAverageRate() {
-    const starSum = reviews.reduce((acc, review) => acc + review.starsRate, 0);
-    const avg = starSum / reviews.length;
-    const rounded = parseFloat(avg.toFixed(2));
-
-    if (Number.isInteger(rounded)) {
-      return rounded.toFixed(1);
-    }
-
-    if (String(rounded).endsWith("0")) {
-      return parseFloat(rounded.toFixed(1));
-    }
-
-    return rounded;
-  }
-
   function getBlockedRanges() {
     return occupancy.map(({ startDate, endDate }) => [
       new Date(startDate),
@@ -286,7 +271,7 @@ export function StayDetails() {
             <li>
               <span className="mini-avg-rate">
                 <img src={starIcon} />
-                {getAverageRate()}
+                {getAverageRating(reviews)}
               </span>
             </li>
             <li>
@@ -483,7 +468,7 @@ export function StayDetails() {
             </ol>
             <span className="avg-rate">
               <img src={starIcon} />
-              {getAverageRate()}
+              {getAverageRating(reviews)}
             </span>
           </div>
           <div className="host-conclusions-grid">
