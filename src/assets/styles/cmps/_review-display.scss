@@ -1,9 +1,8 @@
 .review-display {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   .review-by {
     display: grid;
-    grid-template-columns: 4rem 0.5rem 1fr;
+    grid-template-columns: 4rem 1rem 1fr;
     grid-template-rows: auto auto;
     justify-content: start;
     padding-block: 0.7rem;
@@ -73,7 +72,17 @@
     }
   }
   .review-txt {
+    display: grid;
     color: rgb(59, 58, 58);
     line-height: 1.5;
+    .review-show-more-btn {
+      justify-self: start;
+      margin: 0;
+      padding: 0;
+      font-size: 1rem;
+      font-weight: 500;
+      background-color: transparent;
+      text-decoration: underline;
+    }
   }
 }

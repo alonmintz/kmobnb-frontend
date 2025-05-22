@@ -1,5 +1,6 @@
 import guestUnknown from "../../assets/img/guest-unknown.svg";
 import starIcon from "../../assets/img/rating-star.svg";
+import { getTimeAgoFromNow } from "../../services/util.service";
 
 const dataModel = {
   _id: "654564564",
@@ -18,11 +19,10 @@ const dataModel = {
 
 export function ReviewDisplay({ review, isPreview = false, onShowMore }) {
   const { at, by, txt, starsRate } = review;
+  const isTxtLong = txt.length > 120;
 
   function getTxtToDisplay() {
     if (!isPreview) return txt;
-
-    const isTxtLong = txt.length > 120;
     return isTxtLong ? txt.slice(0, 120) + "..." : txt;
   }
   return (
@@ -44,11 +44,18 @@ export function ReviewDisplay({ review, isPreview = false, onShowMore }) {
           </li>
           <li className="dot">{/* <span></span> */}</li>
           <li className="time-ago">
-            <span>bla bla ago</span>
+            <span>{getTimeAgoFromNow(at)}</span>
           </li>
         </ol>
       </div>
-      <p className="review-txt">{getTxtToDisplay()}</p>
+      <p className="review-txt">
+        {getTxtToDisplay()}
+        {isTxtLong && isPreview && (
+          <button className="review-show-more-btn" onClick={onShowMore}>
+            Show more
+          </button>
+        )}
+      </p>
     </section>
   );
 }

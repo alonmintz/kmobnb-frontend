@@ -1,3 +1,4 @@
+import { svgService } from "../../services/svg.service";
 import { OverallRating } from "./OverallRating";
 
 const tempRatings = {
@@ -63,11 +64,19 @@ export function RatingsDisplay({ ratings }) {
       percentage: total ? Math.round((entry.count / total) * 100) : 0,
     }));
   }
-  console.log({ starsRatings });
 
   return (
     <section className="ratings-display">
       <OverallRating starsRatings={starsRatings} />
+      {categoryRatings.map((rating) => (
+        <div key={rating.category} className="category-rating">
+          <h4>
+            <span>{rating.category}</span>
+            <span>{rating.avgRate}</span>
+          </h4>
+          {svgService.getGenericSvg(rating.category, "category-icon")}
+        </div>
+      ))}
     </section>
   );
 }

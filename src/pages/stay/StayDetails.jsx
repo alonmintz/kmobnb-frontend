@@ -243,6 +243,10 @@ export function StayDetails() {
     ]);
   }
 
+  function getLimitedReviews() {
+    return reviews.length > 4 ? reviews.slice(0, 4) : reviews;
+  }
+
   function onReserveClick() {
     if (!isDatesChosen) {
       datePickerSectionRef.current?.scrollIntoView({
@@ -526,7 +530,7 @@ export function StayDetails() {
           <h2 className="title reviews-title">
             <span className="avg-rate">
               <img src={starIcon} />
-              {getAverageRate()}
+              {getAverageRating(reviews)}
             </span>
             <span className="dot"></span>
             <span>{`${reviews.length} reviews`}</span>
@@ -537,6 +541,14 @@ export function StayDetails() {
             isPreview
             onShowMore={() => setModalContentType("reviews")}
           />
+          <button
+            className="show-more-btn"
+            onClick={() => {
+              setModalContentType("reviews");
+            }}
+          >
+            Show all {reviews.length} reviews
+          </button>
         </section>
         <section className="map-section" id="map-section">
           <StayDetailsMap

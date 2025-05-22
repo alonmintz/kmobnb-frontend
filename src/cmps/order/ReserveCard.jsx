@@ -31,6 +31,8 @@ export function ReserveCard({
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const [nonAdultsIncluded, setNonAdultsIncluded] = useState();
   const dateWrapperRef = useRef();
+  const guestsRef = useRef();
+  const guestPickerRef = useRef();
   const reserveButtonRef = useRef();
   const navigate = useNavigate();
 
@@ -51,13 +53,22 @@ export function ReserveCard({
       ) {
         setShowDatePicker(false);
       }
+      if (
+        showGuestPicker &&
+        guestPickerRef.current &&
+        !guestPickerRef.current.contains(event.target) &&
+        guestsRef.current &&
+        !guestsRef.current.contains(event.target)
+      ) {
+        setShowGuestPicker(false);
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showDatePicker]);
+  }, [showDatePicker, showGuestPicker]);
 
   useEffect(() => {
     setGuestsDisplay(renderGuestsDisplay());
@@ -281,7 +292,11 @@ export function ReserveCard({
             </button>
           </section>
         )}
-        <div className="reserve-item guests" onClick={toggleGuestsPicker}>
+        <div
+          ref={guestsRef}
+          className="reserve-item guests"
+          onClick={toggleGuestsPicker}
+        >
           <span className="title">GUESTS</span>
           <span className="subtitle">{guestsDisplay}</span>
           <span className="arrow">
@@ -293,6 +308,7 @@ export function ReserveCard({
           </span>
           {showGuestPicker && (
             <section
+              ref={guestPickerRef}
               onClick={(ev) => ev.stopPropagation()}
               className="reserve-guest-picker"
             >

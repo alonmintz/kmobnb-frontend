@@ -4,21 +4,7 @@
   grid-template-rows: auto;
   grid-auto-flow: row;
   align-content: start;
-  gap: 1.4em;
+  column-gap: 7rem;
+  row-gap: 1.5rem;
   width: 100%;
-
-  //   grid-template-columns: 1fr 2.5em;
-  //   align-items: start;
-
-  //   > * {
-  //     grid-row: 1;
-  //   }
-
-  //   .actions {
-  //     grid-column: 2;
-
-  //     button {
-  //       margin: 0;
-  //     }
-  //   }
 }
