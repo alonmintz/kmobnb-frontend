@@ -7,7 +7,7 @@ export const SET_USER = "SET_USER";
 export const SET_WATCHED_USER = "SET_WATCHED_USER";
 export const REMOVE_USER = "REMOVE_USER";
 export const SET_USERS = "SET_USERS";
-export const SET_SCORE = "SET_SCORE";
+// export const SET_SCORE = "SET_SCORE";
 
 //TODO: refactor to fit our needs
 const initialState = {

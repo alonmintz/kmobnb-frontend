@@ -37,9 +37,9 @@ export function App() {
         <Route path="user/:userId" element={<UserDetails />} />
         <Route path="trips/:userId" element={<Trips />} />
         <Route path="wishlists/:userId" element={<WishLists />} />
-        <Route path="host/:userId" element={<Host />}>
+        <Route path="host" element={<Host />}>
           <Route index element={<Dashboard />} />
-          <Route path="Listings" element={<Listings />} />
+          <Route path="listings" element={<Listings />} />
           <Route path="stay/edit" element={<StayEdit />} />
         </Route>
         <Route path="*" element={<NotFound />} />
