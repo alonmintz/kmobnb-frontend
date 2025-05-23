@@ -40,19 +40,19 @@
         display: grid;
         grid-template-columns: 1fr auto;
         grid-template-rows: repeat(3, 1.5em) 1.8em;
-        column-gap: 1em;
+        column-gap: 1rem;
         grid-auto-flow: column;
         font-size: rem(15px); // TODO: move somewhere more appropriate. mixin?
         align-items: end;
 
         .bold-text {
             // TODO: move somewhere more appropriate. mixin?
-            font-weight: bold;
+            font-weight: 400;
         }
 
         .normal-text {
             color: grey;
-            font-weight: 100;
+            font-weight: 300;
         }
 
         .star-image {
