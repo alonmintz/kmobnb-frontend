@@ -28,7 +28,7 @@ export const stayActions = {
   setDatesRange,
 };
 
-async function loadStays(filterBy, startIdx, amount) {
+async function loadStays(filterBy, startIdx = 0, amount = 20) {
   try {
     const stays = await stayService.query(filterBy, startIdx, amount);
     store.dispatch({

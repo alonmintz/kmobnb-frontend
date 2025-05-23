@@ -1,0 +1,14 @@
+.listings {
+    .title-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        letter-spacing: 0.02em;
+
+        h1 {
+            padding-block: 2rem;
+            font-size: rem(26px);
+            font-weight: 400;
+        }
+    }
+}
