@@ -11,7 +11,7 @@ export function BnbYourButton() {
                     Manage listings
                 </NavLink>
                 :
-                <NavLink to="stay/edit" className="bnb-your-button">
+                <NavLink to="host/listing/edit" className="bnb-your-button">
                     Bnb your home
                 </NavLink>
             }

@@ -1,3 +1,11 @@
+
+
 export function Listings() {
-  return <section className="listings"></section>;
+
+  
+  return (
+    <section className="listings">
+      Hello, listings!
+    </section>
+  );
 }

@@ -20,6 +20,7 @@ export function AppHeader() {
 
   function getPageClass() {
     if (pathname === "/") return "stay-index-header";
+    if (pathname === "/host/listings") return "host-listings-header"
     if (isStayDetailsPage) return "stay-details-header";
     if (isOrderPage) return "order-page-header";
   }
