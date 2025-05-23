@@ -6,15 +6,19 @@
   min-height: 3.5rem;
   background-color: white;
   z-index: 10;
+
   &.stay-index-header {
     position: sticky;
     top: 0;
   }
+
   .header-container {
     grid-column: 2;
+
     .animate__animated.animate__fadeOutUp {
       --animate-duration: 0.25s;
     }
+
     .header-top {
       width: 100%;
       display: grid;
@@ -24,8 +28,10 @@
       justify-content: space-between;
       padding-block: 1.5rem;
       overflow: hidden;
+
       a {
         cursor: default;
+
         &:hover {
           text-decoration: none;
         }
@@ -33,21 +39,25 @@
 
       .logo-link {
         justify-self: start;
+
         .logo-container {
           grid-column: 1;
           display: flex;
           align-items: center;
           gap: rem(4px);
-          & > * {
+
+          &>* {
             margin: 0;
             cursor: pointer;
           }
+
           h3 {
             font-size: rem(24px);
             font-weight: 700;
             letter-spacing: -0.05em;
             color: #ff385c;
           }
+
           .logo {
             width: 38px;
             // height: 32px;
@@ -60,6 +70,7 @@
       .homes-title-container {
         grid-column: 2;
         justify-self: center;
+
         h2 {
           margin: 0;
           font-weight: 500;
@@ -72,6 +83,7 @@
         justify-self: center;
         width: 415px;
         padding-inline: rem(24px);
+
         .search-bar-mini {
           position: relative;
           display: grid;
@@ -86,9 +98,11 @@
           box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
           cursor: pointer;
           transition: box-shadow 0.2s ease;
+
           &:hover {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
           }
+
           .splitter {
             width: 1px;
             height: 60%;
@@ -96,11 +110,13 @@
             justify-self: center;
             align-self: center;
           }
+
           .mini-display {
             display: flex;
             align-items: center;
             height: 100%;
             padding-inline: 1rem;
+
             span {
               // height: 100%;
               font-size: rem(14px);
@@ -112,6 +128,7 @@
               color: #222222;
             }
           }
+
           .search-button {
             position: absolute;
             right: 0.5rem;
@@ -128,6 +145,7 @@
             border-radius: 50%;
             cursor: pointer;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
             svg {
               color: white;
               width: 0.75rem;
@@ -147,13 +165,25 @@
 
         font-size: 0.8em;
 
+        .bnb-your-button {
+          padding: 1.1em 1em;
+          border-radius: 2em;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
+
+
         a {
           color: #222222;
           font-weight: 500;
+
           &:hover {
             text-decoration: none;
             cursor: pointer;
           }
+
           .active {
             color: inherit;
           }
@@ -162,6 +192,7 @@
         button {
           margin: 0;
         }
+
         .user-info {
           position: relative;
           display: flex;
@@ -176,6 +207,7 @@
           border: 1px solid lightgray;
           border-radius: 2em;
           transition: box-shadow 0.3s ease;
+
           &:hover {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
           }
