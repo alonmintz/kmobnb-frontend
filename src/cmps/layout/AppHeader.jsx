@@ -4,8 +4,10 @@ import { useMatch } from "react-router-dom";
 import { HeaderStayIndex } from "./HeaderStayIndex";
 import { HeaderStayDetails } from "./HeaderStayDetails";
 import { HeaderOrderPage } from "./HeaderOrderPage";
+import { HeaderHost } from "./HeaderHost"
 import { useViewport } from "../../context/ViewportContext";
 import { StayFilter } from "../stay/StayFilter";
+
 export function AppHeader() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -20,12 +22,14 @@ export function AppHeader() {
 
   function getPageClass() {
     if (pathname === "/") return "stay-index-header";
+    if (pathname === "/host/listings") return "host-listings-header"
     if (isStayDetailsPage) return "stay-details-header";
     if (isOrderPage) return "order-page-header";
   }
 
   function headerRenderSwitch() {
     if (pathname === "/") return <HeaderStayIndex viewport={viewport} />;
+    if (pathname === "/host/listings") return <HeaderHost viewport={viewport} />;
     if (isStayDetailsPage) return <HeaderStayDetails viewport={viewport} />;
     if (isOrderPage) return <HeaderOrderPage viewport={viewport} />;
   }

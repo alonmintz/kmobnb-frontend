@@ -1,3 +1,3 @@
-export function Dashboard() {
+export function HostDashboard() {
   return <section className="dashboard"></section>;
 }

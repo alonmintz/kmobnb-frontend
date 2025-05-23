@@ -8,10 +8,10 @@ export function BnbYourButton() {
         <>
             {user && user.isHost ?
                 <NavLink to="host/listings" className="bnb-your-button">
-                    Manage listings
+                    Manage hosting
                 </NavLink>
                 :
-                <NavLink to="stay/edit" className="bnb-your-button">
+                <NavLink to="host/listing/edit" className="bnb-your-button">
                     Bnb your home
                 </NavLink>
             }

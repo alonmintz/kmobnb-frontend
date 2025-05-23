@@ -5,8 +5,8 @@ import { OrderPage } from "./pages/stay/OrderPage";
 import { UserDetails } from "./pages/user/UserDetails";
 import { Trips } from "./pages/user/Trips";
 import { WishLists } from "./pages/user/WishLists";
-import { Host } from "./pages/host/Host";
-import { Dashboard } from "./pages/host/Dashboard";
+// import { Host } from "./pages/host/Host";
+import { HostDashboard } from "./pages/host/Dashboard";
 import { Listings } from "./pages/host/Listings";
 import { StayEdit } from "./pages/host/StayEdit";
 import { AppHeader } from "./cmps/layout/AppHeader";
@@ -36,12 +36,10 @@ export function App() {
         <Route path="order/:stayId" element={<OrderPage />} />
         <Route path="user/:userId" element={<UserDetails />} />
         <Route path="trips/:userId" element={<Trips />} />
-        <Route path="wishlists/:userId" element={<WishLists />} />
-        <Route path="host" element={<Host />}>
-          <Route index element={<Dashboard />} />
-          <Route path="listings" element={<Listings />} />
-          <Route path="stay/edit" element={<StayEdit />} />
-        </Route>
+        <Route path="wishlists" element={<WishLists />} />
+        <Route path="host" index element={<HostDashboard />} />
+        <Route path="host/listings" element={<Listings />} />
+        <Route path="host/listing/edit" element={<StayEdit />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <AppFooter />
