@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import logo from "../../assets/img/logo.png";
 import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { NavMenu } from "../layout/NavMenu";
@@ -12,6 +12,7 @@ import { BnbYourButton } from "./BnbYourButton";
 export function HeaderOrderPage({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [isNavMenuVisible, setIsNavMenuVisible] = useState(false);
+  const userIconRef = useRef();
 
   function handleUserIconClick() {
     if (isNavMenuVisible) {
@@ -33,12 +34,19 @@ export function HeaderOrderPage({ viewport }) {
         <nav>
           {/*this bnb your home is temporerally disabled*/}
           <BnbYourButton />
-          <button className="user-info" onClick={handleUserIconClick}>
+          <button
+            className="user-info"
+            onClick={handleUserIconClick}
+            ref={userIconRef}
+          >
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
           {isNavMenuVisible ? (
-            <NavMenu onClose={() => setIsNavMenuVisible(false)} />
+            <NavMenu
+              onClose={() => setIsNavMenuVisible(false)}
+              triggeringButtonRef={userIconRef}
+            />
           ) : (
             ""
           )}

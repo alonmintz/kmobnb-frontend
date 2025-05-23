@@ -34,6 +34,7 @@ export function HeaderStayDetails({ viewport }) {
   const searchBarRef = useRef();
   const miniSearchBarRef = useRef();
   const homesTitleRef = useRef();
+  const userIconRef = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -201,12 +202,19 @@ export function HeaderStayDetails({ viewport }) {
         )}
         <nav>
           <BnbYourButton />
-          <button className="user-info" onClick={handleUserIconClick}>
+          <button
+            className="user-info"
+            onClick={handleUserIconClick}
+            ref={userIconRef}
+          >
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
           {isNavMenuVisible ? (
-            <NavMenu onClose={() => setIsNavMenuVisible(false)} />
+            <NavMenu
+              onClose={() => setIsNavMenuVisible(false)}
+              triggeringButtonRef={userIconRef}
+            />
           ) : (
             ""
           )}
