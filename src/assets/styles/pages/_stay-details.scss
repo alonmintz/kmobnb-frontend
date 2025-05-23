@@ -2,6 +2,19 @@
   display: grid;
   width: 100%;
 
+  .show-more-btn {
+    padding-block: 0.75rem;
+    padding-inline: 1rem;
+    margin-block-start: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgb(236, 235, 235);
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.1s ease;
+    &:hover {
+      background-color: lightgray;
+    }
+  }
   .title-section {
     display: flex;
     justify-content: space-between;
@@ -151,19 +164,18 @@
     column-gap: 5rem;
     padding-block: 2rem;
 
-    .show-more-btn {
-      padding-block: 0.75rem;
-      padding-inline: 1rem;
-      border-radius: 0.5rem;
-      background-color: rgb(236, 235, 235);
-      font-size: 1rem;
-      font-weight: 600;
-      transition: background-color 0.1s ease;
-
-      &:hover {
-        background-color: lightgray;
-      }
-    }
+    // .show-more-btn {
+    //   padding-block: 0.75rem;
+    //   padding-inline: 1rem;
+    //   border-radius: 0.5rem;
+    //   background-color: rgb(236, 235, 235);
+    //   font-size: 1rem;
+    //   font-weight: 600;
+    //   transition: background-color 0.1s ease;
+    //   &:hover {
+    //     background-color: lightgray;
+    //   }
+    // }
 
     .reserve-container {
       grid-area: reserve;
@@ -184,7 +196,6 @@
 
       .room-details-ol {
         display: flex;
-        gap: 3rem;
         padding-block-end: 0.5rem;
         margin: 0;
         list-style: none;
@@ -363,7 +374,30 @@
   .reviews-section {
     padding-block: 2rem;
     border-bottom: 1px solid lightgray;
-    //TODO: complete
+    .reviews-title {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      margin-block-end: 1.5rem;
+      font-weight: 500;
+      .avg-rate {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        img {
+          display: inline-block;
+          height: 0.8em;
+          margin-inline-end: 0.2rem;
+        }
+      }
+      .dot {
+        align-self: center;
+        height: 0.25rem;
+        width: 0.25rem;
+        background-color: black;
+        border-radius: 1rem;
+      }
+    }
   }
 
   .map-section {
