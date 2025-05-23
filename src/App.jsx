@@ -6,7 +6,7 @@ import { UserDetails } from "./pages/user/UserDetails";
 import { Trips } from "./pages/user/Trips";
 import { WishLists } from "./pages/user/WishLists";
 // import { Host } from "./pages/host/Host";
-import { HostDashboard } from "./pages/host/Dashboard";
+import { HostDashboard } from "./pages/host/HostDashboard";
 import { Listings } from "./pages/host/Listings";
 import { StayEdit } from "./pages/host/StayEdit";
 import { AppHeader } from "./cmps/layout/AppHeader";
