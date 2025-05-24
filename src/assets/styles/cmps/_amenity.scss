@@ -4,6 +4,10 @@
   gap: 1rem;
   width: fit-content;
   font-weight: 400;
+  &.edit-page {
+    display: grid;
+    font-weight: 500;
+  }
   .amenity-icon {
     display: block;
     height: 24px;

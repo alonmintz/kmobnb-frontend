@@ -1,0 +1,40 @@
+.room-type-bracket {
+  all: unset;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+  &:hover {
+    cursor: pointer;
+    border: 2px solid #222;
+  }
+  &.selected {
+    border: 2px solid #222;
+    background-color: #f7f7f7;
+  }
+  .type {
+    display: grid;
+    gap: 0.5rem;
+    padding-inline: 1rem;
+    padding-block: 1.5rem;
+    .title {
+      color: rgb(34, 34, 34);
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+    .desc {
+      color: rgb(106, 106, 106);
+      font-size: 0.9rem;
+    }
+  }
+  .icon {
+    padding-inline-end: 1rem;
+    img {
+      min-height: 30px;
+      min-width: 30px;
+    }
+  }
+}

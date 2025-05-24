@@ -27,7 +27,6 @@ export function App() {
     return location.pathname === "/" ? "main" : "secondary";
   }
   return (
-    //todo: add listener to current page to render main/secondary layouts
     <main className={`layout ${layoutClass}`}>
       <AppHeader />
       <Routes>
@@ -40,6 +39,7 @@ export function App() {
         <Route path="host" index element={<HostDashboard />} />
         <Route path="host/listings" element={<Listings />} />
         <Route path="host/listing/edit" element={<StayEdit />} />
+        <Route path="host/listing/edit/:listingId" element={<StayEdit />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <AppFooter />
