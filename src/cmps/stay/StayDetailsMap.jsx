@@ -24,6 +24,7 @@ const LocationPin = () => (
   </div>
 );
 
+//TODO: export google API key to env variable
 export function StayDetailsMap({ city, country, lat, lng }) {
   const [coordinates, setCoordinates] = useState({ lat, lng });
   const zoom = 8;

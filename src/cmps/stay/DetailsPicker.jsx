@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
 export function DetailsPicker({ details, onSelect }) {
   return (
@@ -29,7 +28,7 @@ function DetailSelectionBracket({ detail, onSelect }) {
             event.preventDefault();
             onSelect({ actionType: "decrease", type });
           }}
-          disabled={!count}
+          disabled={count <= 1}
         >
           <FontAwesomeIcon icon={faMinus} />
         </button>

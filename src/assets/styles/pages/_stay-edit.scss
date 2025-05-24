@@ -1,12 +1,18 @@
 .stay-edit {
   display: grid;
-  gap: 1.5rem;
+  gap: 3rem;
   width: 100%;
   min-height: 100vh;
   .title {
     font-size: 1.5rem;
     font-weight: 600;
     margin-block-end: 1.5rem;
+  }
+  .char-counter {
+    font-size: 0.875rem;
+    color: #717171;
+    font-weight: 700;
+    text-align: left;
   }
   .stay-edit-modal {
     box-sizing: border-box;
@@ -19,7 +25,6 @@
       top: 0;
       height: 1rem;
       width: 100%;
-      // background-color: red;
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
       z-index: 1;
       opacity: 0;
@@ -31,6 +36,30 @@
     }
   }
   .name-section {
+    display: flex;
+    width: 100%;
+    margin-block-start: 1.5rem;
+    .name-label {
+      width: 100%;
+      .name {
+        flex: 1;
+        line-height: 1.5;
+        width: 100%;
+        font-size: 1.625rem;
+        padding: 1rem;
+        margin: 0;
+        margin-block-end: 0.5rem;
+        border: 1px solid lightgray;
+        border-radius: 1rem;
+        background-color: transparent;
+        outline: 0;
+        font-weight: 500;
+        &::placeholder {
+          color: #999;
+          font-weight: 400;
+        }
+      }
+    }
   }
   .img-section {
     position: relative;
@@ -118,7 +147,7 @@
   .type-details-container {
     display: grid;
     grid-auto-flow: column;
-    gap: 1rem;
+    gap: 5rem;
     grid-template-columns: 2fr 1fr;
     .room-type-picker {
       display: grid;
@@ -197,6 +226,33 @@
     }
   }
   .summary-section {
+    .summary-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-family: inherit;
+      width: 100%;
+      margin: 0 auto;
+      .summary {
+        padding: 1rem;
+        border: 1px solid lightgray;
+        border-radius: 12px;
+        font-size: 1rem;
+        line-height: 1.5;
+        resize: vertical;
+        min-height: 120px;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #2222;
+        }
+
+        &::placeholder {
+          color: #999;
+        }
+      }
+    }
   }
   .location-section {
   }

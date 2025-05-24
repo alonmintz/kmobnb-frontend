@@ -7,12 +7,15 @@ import { INITIAL_GUESTS, stayService as local } from "./stay.service.local";
 
 function getEmptyStay() {
   return {
+    name: "",
     imgUrls: [],
     price: 0,
-    capacity: 0,
-    bathrooms: 0,
-    bedrooms: 0,
+    capacity: 1,
+    bathrooms: 1,
+    bedrooms: 1,
     amenities: [],
+    summary: "",
+    loc: {},
   };
 }
 
@@ -76,6 +79,17 @@ function getDatesRangeFromSearchParams(searchParams) {
   return [searchParams.get("startDate"), searchParams.get("endDate")];
 }
 
+function getEmptyLocation() {
+  return {
+    country: "",
+    countryCode: "",
+    city: "",
+    address: "",
+    lat: "",
+    lan: "",
+  };
+}
+
 //TODO: modify to remote when we learn backend
 // const service = VITE_LOCAL === "true" ? local : remote;
 const service = local;
@@ -85,6 +99,7 @@ export const stayService = {
   getFilterByFromSearchParams,
   getGuestsFromSearchParams,
   getDatesRangeFromSearchParams,
+  getEmptyLocation,
   ...service,
 };
 
