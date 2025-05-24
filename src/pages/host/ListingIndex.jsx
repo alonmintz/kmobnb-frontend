@@ -29,12 +29,12 @@ export function ListingIndex() {
       <div className="title-section">
         <h1>Hello, host{user ? " " + user.fullname : ""}!</h1>
       </div>
-      <div className="listings-list">
+      <div className="listing-list">
           {}
           {listings.map((listing) =>
             <div key={listing._id} className="listing-preview">
-              <div>{listing.name}</div>
               <img src={listing.imgUrls[0]} />
+              <div>{listing.name}</div>
             </div>
           )}
       </div>
