@@ -5,7 +5,7 @@ export function Host() {
   const user = useSelector(storeState => storeState.userModule.user)
 
   return (
-    <section className="host">
+    <section className="host-page">
       <header className="title-section">
         <h1>Hello, host{user ? " " + user.fullname : ""}!</h1>
       </header>
