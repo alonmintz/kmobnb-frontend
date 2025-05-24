@@ -14,6 +14,7 @@ import { AppFooter } from "./cmps/layout/AppFooter";
 import { UserMsg } from "./cmps/general/UserMsg";
 import { NotFound } from "./pages/NotFound";
 import { useEffect, useState } from "react";
+import { OrderIndex } from "./pages/host/OrderIndex";
 
 export function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ export function App() {
           <Route path="listings" element={<ListingIndex />} />
           <Route path="listing/edit" element={<StayEdit />} />
           <Route path="listing/edit/:listingId" element={<StayEdit />} />
+          <Route path="orders" element={<OrderIndex />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

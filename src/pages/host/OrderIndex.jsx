@@ -1,0 +1,72 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+// import { stayActions } from "../../store/actions/stay.actions";
+import { orderService } from "../../services/order/order.service.local";
+
+export function OrderIndex() {
+  const user = useSelector(storeState => storeState.userModule.user)
+  // const [listings, setListings] = useState([])
+  const [orders, setOrders] = useState([])
+
+  useEffect(() => {
+    if (user) {
+      // stayActions.loadStays({ hostId: user._id })
+      //   .then(setListings)
+      //   .catch(err => console.log('Failed to load listings:', err))
+      orderService.getOrdersByHostId(user._id)
+        .then(orders => {
+          const ordersWithStatus = orders.map(order => {
+            const now = new Date();
+            const startDate = new Date(order.startDate);
+            const endDate = new Date(order.endDate);
+            
+            let status;
+            if (startDate > now) {
+              status = "future";
+            } else if (endDate < now) {
+              status = "past";
+            } else {
+              status = "active";
+            }
+            
+            return { ...order, status };
+          });
+          setOrders(ordersWithStatus);
+        })        .catch(err => console.log('Failed to load orders:', err))
+    }
+  }, [user])
+
+  return (
+    <section className="order-index">
+      <header className="title-section">
+        <h1>Your Orders</h1>
+      </header>
+      <div className="order-list">
+        <table className="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Listing Name</th>
+              <th>Status</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>Guests</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map(order => (
+              <tr key={order._id}>
+                <td>{order._id}</td>
+                <td>{order.stay?.name}</td>
+                <td>{order.status}</td>
+                <td>{order.startDate}</td>
+                <td>{order.endDate}</td>
+                <td>{order.guests}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
+}
