@@ -95,7 +95,8 @@ const emptyFilter = {
   endDate: null,
   capacity: 0,
   isPetsAllowed: false,
-  type: ""
+  type: "",
+  hostId: ""
 }
 
 async function query(
@@ -106,7 +107,7 @@ async function query(
   try {
     let stays = await storageService.query(STORAGE_KEY);
 
-    const { city, startDate, endDate, capacity, isPetsAllowed, type } =
+    const { city, startDate, endDate, capacity, isPetsAllowed, type, hostId } =
       filterBy;
 
     if (city) {
@@ -123,6 +124,9 @@ async function query(
     }
     if (type) {
       stays = stays.filter((stay) => stay.type === type);
+    }
+    if (hostId) {
+      stays = stays.filter((stay) => stay.host._id === hostId);
     }
 
     stays = stays.slice(bulkIdx * amount, bulkIdx * amount + amount);

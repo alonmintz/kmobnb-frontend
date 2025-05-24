@@ -9,7 +9,7 @@
     border-radius: 0.5rem;
     background-color: rgb(236, 235, 235);
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 400;
     transition: background-color 0.1s ease;
     &:hover {
       background-color: lightgray;
@@ -23,8 +23,8 @@
 
     h1 {
       padding-block: 2rem;
-      font-size: 2rem;
-      font-weight: 600;
+      font-size: rem(26px);
+      font-weight: 400;
     }
 
     .save-btn {
@@ -64,7 +64,7 @@
       .save-btn-text {
         font-size: 1rem;
         text-decoration: underline;
-        font-weight: 600;
+        font-weight: 400;
       }
     }
   }
@@ -190,8 +190,8 @@
       border-bottom: 1px solid lightgray;
 
       .room-type {
-        font-size: 1.5rem;
-        font-weight: 600;
+        font-size: rem(22px);
+        font-weight: 400;
       }
 
       .room-details-ol {
@@ -204,6 +204,7 @@
           display: inline;
           position: relative;
           color: #6a6a6a;
+          font-size: rem(16px);
 
           &::after {
             content: "·";
@@ -218,7 +219,8 @@
 
       .avg-rate {
         display: flex;
-        font-weight: bold;
+        font-weight: 400;
+        font-size: rem(17px);
 
         img {
           display: inline-block;
@@ -257,13 +259,13 @@
 
           // grid-column: 2/3;
           .host {
-            font-weight: 500;
+            font-weight: 400;
             font-size: 1rem;
           }
 
           .super-host {
-            font-weight: 400;
-            font-size: 0.9rem;
+            font-weight: 200;
+            font-size: rem(14px);
             color: #6a6a6a;
           }
         }

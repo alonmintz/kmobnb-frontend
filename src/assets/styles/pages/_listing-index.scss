@@ -1,0 +1,33 @@
+.listings {
+    .title-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        letter-spacing: 0.02em;
+
+        h1 {
+            padding-block: 2rem;
+            font-size: rem(26px);
+            font-weight: 400;
+        }
+    }
+
+    .listing-list {
+        display: grid;
+        width: 100%;
+        min-height: 100vh;
+        align-content: start;
+        grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+        grid-template-rows: auto;
+        grid-auto-flow: row;
+        gap: 1.4em;
+
+        .listing-preview {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: 'Airbnb';
+        }
+    }
+}

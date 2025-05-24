@@ -22,14 +22,14 @@ export function AppHeader() {
 
   function getPageClass() {
     if (pathname === "/") return "stay-index-header";
-    if (pathname === "/host/listings") return "host-listings-header"
+    if (pathname.startsWith("/host")) return "host-listings-header"
     if (isStayDetailsPage) return "stay-details-header";
     if (isOrderPage) return "order-page-header";
   }
 
   function headerRenderSwitch() {
     if (pathname === "/") return <HeaderStayIndex viewport={viewport} />;
-    if (pathname === "/host/listings") return <HeaderHost viewport={viewport} />;
+    if (pathname.startsWith("/host")) return <HeaderHost viewport={viewport} />;
     if (isStayDetailsPage) return <HeaderStayDetails viewport={viewport} />;
     if (isOrderPage) return <HeaderOrderPage viewport={viewport} />;
   }
