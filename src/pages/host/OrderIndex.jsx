@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { stayActions } from "../../store/actions/stay.actions";
 import { orderService } from "../../services/order/order.service.local";
+import { humanDateFormat } from "../../services/util.service";
 
 export function OrderIndex() {
   const user = useSelector(storeState => storeState.userModule.user)
@@ -19,7 +20,7 @@ export function OrderIndex() {
             const now = new Date();
             const startDate = new Date(order.startDate);
             const endDate = new Date(order.endDate);
-            
+
             let status;
             if (startDate > now) {
               status = "future";
@@ -28,11 +29,11 @@ export function OrderIndex() {
             } else {
               status = "active";
             }
-            
+
             return { ...order, status };
           });
           setOrders(ordersWithStatus);
-        })        .catch(err => console.log('Failed to load orders:', err))
+        }).catch(err => console.log('Failed to load orders:', err))
     }
   }, [user])
 
@@ -59,8 +60,8 @@ export function OrderIndex() {
                 <td>{order._id}</td>
                 <td>{order.stay?.name}</td>
                 <td>{order.status}</td>
-                <td>{order.startDate}</td>
-                <td>{order.endDate}</td>
+                <td>{humanDateFormat(order.startDate)}</td>
+                <td>{humanDateFormat(order.endDate)}</td>
                 <td>{order.guests}</td>
               </tr>
             ))}
