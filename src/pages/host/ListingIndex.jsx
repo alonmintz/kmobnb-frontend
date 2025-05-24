@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
 import { stayActions } from "../../store/actions/stay.actions";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 export function ListingIndex() {
+  const navigate = useNavigate()
   const user = useSelector(storeState => storeState.userModule.user)
   const [listings, setListings] = useState([])
 
@@ -13,6 +15,11 @@ export function ListingIndex() {
         .catch(err => console.log('Failed to load listings:', err))
     }
   }, [user])
+
+  function onEditClick(ev, listingId) {
+    ev.stopPropagation()
+    navigate(`/host/listing/edit/${listingId}`)
+  }
 
   if (!listings || !listings.length || !user) {
     return (
@@ -30,16 +37,20 @@ export function ListingIndex() {
         <h1>Hello, host{user ? " " + user.fullname : ""}!</h1>
       </div>
       <div className="listing-list">
-          {}
-          {listings.map((listing) =>
-            <div key={listing._id} className="listing-preview">
-              <img src={listing.imgUrls[0]} />
-              <div className="listing-name">{listing.name}</div>
-              <div className="listing-location">{listing.loc.country}, {listing.loc.city}</div>
-            </div>
-          )}
-      </div>
-
-    </section>
+        {listings.map((listing) =>
+          <div
+            key={listing._id}
+            className="listing-preview"
+            onClick={() => navigate(`/stay/${listing._id}`)}
+          >
+            <img src={listing.imgUrls[0]} />
+            <div className="listing-name">{listing.name}</div>
+            <div className="listing-location"> {listing.loc.country}, {listing.loc.city}</div>
+            <button onClick={(ev) => onEditClick(ev, listing._id)}>Edit Listing</button>
+          </div>
+        )
+        }
+      </div >
+    </section >
   );
 }
