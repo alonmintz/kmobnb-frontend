@@ -1,5 +1,6 @@
 .listings {
     min-height: 82vh;
+
     .title-section {
         display: flex;
         justify-content: space-between;
@@ -26,6 +27,19 @@
             font-family: 'Airbnb';
             cursor: pointer;
 
+            img {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 1rem;
+            }
+
+            button {
+                border-radius: 1rem;
+                margin: 0;
+            }
+
             .listing-name {
                 padding-block: 5px;
                 line-height: 1.2em;
@@ -35,20 +49,13 @@
             }
 
             .listing-location {
-                // padding-block: 1rem;
+                padding-bottom: 10px;
                 line-height: 1.5em;
                 font-size: rem(14px);
                 font-weight: 200;
                 color: gray;
             }
 
-            img {
-                width: 100%;
-                aspect-ratio: 1 / 1;
-                object-fit: cover;
-                object-position: center;
-                border-radius: 1rem;
-            }
         }
     }
 }
