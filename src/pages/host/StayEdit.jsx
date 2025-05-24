@@ -212,6 +212,7 @@ import { TypeCarousel } from "../../cmps/stay/TypeCarousel";
 import { Amenity } from "../../cmps/stay/Amenity";
 import { Modal } from "../../cmps/general/Modal";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
+import { LocationPicker } from "../../cmps/stay/LocationPicker";
 
 const ROOM_TYPES_NAMES = [
   "Entire home/apartment",
@@ -302,12 +303,18 @@ const AMENITIES_NAMES = [
   "Self check-in",
   "Lockbox",
 ];
+
+const MAX_NAME_CHARS = 50;
+
+const MAX_SUMMARY_CHARS = 500;
+
 export function StayEdit() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [stayToEdit, setStayToEdit] = useState(stayService.getEmptyStay());
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalContentType, setModalContentType] = useState("");
+  // const [summaryText, setSummaryText] = useState("");
 
   useEffect(() => {
     console.log({ stayToEdit });
@@ -378,10 +385,6 @@ export function StayEdit() {
     setStayToEdit((prevStayToEdit) => ({ ...prevStayToEdit, type }));
   }
 
-  // function getSelectedAmenityClass(amenity) {
-  //   return stayToEdit.amenities.includes(amenity) ? "selected" : "";
-  // }
-
   function handleAmenityPreviewClick(amenity) {
     if (stayToEdit.amenities.includes(amenity)) {
       setStayToEdit((prevStayToEdit) => ({
@@ -404,6 +407,15 @@ export function StayEdit() {
       amenities: [...newAmenities],
     }));
     setModalContentType("");
+  }
+
+  function handleLocationChange(newLocation) {
+    console.log("hereeee");
+
+    setStayToEdit((prevStayToEdit) => ({
+      ...prevStayToEdit,
+      loc: { ...newLocation },
+    }));
   }
 
   function renderImagesTemplate() {
@@ -553,17 +565,21 @@ export function StayEdit() {
   return (
     <section className="stay-edit layout secondary full">
       <section className="name-section">
-        <label htmlFor="name">
+        <label className="name-label" htmlFor="name">
           <input
             type="text"
+            className="name"
             name="name"
-            id="name"
-            placeholder="Your place's name"
+            placeholder="Let's give your place a title"
+            maxLength={MAX_NAME_CHARS}
             value={stayToEdit.name}
             disabled={isLoading}
             onChange={handleInputChange}
             required
           />
+          <div className="char-counter">
+            <span>{`${stayToEdit.name.length}/${MAX_NAME_CHARS}`}</span>
+          </div>
         </label>
       </section>
       <section className="img-section">{renderImagesTemplate()}</section>
@@ -605,8 +621,28 @@ export function StayEdit() {
           stayAmenities={stayToEdit.amenities}
         />
       </section>
-      <section className="summary-section"></section>
-      <section className="location-section"></section>
+      <section className="summary-section">
+        <h2 className="title">Create your description</h2>
+        <div className="summary-container">
+          <textarea
+            className="summary"
+            name="summary"
+            placeholder="For example: Take a break and unwind at this peaceful oasis..."
+            maxLength={MAX_SUMMARY_CHARS}
+            value={stayToEdit.summary}
+            onChange={handleInputChange}
+          />
+          <div className="char-counter">
+            <span>{`${stayToEdit.summary.length}/${MAX_SUMMARY_CHARS}`}</span>
+          </div>
+        </div>
+      </section>
+      <section className="location-section">
+        <LocationPicker
+          location={stayToEdit.loc}
+          onChange={handleLocationChange}
+        />
+      </section>
       {isEditModalOpen && (
         <DynamicEditsModal>{renderModalContent()}</DynamicEditsModal>
       )}
