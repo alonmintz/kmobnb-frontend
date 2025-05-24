@@ -34,7 +34,8 @@ export function ListingIndex() {
           {listings.map((listing) =>
             <div key={listing._id} className="listing-preview">
               <img src={listing.imgUrls[0]} />
-              <div>{listing.name}</div>
+              <div className="listing-name">{listing.name}</div>
+              <div className="listing-location">{listing.loc.country}, {listing.loc.city}</div>
             </div>
           )}
       </div>
