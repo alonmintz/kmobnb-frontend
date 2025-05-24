@@ -11,7 +11,7 @@ import { stayService } from "../../services/stay";
 import { subDays, format } from "date-fns";
 import starIcon from "../../assets/img/rating-star.svg";
 import visaIcon from "../../assets/img/order/visa.svg";
-import { orderService } from "../../services/order/order,service.local";
+import { orderService } from "../../services/order/order.service.local";
 import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
 
 //TODO: move to order service:
