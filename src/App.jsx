@@ -7,7 +7,7 @@ import { Trips } from "./pages/user/Trips";
 import { WishLists } from "./pages/user/WishLists";
 // import { Host } from "./pages/host/Host";
 import { HostDashboard } from "./pages/host/HostDashboard";
-import { Listings } from "./pages/host/Listings";
+import { ListingIndex } from "./pages/host/ListingIndex";
 import { StayEdit } from "./pages/host/StayEdit";
 import { AppHeader } from "./cmps/layout/AppHeader";
 import { AppFooter } from "./cmps/layout/AppFooter";
@@ -26,6 +26,7 @@ export function App() {
   function getLayoutClass() {
     return location.pathname === "/" ? "main" : "secondary";
   }
+  
   return (
     //todo: add listener to current page to render main/secondary layouts
     <main className={`layout ${layoutClass}`}>
@@ -38,7 +39,7 @@ export function App() {
         <Route path="trips/:userId" element={<Trips />} />
         <Route path="wishlists" element={<WishLists />} />
         <Route path="host" index element={<HostDashboard />} />
-        <Route path="host/listings" element={<Listings />} />
+        <Route path="host/listings" element={<ListingIndex />} />
         <Route path="host/listing/edit" element={<StayEdit />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
