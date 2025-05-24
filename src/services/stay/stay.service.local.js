@@ -1,6 +1,5 @@
 import { storageService } from "../async-storage.service";
-import { loadFromStorage, makeId, saveToStorage } from "../util.service";
-import { userService } from "../user";
+import { loadFromStorage, saveToStorage } from "../util.service";
 import STAYS_DATA from "./stay_mockdata.json";
 import mauiIcon from "../../assets/img/city-icons/maui-icon.png";
 import montrealIcon from "../../assets/img/city-icons/montreal-icon.png";

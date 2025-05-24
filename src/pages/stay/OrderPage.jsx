@@ -267,6 +267,9 @@ export function OrderPage() {
   async function submitOrder() {
     const orderToSave = {
       userId: loggedInUser._id,
+      userFullname: loggedInUser.fullname,
+      userImgUrl: loggedInUser.imgUrl,
+      stayName: name,
       stayId: _id,
       startDate,
       endDate,
