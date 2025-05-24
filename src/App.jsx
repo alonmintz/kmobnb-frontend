@@ -5,7 +5,7 @@ import { OrderPage } from "./pages/stay/OrderPage";
 import { UserDetails } from "./pages/user/UserDetails";
 import { Trips } from "./pages/user/Trips";
 import { WishLists } from "./pages/user/WishLists";
-// import { Host } from "./pages/host/Host";
+import { Host } from "./pages/host/Host";
 import { HostDashboard } from "./pages/host/HostDashboard";
 import { ListingIndex } from "./pages/host/ListingIndex";
 import { StayEdit } from "./pages/host/StayEdit";
@@ -26,7 +26,7 @@ export function App() {
   function getLayoutClass() {
     return location.pathname === "/" ? "main" : "secondary";
   }
-  
+
   return (
     <main className={`layout ${layoutClass}`}>
       <AppHeader />
@@ -37,10 +37,12 @@ export function App() {
         <Route path="user/:userId" element={<UserDetails />} />
         <Route path="trips/:userId" element={<Trips />} />
         <Route path="wishlists" element={<WishLists />} />
-        <Route path="host" index element={<HostDashboard />} />
-        <Route path="host/listings" element={<ListingIndex />} />
-        <Route path="host/listing/edit" element={<StayEdit />} />
-        <Route path="host/listing/edit/:listingId" element={<StayEdit />} />
+        <Route path="host" element={<Host />} >
+          {/* <Route path="dashboard" index element={<HostDashboard />} /> */}
+          <Route path="listings" element={<ListingIndex />} />
+          <Route path="listing/edit" element={<StayEdit />} />
+          <Route path="listing/edit/:listingId" element={<StayEdit />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <AppFooter />

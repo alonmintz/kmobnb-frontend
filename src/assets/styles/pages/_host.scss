@@ -1,0 +1,21 @@
+.host {
+  min-height: 82vh;
+
+  .title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 0.02em;
+
+    h1 {
+      padding-top: 2rem;
+      padding-bottom: 1rem;
+      font-size: rem(26px);
+      font-weight: 400;
+    }
+  }
+
+  .host-anchor-header {
+    z-index: 0;
+  }
+}

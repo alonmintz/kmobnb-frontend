@@ -34,7 +34,7 @@ export function ListingIndex() {
   return (
     <section className="listings">
       <div className="title-section">
-        <h1>Hello, host{user ? " " + user.fullname : ""}!</h1>
+        <h1>Your Listings</h1>
       </div>
       <div className="listing-list">
         {listings.map((listing) =>
