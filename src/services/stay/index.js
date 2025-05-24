@@ -6,8 +6,14 @@ import { INITIAL_GUESTS, stayService as local } from "./stay.service.local";
 // import { stayService as remote } from "./stay.service.remote";
 
 function getEmptyStay() {
-  //TODO: refactor to stay object
-  return {};
+  return {
+    imgUrls: [],
+    price: 0,
+    capacity: 0,
+    bathrooms: 0,
+    bedrooms: 0,
+    amenities: [],
+  };
 }
 
 function getDefaultFilter() {

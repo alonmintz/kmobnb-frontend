@@ -305,7 +305,7 @@ const AMENITIES_NAMES = [
 export function StayEdit() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const [stayToEdit, setStayToEdit] = useState({});
+  const [stayToEdit, setStayToEdit] = useState(stayService.getEmptyStay());
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalContentType, setModalContentType] = useState("");
 
