@@ -27,4 +27,16 @@
   .host-anchor-header {
     z-index: 0;
   }
+
+  .anchor-link {
+    .anchor-name {
+      font-weight: 100;
+    }
+
+    &.active {
+      .anchor-name {
+        font-weight: 500;
+      }
+    }
+  }
 }
