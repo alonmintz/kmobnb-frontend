@@ -21,6 +21,11 @@ export function ListingIndex() {
     navigate(`/host/listing/edit/${listingId}`)
   }
 
+  function onViewListingAsGuestClick(ev, listingId) {
+    ev.stopPropagation()
+    navigate(`/stay/${listingId}`)
+  }
+
   if (!listings || !listings.length || !user) {
     return (
       <div className="listings">
@@ -47,7 +52,7 @@ export function ListingIndex() {
             <div className="listing-name">{listing.name}</div>
             <div className="listing-location"> {listing.loc.country}, {listing.loc.city}</div>
             <button onClick={(ev) => onEditClick(ev, listing._id)}>Edit Listing</button>
-            <button onClick={() => navigate(`/stay/${listing._id}`)}>View listing as guest</button>
+            <button onClick={(ev) => onViewListingAsGuestClick(ev, listing._id)}>View listing as guest</button>
           </div>
         )
         }
