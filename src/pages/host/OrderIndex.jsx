@@ -39,7 +39,7 @@ export function OrderIndex() {
 
   return (
     <section className="order-index">
-      <header className="title-section">
+      <header className="section-title">
         <h1>Your Orders</h1>
       </header>
       <div className="order-list">

@@ -33,7 +33,7 @@ export function ListingIndex() {
 
   return (
     <section className="listings">
-      <div className="title-section">
+      <div className="section-title">
         <h1>Your Listings</h1>
       </div>
       <div className="listing-list">

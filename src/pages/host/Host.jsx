@@ -7,7 +7,7 @@ export function Host() {
 
   return (
     <section className="host-page">
-      <header className="title-section">
+      <header className="page-title">
         <h1>Hello, host{user ? " " + user.fullname : ""}!</h1>
       </header>
       <div className="anchor-header host-anchor-header">
