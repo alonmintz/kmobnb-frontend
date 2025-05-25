@@ -41,12 +41,13 @@ export function ListingIndex() {
           <div
             key={listing._id}
             className="listing-preview"
-            onClick={() => navigate(`/stay/${listing._id}`)}
+            onClick={() => navigate(`/host/orders?listingId=${listing._id}`)}
           >
             <img src={listing.imgUrls[0]} />
             <div className="listing-name">{listing.name}</div>
             <div className="listing-location"> {listing.loc.country}, {listing.loc.city}</div>
             <button onClick={(ev) => onEditClick(ev, listing._id)}>Edit Listing</button>
+            <button onClick={() => navigate(`/stay/${listing._id}`)}>View listing as guest</button>
           </div>
         )
         }
