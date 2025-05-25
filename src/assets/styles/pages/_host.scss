@@ -1,13 +1,13 @@
 .host-page {
   min-height: 82vh;
 
-  .page-title {
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-    font-size: rem(26px);
-    font-weight: 400;
-    letter-spacing: 0.02em;
-  }
+  // .page-title {
+  //   padding-top: 2rem;
+  //   padding-bottom: 1rem;
+  //   font-size: rem(26px);
+  //   font-weight: 400;
+  //   letter-spacing: 0.02em;
+  // }
 
   .section-title {
     display: flex;
@@ -25,10 +25,12 @@
   }
 
   .host-anchor-header {
-    z-index: 0;
+    z-index: 1;
   }
 
   .anchor-link {
+    margin: 10px;
+
     .anchor-name {
       font-weight: 100;
     }

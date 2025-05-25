@@ -7,11 +7,11 @@ export function Host() {
 
   return (
     <section className="host-page">
-      <header className="page-title">
-        <h1>Hello, host{user ? " " + user.fullname : ""}!</h1>
-      </header>
+      {/* <header className="page-title">
+      </header> */}
       <div className="anchor-header host-anchor-header">
         <div className="anchor-header-container">
+        <h1>{user ? "Hello, host " + user.fullname : "Please log in"}</h1>
           <nav className="anchor-nav">
             <NavLink to="listings" className="anchor-link">
               <span className="anchor-name">Listings</span>
