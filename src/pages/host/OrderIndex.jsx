@@ -4,17 +4,28 @@ import { useSelector } from "react-redux";
 import { orderService } from "../../services/order/order.service.local";
 import { humanDateFormat, humanDateTimeFormat } from "../../services/util.service";
 import { useSearchParams } from "react-router-dom";
+import { stayActions } from "../../store/actions/stay.actions";
 
 export function OrderIndex() {
   const user = useSelector(storeState => storeState.userModule.user)
   const [orders, setOrders] = useState([])
   const [searchParams] = useSearchParams()
+  const [listingName, setListingName] = useState('')
 
   useEffect(() => {
     if (!user) return
 
     const filter = {
       listingId: searchParams.get('listingId')
+    }
+
+    if (filter.listingId) {
+      stayActions.getStayById(filter.listingId)
+        .then(stay => {
+          console.log('Listing details:', stay.name)
+          setListingName(stay.name)
+        })
+        .catch(err => console.log('Failed to load listing details:', err))
     }
 
     orderService.getOrdersByHostId(user._id)
@@ -46,7 +57,7 @@ export function OrderIndex() {
   return (
     <section className="order-index">
       <header className="section-title">
-        <h1>Your Orders</h1>
+        <h1>Your Orders{listingName ? ` - filtering for listing "${listingName}"` : ""}</h1>
       </header>
       <div className="order-list">
         <table className="orders-table">
