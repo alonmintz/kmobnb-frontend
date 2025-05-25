@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { stayActions } from "../../store/actions/stay.actions";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export function ListingIndex() {
   const navigate = useNavigate()
@@ -16,9 +17,9 @@ export function ListingIndex() {
     }
   }, [user])
 
-  function onEditClick(ev, listingId) {
+  function onViewListingAsGuestClick(ev, listingId) {
     ev.stopPropagation()
-    navigate(`/host/listing/edit/${listingId}`)
+    navigate(`/stay/${listingId}`)
   }
 
   if (!listings || !listings.length || !user) {
@@ -33,7 +34,7 @@ export function ListingIndex() {
 
   return (
     <section className="listings">
-      <div className="title-section">
+      <div className="section-title">
         <h1>Your Listings</h1>
       </div>
       <div className="listing-list">
@@ -41,12 +42,25 @@ export function ListingIndex() {
           <div
             key={listing._id}
             className="listing-preview"
-            onClick={() => navigate(`/stay/${listing._id}`)}
+            onClick={() => navigate(`/host/orders?listingId=${listing._id}`)}
           >
             <img src={listing.imgUrls[0]} />
             <div className="listing-name">{listing.name}</div>
             <div className="listing-location"> {listing.loc.country}, {listing.loc.city}</div>
-            <button onClick={(ev) => onEditClick(ev, listing._id)}>Edit Listing</button>
+            <Link
+              to={`/host/listing/edit/${listing._id}`}
+              onClick={(ev => ev.stopPropagation())}
+              className="button"
+            >
+              Edit Listing
+            </Link>
+            <Link
+              to={`/stay/${listing._id}`}
+              onClick={(ev => ev.stopPropagation())}
+              className="button"
+            >
+              View listing as guest
+            </Link>
           </div>
         )
         }

@@ -163,3 +163,24 @@ export function getTimeAgoFromNow(dateString) {
   const diffInYears = Math.floor(diffInDays / 365);
   return `${diffInYears} year${diffInYears > 1 ? "s" : ""} ago`;
 }
+
+export function humanDateFormat(date) {
+  if (!date) return ""
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
+export function humanDateTimeFormat(date) {
+  if (!date) return ""
+  return new Date(date).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  })
+}

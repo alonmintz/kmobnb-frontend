@@ -39,7 +39,7 @@ export function App() {
         <Route path="trips/:userId" element={<Trips />} />
         <Route path="wishlists" element={<WishLists />} />
         <Route path="host" element={<Host />} >
-          {/* <Route path="dashboard" index element={<HostDashboard />} /> */}
+          <Route path="dashboard" index element={<HostDashboard />} />
           <Route path="listings" element={<ListingIndex />} />
           <Route path="listing/edit" element={<StayEdit />} />
           <Route path="listing/edit/:listingId" element={<StayEdit />} />

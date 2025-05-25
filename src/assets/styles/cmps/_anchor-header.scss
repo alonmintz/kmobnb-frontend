@@ -4,6 +4,7 @@
 #map-section {
   scroll-margin-top: 80px;
 }
+
 .anchor-header {
   position: sticky;
   top: 0;
@@ -12,11 +13,13 @@
   width: 100%;
   border-bottom: 1px solid lightgray;
   z-index: 100;
+
   .anchor-header-container {
     grid-column: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .anchor-nav {
       height: 5rem;
       display: grid;
@@ -24,6 +27,7 @@
       align-items: center;
       justify-content: start;
       gap: 1.5rem;
+
       .anchor-link {
         position: relative;
         display: flex;
@@ -33,16 +37,20 @@
         color: #222222;
         font-weight: 500;
         font-size: 0.85rem;
+
         &:hover {
           text-decoration: none;
           cursor: pointer;
+
           .anchor-hover-line {
             background-color: #222222;
           }
         }
+
         .active {
           color: inherit;
         }
+
         .anchor-hover-line {
           position: absolute;
           bottom: 0;
@@ -53,6 +61,7 @@
         }
       }
     }
+
     .mini-reserve {
       display: grid;
       grid-auto-flow: column;
@@ -61,27 +70,33 @@
       gap: 0.25rem;
       height: 100%;
       min-width: 300px;
+
       .mini-details {
         display: grid;
         gap: 0.25rem;
+
         .title {
           font-size: 1rem;
           color: #222222;
           font-weight: 500;
+
           span {
             padding-inline-start: 0.3rem;
             font-weight: 400;
             font-size: 0.8rem;
           }
         }
+
         .mini-details-ol {
           display: flex;
           margin: 0;
           list-style: none;
+
           li {
             display: flex;
             align-items: center;
             position: relative;
+
             &::after {
               content: "·";
               margin: 0 0.5rem;
@@ -90,24 +105,29 @@
             &:last-child::after {
               content: ""; // no dot after last item
             }
+
             span {
               height: 0.7em;
               font-size: 0.7em;
             }
+
             .mini-avg-rate {
               display: flex;
               font-weight: bold;
+
               img {
                 display: inline-block;
                 margin-inline-end: 0.2rem;
               }
             }
+
             .mini-reviews {
               color: #6a6a6a;
             }
           }
         }
       }
+
       .reserve-btn {
         display: flex;
         align-items: center;
@@ -127,6 +147,7 @@
           background-color: #e31c5f;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
+
         span {
           font-size: 1rem;
           font-weight: 600;

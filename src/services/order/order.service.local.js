@@ -11,7 +11,10 @@ export const orderService = {
 };
 
 async function save(order) {
-  const orderToSave = { ...order };
+  const orderToSave = {
+    ...order,
+    orderTime: new Date().toISOString()
+  }
   try {
     return await storageService.post(STORAGE_KEY, orderToSave);
   } catch (err) {
@@ -49,7 +52,7 @@ async function getOrdersByHostId(hostId) {
       hostOrders.push(...listingOrders)
     })
     return hostOrders
-    
+
   } catch (err) {
     throw new Error(err);
   }
