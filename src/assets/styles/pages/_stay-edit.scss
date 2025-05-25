@@ -196,6 +196,10 @@
       }
     }
     .show-more-btn {
+      height: fit-content;
+      width: fit-content;
+      justify-self: center;
+      align-self: end;
       padding-block: 0.75rem;
       padding-inline: 1rem;
       margin-block-start: 1rem;
@@ -240,7 +244,7 @@
         font-size: 1rem;
         line-height: 1.5;
         resize: vertical;
-        min-height: 120px;
+        min-height: 200px;
         transition: border-color 0.2s ease;
 
         &:focus {

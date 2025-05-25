@@ -314,7 +314,6 @@ export function StayEdit() {
   const [stayToEdit, setStayToEdit] = useState(stayService.getEmptyStay());
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalContentType, setModalContentType] = useState("");
-  // const [summaryText, setSummaryText] = useState("");
 
   useEffect(() => {
     console.log({ stayToEdit });
@@ -410,8 +409,6 @@ export function StayEdit() {
   }
 
   function handleLocationChange(newLocation) {
-    console.log("hereeee");
-
     setStayToEdit((prevStayToEdit) => ({
       ...prevStayToEdit,
       loc: { ...newLocation },
@@ -568,6 +565,7 @@ export function StayEdit() {
         <label className="name-label" htmlFor="name">
           <input
             type="text"
+            id="name"
             className="name"
             name="name"
             placeholder="Let's give your place a title"
@@ -606,6 +604,12 @@ export function StayEdit() {
           />
         </section>
       </section>
+      <section className="location-section">
+        <LocationPicker
+          location={stayToEdit.loc}
+          onChange={handleLocationChange}
+        />
+      </section>
       <section className="type-filter-section">
         <h2 className="title">Which of these best describes your place?</h2>
         <TypeCarousel
@@ -637,12 +641,7 @@ export function StayEdit() {
           </div>
         </div>
       </section>
-      <section className="location-section">
-        <LocationPicker
-          location={stayToEdit.loc}
-          onChange={handleLocationChange}
-        />
-      </section>
+
       {isEditModalOpen && (
         <DynamicEditsModal>{renderModalContent()}</DynamicEditsModal>
       )}
