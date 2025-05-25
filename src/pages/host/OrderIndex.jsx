@@ -2,40 +2,46 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { stayActions } from "../../store/actions/stay.actions";
 import { orderService } from "../../services/order/order.service.local";
-import { humanDateFormat } from "../../services/util.service";
+import { humanDateFormat, humanDateTimeFormat } from "../../services/util.service";
+import { useSearchParams } from "react-router-dom";
 
 export function OrderIndex() {
   const user = useSelector(storeState => storeState.userModule.user)
-  // const [listings, setListings] = useState([])
   const [orders, setOrders] = useState([])
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    if (user) {
-      // stayActions.loadStays({ hostId: user._id })
-      //   .then(setListings)
-      //   .catch(err => console.log('Failed to load listings:', err))
-      orderService.getOrdersByHostId(user._id)
-        .then(orders => {
-          const ordersWithStatus = orders.map(order => {
-            const now = new Date();
-            const startDate = new Date(order.startDate);
-            const endDate = new Date(order.endDate);
+    if (!user) return
 
-            let status;
-            if (startDate > now) {
-              status = "future";
-            } else if (endDate < now) {
-              status = "past";
-            } else {
-              status = "active";
-            }
-
-            return { ...order, status };
-          });
-          setOrders(ordersWithStatus);
-        }).catch(err => console.log('Failed to load orders:', err))
+    const filter = {
+      listingId: searchParams.get('listingId')
     }
-  }, [user])
+
+    orderService.getOrdersByHostId(user._id)
+      .then(orders => {
+        const filteredOrders = filter.listingId
+          ? orders.filter(order => order.stayId === filter.listingId)
+          : orders;
+
+        const ordersWithStatus = filteredOrders.map(order => {
+          const now = new Date();
+          const startDate = new Date(order.startDate);
+          const endDate = new Date(order.endDate);
+
+          let status;
+          if (startDate > now) {
+            status = "future";
+          } else if (endDate < now) {
+            status = "past";
+          } else {
+            status = "active";
+          }
+
+          return { ...order, status };
+        });
+        setOrders(ordersWithStatus);
+      }).catch(err => console.log('Failed to load orders:', err))
+  }, [user, searchParams])
 
   return (
     <section className="order-index">
@@ -51,6 +57,7 @@ export function OrderIndex() {
               <th>Status</th>
               <th>Check-in</th>
               <th>Check-out</th>
+              <th>Order Time</th>
               <th>Guests</th>
             </tr>
           </thead>
@@ -58,10 +65,11 @@ export function OrderIndex() {
             {orders.map(order => (
               <tr key={order._id}>
                 <td>{order._id}</td>
-                <td>{order.stay?.name}</td>
+                <td>{order.stayName}</td>
                 <td>{order.status}</td>
                 <td>{humanDateFormat(order.startDate)}</td>
                 <td>{humanDateFormat(order.endDate)}</td>
+                <td>{humanDateTimeFormat(order.orderTime)}</td>
                 <td>{order.guests}</td>
               </tr>
             ))}

@@ -21,7 +21,7 @@ export function OrderPage() {
   const [isLoading, setIsLoading] = useState(true);
   const loggedInUser = useSelector((storeState) => storeState.userModule.user);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const params = useParams();
   const [stayToOrder, setStayToOrder] = useState();
   const [isOrderComplete, setIsOrderComplete] = useState(false);
