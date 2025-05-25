@@ -33,11 +33,20 @@
                 border-radius: 1rem;
             }
 
-            button {
-                padding: 10px;
+            .button {
+                margin-top: 6px;
+                padding: 0.75rem;
+                text-align: center;
                 border-radius: 1rem;
-                margin: 0;
-                margin-top: 5px;
+                background-color: rgb(236, 235, 235);
+                font-size: rem(14px);
+                font-weight: 400;
+                color: black;
+                transition: background-color 0.1s ease;
+
+                &:hover {
+                    background-color: lightgray;
+                }
             }
 
             .listing-name {
@@ -49,7 +58,7 @@
             }
 
             .listing-location {
-                padding-bottom: 10px;
+                padding-bottom: 5px;
                 line-height: 1.5em;
                 font-size: rem(14px);
                 font-weight: 200;

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { stayActions } from "../../store/actions/stay.actions";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export function ListingIndex() {
   const navigate = useNavigate()
@@ -15,11 +16,6 @@ export function ListingIndex() {
         .catch(err => console.log('Failed to load listings:', err))
     }
   }, [user])
-
-  function onEditClick(ev, listingId) {
-    ev.stopPropagation()
-    navigate(`/host/listing/edit/${listingId}`)
-  }
 
   function onViewListingAsGuestClick(ev, listingId) {
     ev.stopPropagation()
@@ -51,8 +47,20 @@ export function ListingIndex() {
             <img src={listing.imgUrls[0]} />
             <div className="listing-name">{listing.name}</div>
             <div className="listing-location"> {listing.loc.country}, {listing.loc.city}</div>
-            <button onClick={(ev) => onEditClick(ev, listing._id)}>Edit Listing</button>
-            <button onClick={(ev) => onViewListingAsGuestClick(ev, listing._id)}>View listing as guest</button>
+            <Link
+              to={`/host/listing/edit/${listing._id}`}
+              onClick={(ev => ev.stopPropagation())}
+              className="button"
+            >
+              Edit Listing
+            </Link>
+            <Link
+              to={`/stay/${listing._id}`}
+              onClick={(ev => ev.stopPropagation())}
+              className="button"
+            >
+              View listing as guest
+            </Link>
           </div>
         )
         }
