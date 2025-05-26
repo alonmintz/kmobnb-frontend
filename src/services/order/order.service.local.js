@@ -3,17 +3,31 @@ import { stayService } from "../stay";
 
 const STORAGE_KEY = "STAY_ORDER_DB";
 
+// Order statuses
+const PENDING = 'pending'
+const APPROVED = 'approved'
+const CANCELED = 'canceled'
+
 export const orderService = {
   save,
   getOrdersByUserId,
   getOrdersByStayId,
-  getOrdersByHostId
+  getOrdersByHostId,
+  getOrderById,
+  changeOrderStatus,
+
+  PENDING: PENDING,
+  APPROVED: APPROVED,
+  CANCELED: CANCELED
 };
+
+window.orders = orderService
 
 async function save(order) {
   const orderToSave = {
     ...order,
-    orderTime: new Date().toISOString()
+    orderTime: new Date().toISOString(),
+    status: PENDING
   }
   try {
     return await storageService.post(STORAGE_KEY, orderToSave);
@@ -53,6 +67,31 @@ async function getOrdersByHostId(hostId) {
     })
     return hostOrders
 
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+async function getOrderById(orderId) {
+  try {
+    const orders = await storageService.query(STORAGE_KEY)
+    const order = orders.find(order => order._id === orderId)
+    return order
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+async function changeOrderStatus(orderId, status) {
+  try {
+    const order = await getOrderById(orderId)
+    console.log('order from getOrderById:', order)
+    const orderToSave = {
+      ...order,
+      status
+    }
+    console.log('orderToSave:', orderToSave)
+    return await storageService.put(STORAGE_KEY, orderToSave);
   } catch (err) {
     throw new Error(err);
   }
