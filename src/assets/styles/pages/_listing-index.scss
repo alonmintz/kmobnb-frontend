@@ -1,14 +1,31 @@
 .listings {
-    .title-section {
+
+    .section-title {
         display: flex;
         justify-content: space-between;
         align-items: center;
         letter-spacing: 0.02em;
 
+        .button {
+            // margin-top: 6px;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 1rem;
+            background-color: rgb(236, 235, 235);
+            font-size: rem(14px);
+            font-weight: 400;
+            color: black;
+            transition: background-color 0.1s ease;
+
+            &:hover {
+                text-decoration: none;
+                background-color: lightgray;
+            }
+        }
+
         h1 {
             padding-block: 2rem;
             font-size: rem(26px);
-            font-weight: 400;
         }
     }
 
@@ -23,14 +40,67 @@
             flex: 0 0 200px;
             flex-direction: column;
             font-family: 'Airbnb';
-            cursor: pointer;
 
-            img {
-                width: 100%;
-                aspect-ratio: 1 / 1;
-                object-fit: cover;
-                object-position: center;
-                border-radius: 1rem;
+            .img-container {
+                position: relative;
+
+                &:hover {
+                    img {
+                        filter: brightness(0.7);
+                    }
+
+                    .hover-buttons {
+                        opacity: 1;
+                    }
+                }
+
+                img {
+                    width: 100%;
+                    aspect-ratio: 1 / 1;
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 1rem;
+                    transition: filter 0.2s ease;
+                }
+
+                .hover-buttons {
+                    position: absolute;
+                    display: flex;
+                    flex-direction: column;
+                    top: 10px;
+                    right: 10px;
+                    opacity: 0;
+                    transition: opacity 0.2s ease;
+
+                    .round-btn {
+                        display: flex;
+                        width: 45px;
+                        height: 45px;
+                        border-radius: 50%;
+                        border: none;
+                        background-color: white;
+                        cursor: pointer;
+                        align-items: center;
+                        justify-content: center;
+                        transition: background-color 0.2s ease, transform 0.2s ease;
+
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+
+                        &.deactivate-btn:hover {
+                            background-color: #ffd1d1;
+                        }
+
+                        &.edit-btn:hover {
+                            background-color: #e8e8e8;
+                        }
+
+                        .icon {
+                            font-size: 18px;
+                        }
+                    }
+                }
             }
 
             .button {
@@ -43,6 +113,7 @@
                 font-weight: 400;
                 color: black;
                 transition: background-color 0.1s ease;
+                text-decoration: none;
 
                 &:hover {
                     background-color: lightgray;
