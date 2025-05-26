@@ -1,15 +1,16 @@
 .spacer {
-    height: 3.5rem;
+    height: 65px;
+    opacity: 0;
 }
 
 .app-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     position: fixed;
     bottom: 0;
     width: 100vw;
-    height: 3.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 2rem;
     background-color: $clr6;
     transform: translateY(100%);
