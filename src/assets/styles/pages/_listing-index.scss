@@ -92,6 +92,10 @@
                             background-color: #ffd1d1;
                         }
 
+                        &.reactivate-btn:hover {
+                            background-color: lightgreen;
+                        }
+
                         &.edit-btn:hover {
                             background-color: #e8e8e8;
                         }
