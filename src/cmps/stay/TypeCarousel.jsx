@@ -86,7 +86,7 @@ export function TypeCarousel({ onSelect, selectedType }) {
       }
     };
 
-    updateItemsToShow(); // Initial call
+    updateItemsToShow();
     window.addEventListener("resize", updateItemsToShow);
     return () => window.removeEventListener("resize", updateItemsToShow);
   }, []);
@@ -96,8 +96,6 @@ export function TypeCarousel({ onSelect, selectedType }) {
   }, [itemsToShow]);
 
   useEffect(() => {
-    console.log({ selectedType });
-
     if (selectedType) {
       setDisplayTypeList((prevList) => {
         const filteredList = prevList.filter((type) => type !== selectedType);

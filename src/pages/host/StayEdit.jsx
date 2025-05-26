@@ -1,208 +1,4 @@
-// {
-//   "_id": "622f337a75c7d36e498aaaf8",
-//   "name": "Westin Kaanapali KORVN 2BR",
-//   "type": "National parks",
-//   "imgUrls": [
-//       "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436975/hx9ravtjop3uqv4giupt.jpg",
-//       "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436294/mvhb3iazpiar6duvy9we.jpg",
-//       "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436496/ihozxprafjzuhil9qhh4.jpg",
-//       "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436952/aef9ajipinpjhkley1e3.jpg",
-//       "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436948/vgfxpvmcpd2q40qxtuv3.jpg"
-//   ],
-//   "price": 595,
-//   "summary": "Westin Kaanapali Ocean Resort Villas North timeshare - Pay resort: $14-20/day, stays under 7 night $38/res - Inquire about availability, I review then offer/approve if available :) - READ \"The Space\" for cleaning/etc AND brief explanation about timeshare reservations - Want guaranteed view for additional cost? Must be weekly rental, other restrictions - Wheelchair accessible / ADA, call resort directly to ensure U receive. If U need ADA U MUST inform us BEFORE booking.",
-//   "capacity": 8,
-//   "amenities": [
-//       "TV",
-//       "Cable TV",
-//       "Internet",
-//       "Wifi",
-//       "Air conditioning",
-//       "Wheelchair accessible",
-//       "Pool",
-//       "Kitchen",
-//       "Free parking on premises",
-//       "Doorman",
-//       "Gym",
-//       "Elevator",
-//       "Hot tub",
-//       "Heating",
-//       "Family/kid friendly",
-//       "Suitable for events",
-//       "Washer",
-//       "Dryer",
-//       "Smoke detector",
-//       "Carbon monoxide detector",
-//       "First aid kit",
-//       "Safety card",
-//       "Fire extinguisher",
-//       "Essentials",
-//       "Shampoo",
-//       "24-hour check-in",
-//       "Hangers",
-//       "Hair dryer",
-//       "Iron",
-//       "Laptop friendly workspace",
-//       "Self check-in",
-//       "Building staff",
-//       "Private entrance",
-//       "Room-darkening shades",
-//       "Hot water",
-//       "Bed linens",
-//       "Extra pillows and blankets",
-//       "Ethernet connection",
-//       "Luggage dropoff allowed",
-//       "Long term stays allowed",
-//       "Ground floor access",
-//       "Wide hallway clearance",
-//       "Step-free access",
-//       "Wide doorway",
-//       "Flat path to front door",
-//       "Well-lit path to entrance",
-//       "Disabled parking spot",
-//       "Step-free access",
-//       "Wide doorway",
-//       "Wide clearance to bed",
-//       "Step-free access",
-//       "Wide doorway",
-//       "Step-free access",
-//       "Wide entryway",
-//       "Waterfront",
-//       "Beachfront"
-//   ],
-//   "bathrooms": 2,
-//   "bedrooms": 2,
-//   "roomType": "Entire home/apt",
-//   "host": {
-//       "_id": "622f3403e36c59e6164faf93",
-//       "fullname": "Patty And Beckett",
-//       "location": "Eureka, California, United States",
-//       "about": "Adventurous couple loves to travel :)",
-//       "responseTime": "within an hour",
-//       "thumbnailUrl": "https://a0.muscache.com/im/pictures/542dba0c-eb1b-4ab3-85f3-94d3cc8f87a4.jpg?aki_policy=profile_small",
-//       "pictureUrl": "https://a0.muscache.com/im/pictures/542dba0c-eb1b-4ab3-85f3-94d3cc8f87a4.jpg?aki_policy=profile_x_medium",
-//       "isSuperhost": true,
-//       "id": "36133410"
-//   },
-//   "loc": {
-//       "country": "United States",
-//       "countryCode": "US",
-//       "city": "Maui",
-//       "address": "Lahaina, HI, United States",
-//       "lat": -156.6917,
-//       "lan": 20.93792
-//   },
-//   "reviews": [
-//       {
-//           "at": "2016-06-12T04:00:00.000Z",
-//           "by": {
-//               "_id": "622f3407e36c59e6164fc004",
-//               "fullname": "Kiesha",
-//               "imgUrl": "https://robohash.org/10711825?set=set1",
-//               "id": "10711825"
-//           },
-//           "txt": "I had a great experience working with Patty and Peter.  Both were very attentive in sorting out the booking details and following up directly when I had questions.  I rented a 2 bedroom unit at the Westin Villas  in Maui and both the unit and property was absolutely amazing.  I think we had the best unit on the resort complete with 2 outdoor patios with direct access  to  the  beach.  I would HIGHLY recommend renting with Patty and Peter.",
-//           "starsRate": 4
-//       },
-//       {
-//           "at": "2016-07-28T04:00:00.000Z",
-//           "by": {
-//               "_id": "622f3403e36c59e6164fb204",
-//               "fullname": "Chris",
-//               "imgUrl": "https://robohash.org/70072865?set=set1",
-//               "id": "70072865"
-//           },
-//           "txt": "Peter quickly responded to any questions I had before, and during the trip. Will use again, highly recommend. ",
-//           "starsRate": 3
-//       },
-//       {
-//           "at": "2016-09-11T04:00:00.000Z",
-//           "by": {
-//               "_id": "622f3405e36c59e6164fb703",
-//               "fullname": "Kim",
-//               "imgUrl": "https://robohash.org/71179725?set=set1",
-//               "id": "71179725"
-//           },
-//           "txt": "We had the perfect location for a room, first floor right in front of the pool. The resort is beautiful, and the staff is so friendly! I enjoyed it so much, we talked about buying a timeshare ourselves.",
-//           "starsRate": 4
-//       },
-//       {
-//           "at": "2017-01-07T05:00:00.000Z",
-//           "by": {
-//               "_id": "622f3404e36c59e6164fb37f",
-//               "fullname": "Tracy",
-//               "imgUrl": "https://robohash.org/65593239?set=set1",
-//               "id": "65593239"
-//           },
-//           "txt": "Beautiful location. Patty & Peter were super helpful and easy to work with!",
-//           "starsRate": 4
-//       },
-//       {
-//           "at": "2017-04-07T04:00:00.000Z",
-//           "by": {
-//               "_id": "622f3403e36c59e6164fb105",
-//               "fullname": "Duyen",
-//               "imgUrl": "https://robohash.org/26215688?set=set1",
-//               "id": "26215688"
-//           },
-//           "txt": "Great spot for the kids and family and close to beach and everything at the resort. We will definitely be back.",
-//           "starsRate": 4
-//       },
-//       {
-//           "at": "2017-05-09T04:00:00.000Z",
-//           "by": {
-//               "_id": "622f3402e36c59e6164fabbe",
-//               "fullname": "Binh",
-//               "imgUrl": "https://robohash.org/117390236?set=set1",
-//               "id": "117390236"
-//           },
-//           "txt": "The unit and the Westin offer variety of amenities you can possibly ask for. Sofa beds are very comfortable to sleep in. But there is charge for ocean view upgrade. Overall, I highly recommend to book with Patty and Peter. ",
-//           "starsRate": 3
-//       },
-//       {
-//           "at": "2018-02-24T05:00:00.000Z",
-//           "by": {
-//               "_id": "622f3404e36c59e6164fb4af",
-//               "fullname": "Samy",
-//               "imgUrl": "https://robohash.org/15143517?set=set1",
-//               "id": "15143517"
-//           },
-//           "txt": "We spent a great week at Patty and Peter's place. The place was exactly as shown in the pictures, very comfortable, nice view, with all amenities. The resort is great with several pools, a long beach, many restaurants, and of course a lot of great activities all around.",
-//           "starsRate": 4
-//       },
-//       {
-//           "at": "2018-06-16T04:00:00.000Z",
-//           "by": {
-//               "_id": "622f3405e36c59e6164fb87b",
-//               "fullname": "Breanne",
-//               "imgUrl": "https://robohash.org/78173091?set=set1",
-//               "id": "78173091"
-//           },
-//           "txt": "This place was perfect for my family. We had plenty of room to spread out and the service could not have been any better",
-//           "starsRate": 5
-//       },
-//       {
-//           "at": "2018-06-29T04:00:00.000Z",
-//           "by": {
-//               "_id": "622f3405e36c59e6164fb713",
-//               "fullname": "Kimberly",
-//               "imgUrl": "https://robohash.org/100535039?set=set1",
-//               "id": "100535039"
-//           },
-//           "txt": "We love Westin Kaanapalli",
-//           "starsRate": 4
-//       }
-//   ],
-//   "likedByUsers": [],
-//   "occupancy": [
-//       {
-//           "startDate": "2025-05-18T00:00:00.000Z",
-//           "endDate": "2025-05-20T00:00:00.000Z"
-//       }
-//   ]
-// }
-
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { stayService } from "../../services/stay";
 import { svgService } from "../../services/svg.service";
@@ -308,17 +104,15 @@ const MAX_NAME_CHARS = 50;
 
 const MAX_SUMMARY_CHARS = 500;
 
+const MIN_PRICE = 10;
+
 export function StayEdit() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [stayToEdit, setStayToEdit] = useState(stayService.getEmptyStay());
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalContentType, setModalContentType] = useState("");
-  // const [summaryText, setSummaryText] = useState("");
-
-  useEffect(() => {
-    console.log({ stayToEdit });
-  }, [stayToEdit]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (params.listingId) {
@@ -410,8 +204,6 @@ export function StayEdit() {
   }
 
   function handleLocationChange(newLocation) {
-    console.log("hereeee");
-
     setStayToEdit((prevStayToEdit) => ({
       ...prevStayToEdit,
       loc: { ...newLocation },
@@ -562,12 +354,26 @@ export function StayEdit() {
     );
   }
 
+  async function onSubmit() {
+    try {
+      const savedStay = await stayService.save(stayToEdit);
+      if (savedStay._id) {
+        console.log("Successfully saved listing");
+      }
+    } catch (err) {
+      console.log("Error saving listing");
+    } finally {
+      navigate("/host/listings");
+    }
+  }
+
   return (
     <section className="stay-edit layout secondary full">
       <section className="name-section">
         <label className="name-label" htmlFor="name">
           <input
             type="text"
+            id="name"
             className="name"
             name="name"
             placeholder="Let's give your place a title"
@@ -581,6 +387,9 @@ export function StayEdit() {
             <span>{`${stayToEdit.name.length}/${MAX_NAME_CHARS}`}</span>
           </div>
         </label>
+        <button className="save-all-btn" onClick={onSubmit}>
+          Save changes
+        </button>
       </section>
       <section className="img-section">{renderImagesTemplate()}</section>
       <section className="type-details-section">
@@ -596,15 +405,46 @@ export function StayEdit() {
               />
             ))}
           </div>
-          <DetailsPicker
-            details={[
-              { type: "capacity", count: stayToEdit.capacity },
-              { type: "bedrooms", count: stayToEdit.bedrooms },
-              { type: "bathrooms", count: stayToEdit.bathrooms },
-            ]}
-            onSelect={handleDetailClick}
-          />
+          <div className="details-price-container">
+            <DetailsPicker
+              details={[
+                { type: "capacity", count: stayToEdit.capacity },
+                { type: "bedrooms", count: stayToEdit.bedrooms },
+                { type: "bathrooms", count: stayToEdit.bathrooms },
+              ]}
+              onSelect={handleDetailClick}
+            />
+            <div className="price-picker-wrapper">
+              <div className="price-picker">
+                <span className="price-title">
+                  Price <span className="night">/night</span>
+                </span>
+
+                <label className="price-input-label">
+                  <span>$</span>
+                  <input
+                    type="number"
+                    name="price"
+                    id="price"
+                    className="price"
+                    min={MIN_PRICE}
+                    value={stayToEdit.price}
+                    disabled={isLoading}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  {/* <span>/night</span> */}
+                </label>
+              </div>
+            </div>
+          </div>
         </section>
+      </section>
+      <section className="location-section">
+        <LocationPicker
+          location={stayToEdit.loc}
+          onChange={handleLocationChange}
+        />
       </section>
       <section className="type-filter-section">
         <h2 className="title">Which of these best describes your place?</h2>
@@ -637,12 +477,10 @@ export function StayEdit() {
           </div>
         </div>
       </section>
-      <section className="location-section">
-        <LocationPicker
-          location={stayToEdit.loc}
-          onChange={handleLocationChange}
-        />
-      </section>
+      <button className="save-all-bottom-btn" onClick={onSubmit}>
+        Save changes
+      </button>
+
       {isEditModalOpen && (
         <DynamicEditsModal>{renderModalContent()}</DynamicEditsModal>
       )}
