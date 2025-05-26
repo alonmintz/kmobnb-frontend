@@ -23,10 +23,10 @@ export function StayIndex() {
 
     return () => observer.disconnect();
   }, []);
-
+  const filterToSet = { ...filterBy, status: 'active' }
   useEffect(() => {
     if (bulkIdx === 0) {
-      stayActions.loadStays(filterBy, bulkIdx);
+      stayActions.loadStays(filterToSet, bulkIdx);
     } else {
       setBulkIndex(0);
     }
