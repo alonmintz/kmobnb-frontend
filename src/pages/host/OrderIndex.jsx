@@ -54,6 +54,15 @@ export function OrderIndex() {
       }).catch(err => console.log('Failed to load orders:', err))
   }, [user, searchParams])
 
+  if (!orders || !orders.length || !user) {
+    return (
+      <div className="orders">
+        <div className="section-title">
+          <h1>No orders to show</h1>
+        </div>
+      </div>
+    )
+  }
   return (
     <section className="order-index">
       <header className="section-title">

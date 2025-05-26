@@ -22,7 +22,7 @@ export function ListingIndex() {
   if (!listings || !listings.length || !user) {
     return (
       <div className="listings">
-        <div className="title-section">
+        <div className="section-title">
           <h1>No listings to show</h1>
         </div>
       </div>
