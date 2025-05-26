@@ -33,7 +33,7 @@ export function ListingIndex() {
     <section className="listings">
       <div className="section-title">
         <h1>Your Listings</h1>
-        <Link className="button">Add listing</Link>
+        <Link to="../listing/edit" className="button">Add listing</Link>
       </div>
       <div className="listing-list">
         {listings.map((listing) =>
@@ -43,7 +43,7 @@ export function ListingIndex() {
               <div className="hover-buttons">
                 <button title="Edit" className="round-btn edit-btn" onClick={(ev) => {
                   ev.stopPropagation()
-                  navigate(`/host/listing/edit/${listing._id}`)
+                  navigate(`../listing/edit/${listing._id}`)
                 }}>
                   <FontAwesomeIcon icon={faPen} />
                 </button>
@@ -75,7 +75,7 @@ export function ListingIndex() {
             <div className="listing-name">{listing.name}</div>
             <div className="listing-location">{listing.loc.country}, {listing.loc.city}</div>
             <Link
-              to={`/host/orders?listingId=${listing._id}`}
+              to={`../orders?listingId=${listing._id}`}
               className="button"
             >View orders
             </Link>
