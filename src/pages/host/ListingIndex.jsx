@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { stayActions } from "../../store/actions/stay.actions";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,20 +9,31 @@ import { faBan, faPen, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 export function ListingIndex() {
   const navigate = useNavigate()
   const user = useSelector(storeState => storeState.userModule.user)
-  const [listings, setListings] = useState([])
+  const listings = useSelector(storeState => storeState.stayModule.stays)
 
   useEffect(() => {
     if (user) {
       stayActions.loadStays({ hostId: user._id })
-        .then(setListings)
-        .catch(err => console.log('Failed to load listings:', err))
+        // .then(setListings)
+        // .catch(err => console.log('Failed to load listings:', err))
     }
   }, [user])
+
+  async function onChangeStatusClick(ev, listing, status) {
+    ev.stopPropagation()
+    const listingToSave = { ...listing, status }
+    try {
+      stayActions.updateStay(listingToSave)
+      console.log('Listing status changed successfully to', status)
+    } catch (err) {
+      console.log('Failed updating listing status:', err)
+    }
+  }
 
   if (!listings || !listings.length || !user) {
     return (
       <div className="listings">
-        <div className="title-section">
+        <div className="section-title">
           <h1>No listings to show</h1>
         </div>
       </div>
@@ -51,10 +62,7 @@ export function ListingIndex() {
                   <button
                     title="Deactivate"
                     className="round-btn deactivate-btn"
-                    onClick={(ev) => {
-                      ev.stopPropagation()
-                      // TODO: add deactivate functionality here
-                    }}
+                    onClick={ev => onChangeStatusClick(ev, listing, "inactive")}
                   >
                     <FontAwesomeIcon className="icon" icon={faBan} />
                   </button>
@@ -62,10 +70,7 @@ export function ListingIndex() {
                   <button
                     title="Reactivate"
                     className="round-btn reactivate-btn"
-                    onClick={(ev) => {
-                      ev.stopPropagation()
-                      // TODO: add reactivate functionality here
-                    }}
+                    onClick={ev => onChangeStatusClick(ev, listing, "active")}
                   >
                     <FontAwesomeIcon className="icon" icon={faRotateLeft} />
                   </button>

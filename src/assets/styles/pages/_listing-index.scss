@@ -22,11 +22,6 @@
                 background-color: lightgray;
             }
         }
-
-        h1 {
-            padding-block: 2rem;
-            font-size: rem(26px);
-        }
     }
 
     .listing-list {
@@ -90,6 +85,10 @@
 
                         &.deactivate-btn:hover {
                             background-color: #ffd1d1;
+                        }
+
+                        &.reactivate-btn:hover {
+                            background-color: lightgreen;
                         }
 
                         &.edit-btn:hover {

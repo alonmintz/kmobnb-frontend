@@ -11,6 +11,20 @@ import hongKongIcon from "../../assets/img/city-icons/hong-kong-icon.png";
 import sydneyIcon from "../../assets/img/city-icons/sydney-icon.png";
 import rioDeJaneiroIcon from "../../assets/img/city-icons/rio-de-janeiro-icon.png";
 
+export const stayService = {
+  query,
+  getById,
+  save,
+  remove
+};
+
+const STORAGE_KEY = "STAY_DB";
+const STAYS_PER_LOAD = 20;
+
+_createStays();
+
+// window.cs = stayService;
+
 export const INITIAL_GUESTS = [
   { type: "adults", desc: "Ages 13 or above", count: 0 },
   { type: "children", desc: "Ages 2 – 12", count: 0 },
@@ -74,19 +88,6 @@ export const CITY_OPTIONS = [
     imgUrl: rioDeJaneiroIcon,
   },
 ];
-const STORAGE_KEY = "STAY_DB";
-const STAYS_PER_LOAD = 20;
-
-_createStays();
-
-export const stayService = {
-  query,
-  getById,
-  save,
-  remove,
-};
-
-// window.cs = stayService;
 
 const emptyFilter = {
   city: "",
