@@ -3,6 +3,21 @@
   gap: 3rem;
   width: 100%;
   min-height: 100vh;
+  .save-all-bottom-btn {
+    height: 4.5rem;
+    width: 100%;
+    align-self: start;
+    margin: 0;
+    padding-inline: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgb(236, 235, 235);
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.1s ease;
+    &:hover {
+      background-color: lightgray;
+    }
+  }
   .title {
     font-size: 1.5rem;
     font-weight: 600;
@@ -37,6 +52,8 @@
   }
   .name-section {
     display: flex;
+    align-items: center;
+    gap: 2rem;
     width: 100%;
     margin-block-start: 1.5rem;
     .name-label {
@@ -58,6 +75,21 @@
           color: #999;
           font-weight: 400;
         }
+      }
+    }
+    .save-all-btn {
+      height: 4.5rem;
+      width: fit-content;
+      align-self: start;
+      margin: 0;
+      padding-inline: 1rem;
+      border-radius: 0.5rem;
+      background-color: rgb(236, 235, 235);
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.1s ease;
+      &:hover {
+        background-color: lightgray;
       }
     }
   }
@@ -147,14 +179,51 @@
   .type-details-container {
     display: grid;
     grid-auto-flow: column;
-    gap: 5rem;
+    gap: 3rem;
     grid-template-columns: 2fr 1fr;
     .room-type-picker {
       display: grid;
-    }
-    .room-type-picker {
-      display: grid;
       gap: 1rem;
+    }
+    .details-price-container {
+      display: grid;
+      grid-template-rows: 2fr 1fr;
+      gap: 1rem;
+      .price-picker-wrapper {
+        display: grid;
+        align-items: center;
+        padding-inline: 1.5rem;
+        border: 1px solid lightgray;
+        border-radius: 1rem;
+        .price-picker {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .price-title {
+            font-size: 1rem;
+            font-weight: 500;
+            .night {
+              color: rgb(106, 106, 106);
+              font-size: 0.9rem;
+              font-weight: 400;
+            }
+          }
+          .price-input-label {
+            display: flex;
+            align-items: center;
+            span {
+              font-size: 0.9rem;
+            }
+            .price {
+              max-width: 3rem;
+              text-align: center;
+              border: none;
+              font-size: 1rem;
+              font-weight: 400;
+            }
+          }
+        }
+      }
     }
   }
   .type-filter-section {
