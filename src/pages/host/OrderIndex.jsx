@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { stayActions } from "../../store/actions/stay.actions";
 import { orderService } from "../../services/order/order.service.local";
-import { humanDateFormat, humanDateTimeFormat } from "../../services/util.service";
+import { capitalize, humanDateFormat, humanDateTimeFormat } from "../../services/util.service";
 import { useSearchParams } from "react-router-dom";
 import { stayActions } from "../../store/actions/stay.actions";
 
@@ -33,26 +33,27 @@ export function OrderIndex() {
         const filteredOrders = filter.listingId
           ? orders.filter(order => order.stayId === filter.listingId)
           : orders;
-
-        const ordersWithStatus = filteredOrders.map(order => {
-          const now = new Date();
-          const startDate = new Date(order.startDate);
-          const endDate = new Date(order.endDate);
-
-          let status;
-          if (startDate > now) {
-            status = "future";
-          } else if (endDate < now) {
-            status = "past";
-          } else {
-            status = "active";
-          }
-
-          return { ...order, status };
-        });
-        setOrders(ordersWithStatus);
+        setOrders(filteredOrders);
       }).catch(err => console.log('Failed to load orders:', err))
   }, [user, searchParams])
+
+  function getTiming(orderStartDate, orderEndDate) {
+    const now = new Date();
+    const startDate = new Date(orderStartDate);
+    const endDate = new Date(orderEndDate);
+
+    if (startDate > now) {
+      return "Future";
+    } else if (endDate < now) {
+      return "Past";
+    } else {
+      return "Active";
+    }
+  }
+
+  async function onUpdateOrderStatus(orderId, status) {
+    await orderService.onUpdateOrderStatus(orderId, status)
+  }
 
   if (!orders || !orders.length || !user) {
     return (
@@ -63,6 +64,7 @@ export function OrderIndex() {
       </div>
     )
   }
+
   return (
     <section className="order-index">
       <header className="section-title">
@@ -73,8 +75,9 @@ export function OrderIndex() {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Listing Name</th>
               <th>Status</th>
+              <th>Listing Name</th>
+              <th>Timing</th>
               <th>Check-in</th>
               <th>Check-out</th>
               <th>Order Time</th>
@@ -84,9 +87,10 @@ export function OrderIndex() {
           <tbody>
             {orders.map(order => (
               <tr key={order._id}>
-                <td>{order._id}</td>
+                <td title={order._id}>{order._id.slice(-6)}</td>
+                <td>{order.status ? capitalize(order.status) : ""}</td>
                 <td>{order.stayName}</td>
-                <td>{order.status}</td>
+                <td>{getTiming(order.startDate, order.endDate)}</td>
                 <td>{humanDateFormat(order.startDate)}</td>
                 <td>{humanDateFormat(order.endDate)}</td>
                 <td>{humanDateTimeFormat(order.orderTime)}</td>
