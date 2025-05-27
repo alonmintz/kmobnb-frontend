@@ -1,7 +1,11 @@
 import { storageService } from "../async-storage.service";
 import { stayService } from "../stay";
+import { loadFromStorage, saveToStorage } from "../util.service";
+import ORDERS_DATA from "./order_mockdata.json";
 
 const STORAGE_KEY = "STAY_ORDER_DB";
+
+_createOrders()
 
 // Order statuses
 const PENDING = 'pending'
@@ -94,5 +98,13 @@ async function changeOrderStatus(orderId, status) {
     return await storageService.put(STORAGE_KEY, orderToSave);
   } catch (err) {
     throw new Error(err);
+  }
+}
+
+// for local dev
+function _createOrders() {
+  let orders = loadFromStorage(STORAGE_KEY);
+  if (!orders || !orders.length) {
+    saveToStorage(STORAGE_KEY, ORDERS_DATA);
   }
 }
