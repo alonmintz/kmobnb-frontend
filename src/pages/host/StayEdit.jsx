@@ -9,6 +9,7 @@ import { Amenity } from "../../cmps/stay/Amenity";
 import { Modal } from "../../cmps/general/Modal";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { LocationPicker } from "../../cmps/stay/LocationPicker";
+import { ImagesDisplayEditor } from "../../cmps/stay/ImagesDisplayEditor";
 
 const ROOM_TYPES_NAMES = [
   "Entire home/apartment",
@@ -161,6 +162,13 @@ export function StayEdit() {
     setStayToEdit((prevStayToEdit) => ({ ...prevStayToEdit, [field]: value }));
   }
 
+  function handleImagesChange(updatedImages) {
+    setStayToEdit((prevStayToEdit) => ({
+      ...prevStayToEdit,
+      imgUrls: updatedImages,
+    }));
+  }
+
   function handleRoomTypeClick(roomType) {
     setStayToEdit((prevStayToEdit) => ({ ...prevStayToEdit, roomType }));
   }
@@ -208,22 +216,6 @@ export function StayEdit() {
       ...prevStayToEdit,
       loc: { ...newLocation },
     }));
-  }
-
-  function renderImagesTemplate() {
-    if (stayToEdit.imgUrls?.length) {
-      return stayToEdit.imgUrls.slice(0, 5).map((url, idx) => (
-        <div key={url} className={`img-wrapper img-${idx + 1}`}>
-          <img src={url} alt={`stay-img-${idx}`} />
-        </div>
-      ));
-    } else {
-      return [...Array(NUMBER_OF_IMAGES)].map((_, idx) => (
-        <div key={idx} className={`img-wrapper template img-${idx + 1}`}>
-          {svgService.getGenericSvg("Photo", "photo-icon")}
-        </div>
-      ));
-    }
   }
 
   function renderModalContent() {
@@ -391,7 +383,12 @@ export function StayEdit() {
           Save changes
         </button>
       </section>
-      <section className="img-section">{renderImagesTemplate()}</section>
+      <section className="img-section">
+        <ImagesDisplayEditor
+          images={stayToEdit.imgUrls}
+          onImagesChange={handleImagesChange}
+        />
+      </section>
       <section className="type-details-section">
         <h2 className="title">What type of place will guests have?</h2>
         <section className="type-details-container">

@@ -6,7 +6,7 @@ import { INITIAL_GUESTS, stayService as local } from "./stay.service.local";
 function getEmptyStay() {
   return {
     name: "",
-    imgUrls: [],
+    imgUrls: [null, null, null, null, null],
     price: 0,
     capacity: 1,
     bathrooms: 1,
