@@ -8,9 +8,9 @@ const STORAGE_KEY = "STAY_ORDER_DB";
 _createOrders()
 
 // Order statuses
-const PENDING = 'pending'
-const APPROVED = 'approved'
-const CANCELED = 'canceled'
+export const PENDING = 'pending'
+export const APPROVED = 'approved'
+export const CANCELED = 'canceled'
 
 export const orderService = {
   save,
@@ -18,11 +18,7 @@ export const orderService = {
   getOrdersByStayId,
   getOrdersByHostId,
   getOrderById,
-  changeOrderStatus,
-
-  PENDING: PENDING,
-  APPROVED: APPROVED,
-  CANCELED: CANCELED
+  changeOrderStatus
 };
 
 window.orders = orderService
