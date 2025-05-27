@@ -1,19 +1,37 @@
 import { storageService } from "../async-storage.service";
 import { stayService } from "../stay";
+import { loadFromStorage, saveToStorage } from "../util.service";
+import ORDERS_DATA from "./order_mockdata.json";
 
 const STORAGE_KEY = "STAY_ORDER_DB";
+
+_createOrders()
+
+// Order statuses
+const PENDING = 'pending'
+const APPROVED = 'approved'
+const CANCELED = 'canceled'
 
 export const orderService = {
   save,
   getOrdersByUserId,
   getOrdersByStayId,
-  getOrdersByHostId
+  getOrdersByHostId,
+  getOrderById,
+  changeOrderStatus,
+
+  PENDING: PENDING,
+  APPROVED: APPROVED,
+  CANCELED: CANCELED
 };
+
+window.orders = orderService
 
 async function save(order) {
   const orderToSave = {
     ...order,
-    orderTime: new Date().toISOString()
+    orderTime: new Date().toISOString(),
+    status: PENDING
   }
   try {
     return await storageService.post(STORAGE_KEY, orderToSave);
@@ -55,5 +73,38 @@ async function getOrdersByHostId(hostId) {
 
   } catch (err) {
     throw new Error(err);
+  }
+}
+
+async function getOrderById(orderId) {
+  try {
+    const orders = await storageService.query(STORAGE_KEY)
+    const order = orders.find(order => order._id === orderId)
+    return order
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+async function changeOrderStatus(orderId, status) {
+  try {
+    const order = await getOrderById(orderId)
+    console.log('order from getOrderById:', order)
+    const orderToSave = {
+      ...order,
+      status
+    }
+    console.log('orderToSave:', orderToSave)
+    return await storageService.put(STORAGE_KEY, orderToSave);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+// for local dev
+function _createOrders() {
+  let orders = loadFromStorage(STORAGE_KEY);
+  if (!orders || !orders.length) {
+    saveToStorage(STORAGE_KEY, ORDERS_DATA);
   }
 }

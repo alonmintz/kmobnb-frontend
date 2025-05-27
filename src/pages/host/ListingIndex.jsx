@@ -14,8 +14,6 @@ export function ListingIndex() {
   useEffect(() => {
     if (user) {
       stayActions.loadStays({ hostId: user._id })
-        // .then(setListings)
-        // .catch(err => console.log('Failed to load listings:', err))
     }
   }, [user])
 
@@ -24,9 +22,9 @@ export function ListingIndex() {
     const listingToSave = { ...listing, status }
     try {
       stayActions.updateStay(listingToSave)
-      console.log('Listing status changed successfully to', status)
+      console.log('Listing', listing._id, 'status changed successfully to', status)
     } catch (err) {
-      console.log('Failed updating listing status:', err)
+      console.log('Failed updating listing\'s', listing._id,'status:', err)
     }
   }
 

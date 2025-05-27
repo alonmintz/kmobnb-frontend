@@ -1,0 +1,81 @@
+[
+    {
+        "userId": "LXWCe",
+        "stayId": "622f337a75c7d36e498aab52",
+        "startDate": "2025-06-01T21:00:00.000Z",
+        "endDate": "2025-06-02T21:00:00.000Z",
+        "price": 531,
+        "guests": 0,
+        "_id": "e7gwV"
+    },
+    {
+        "userId": "LXWCe",
+        "stayId": "622f337a75c7d36e498aab37",
+        "startDate": "2025-05-20T21:00:00.000Z",
+        "endDate": "2025-05-22T21:00:00.000Z",
+        "price": 158,
+        "guests": 0,
+        "_id": "6JOMu"
+    },
+    {
+        "userId": "LXWCe",
+        "stayId": "622f337a75c7d36e498aab37",
+        "startDate": "2025-05-20T21:00:00.000Z",
+        "endDate": "2025-05-22T21:00:00.000Z",
+        "price": 158,
+        "guests": 0,
+        "_id": "JZvlU"
+    },
+    {
+        "userId": "622f3403e36c59e6164faf93",
+        "stayId": "622f337a75c7d36e498aaaf8",
+        "startDate": "2025-05-31T21:00:00.000Z",
+        "endDate": "2025-06-08T21:00:00.000Z",
+        "price": 4792,
+        "guests": 2,
+        "_id": "lbXIO"
+    },
+    {
+        "userId": "622f3403e36c59e6164faf93",
+        "stayId": "622f337a75c7d36e498aab0a",
+        "startDate": "2025-06-07T21:00:00.000Z",
+        "endDate": "2025-06-14T21:00:00.000Z",
+        "price": 413,
+        "guests": 3,
+        "_id": "e22WE"
+    },
+    {
+        "userId": "622f3403e36c59e6164faf93",
+        "stayId": "622f337a75c7d36e498aaaf8",
+        "startDate": "2025-05-24T21:00:00.000Z",
+        "endDate": "2025-06-29T21:00:00.000Z",
+        "price": 21564,
+        "guests": 6,
+        "_id": "CKELC"
+    },
+    {
+        "userId": "622f3407e36c59e6164fbf76",
+        "userFullname": "Dan",
+        "userImgUrl": "https://robohash.org/6460525?set=set1",
+        "stayName": "Westin Kaanapali KORVN 2BR",
+        "stayId": "622f337a75c7d36e498aaaf8",
+        "startDate": "2025-05-31T21:00:00.000Z",
+        "endDate": "2025-06-08T21:00:00.000Z",
+        "price": 4792,
+        "guests": 2,
+        "_id": "xYg9m"
+    },
+    {
+        "userId": "622f3407e36c59e6164fbf76",
+        "userFullname": "Dan",
+        "userImgUrl": "https://robohash.org/6460525?set=set1",
+        "stayName": "Westin Kaanapali KORVN 2BR",
+        "stayId": "622f337a75c7d36e498aaaf8",
+        "startDate": "2025-06-17T21:00:00.000Z",
+        "endDate": "2025-06-28T21:00:00.000Z",
+        "price": 6589,
+        "guests": 1,
+        "orderTime": "2025-05-25T01:00:55.437Z",
+        "_id": "8QkIG"
+    }
+]

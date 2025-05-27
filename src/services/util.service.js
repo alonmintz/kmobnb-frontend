@@ -184,3 +184,7 @@ export function humanDateTimeFormat(date) {
     hour12: true
   })
 }
+
+export function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}

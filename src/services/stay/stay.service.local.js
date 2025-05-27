@@ -90,13 +90,14 @@ export const CITY_OPTIONS = [
 ];
 
 const emptyFilter = {
+  status: "",
   city: "",
   startDate: null,
   endDate: null,
   capacity: 0,
   isPetsAllowed: false,
   type: "",
-  hostId: ""
+  hostId: "",
 }
 
 async function query(
@@ -107,9 +108,12 @@ async function query(
   try {
     let stays = await storageService.query(STORAGE_KEY);
 
-    const { city, startDate, endDate, capacity, isPetsAllowed, type, hostId } =
+    const { status, city, startDate, endDate, capacity, isPetsAllowed, type, hostId } =
       filterBy;
 
+    if (status) {
+      stays = stays.filter((stay) => stay.status === status);
+    }
     if (city) {
       stays = stays.filter((stay) => stay.loc.city === city);
     }
