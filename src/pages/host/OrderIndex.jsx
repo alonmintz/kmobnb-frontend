@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 // import { stayActions } from "../../store/actions/stay.actions";
 import { orderService } from "../../services/order/order.service.local";
 import { capitalize, humanDateFormat, humanDateTimeFormat } from "../../services/util.service";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { stayActions } from "../../store/actions/stay.actions";
 
 export function OrderIndex() {
@@ -11,6 +11,7 @@ export function OrderIndex() {
   const [orders, setOrders] = useState([])
   const [searchParams] = useSearchParams()
   const [listingName, setListingName] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!user) return
@@ -51,10 +52,6 @@ export function OrderIndex() {
     }
   }
 
-  async function onUpdateOrderStatus(orderId, status) {
-    await orderService.onUpdateOrderStatus(orderId, status)
-  }
-
   if (!orders || !orders.length || !user) {
     return (
       <div className="orders">
@@ -86,7 +83,7 @@ export function OrderIndex() {
           </thead>
           <tbody>
             {orders.map(order => (
-              <tr key={order._id}>
+              <tr key={order._id} onClick={() => navigate(`../order/${order._id}`)}>
                 <td title={order._id}>{order._id.slice(-6)}</td>
                 <td>{order.status ? capitalize(order.status) : ""}</td>
                 <td>{order.stayName}</td>

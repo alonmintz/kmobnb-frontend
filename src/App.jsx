@@ -15,6 +15,7 @@ import { UserMsg } from "./cmps/general/UserMsg";
 import { NotFound } from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import { OrderIndex } from "./pages/host/OrderIndex";
+import { HostOrderPage } from "./pages/host/HostOrderPage";
 
 export function App() {
   const location = useLocation();
@@ -44,6 +45,7 @@ export function App() {
           <Route path="listing/edit" element={<StayEdit />} />
           <Route path="listing/edit/:listingId" element={<StayEdit />} />
           <Route path="orders" element={<OrderIndex />} />
+          <Route path="order/:orderId" element={<HostOrderPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
