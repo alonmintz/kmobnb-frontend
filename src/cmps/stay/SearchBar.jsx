@@ -5,7 +5,7 @@ import { SearchWherePicker } from "./SearchWherePicker";
 import { SearchDatePicker } from "./SearchDatePicker";
 import { SearchWhoPicker } from "./SearchWhoPicker";
 import { format } from "date-fns";
-import { INITIAL_GUESTS } from "../../services/stay/stay.service.local";
+import { INITIAL_GUESTS } from "../../services/stay/index";
 
 export function SearchBar({
   activeSearchControl,
@@ -44,6 +44,10 @@ export function SearchBar({
       setSearchInputValue("");
     }
   }, [destination]);
+
+  useEffect(() => {
+    if (searchInputValue) setDestination(searchInputValue);
+  }, [searchInputValue]);
 
   function renderSplitterActiveClass(leftControl, rightControl) {
     return activeSearchControl === leftControl ||
