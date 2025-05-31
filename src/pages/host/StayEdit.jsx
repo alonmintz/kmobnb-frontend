@@ -10,6 +10,7 @@ import { Modal } from "../../cmps/general/Modal";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { LocationPicker } from "../../cmps/stay/LocationPicker";
 import { ImagesDisplayEditor } from "../../cmps/stay/ImagesDisplayEditor";
+import { stayActions } from "../../store/actions/stay.actions";
 
 const ROOM_TYPES_NAMES = [
   "Entire home/apartment",
@@ -113,6 +114,7 @@ export function StayEdit() {
   const [stayToEdit, setStayToEdit] = useState(stayService.getEmptyStay());
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalContentType, setModalContentType] = useState("");
+  const [validationErrors, setValidationErrors] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -221,7 +223,16 @@ export function StayEdit() {
   function renderModalContent() {
     switch (modalContentType) {
       case "errors":
-        return <div className="errors-modal modal-content"></div>;
+        return (
+          <div className="errors-modal modal-content">
+            <h3>Validation Errors</h3>
+            <ul>
+              {validationErrors.map((err, idx) => (
+                <li key={idx}>{err}</li>
+              ))}
+            </ul>
+          </div>
+        );
 
       case "amenities":
         return (
@@ -347,8 +358,15 @@ export function StayEdit() {
   }
 
   async function onSubmit() {
+    const errors = validateStay(stayToEdit);
+    if (errors.length) {
+      setValidationErrors(errors);
+      setModalContentType("errors");
+      return;
+    }
+    setValidationErrors([]);
     try {
-      const savedStay = await stayService.save(stayToEdit);
+      const savedStay = stayActions.addStay(stayToEdit);
       if (savedStay._id) {
         console.log("Successfully saved listing");
       }
@@ -357,6 +375,38 @@ export function StayEdit() {
     } finally {
       navigate("/host/listings");
     }
+  }
+
+  function validateStay(stay) {
+    const errors = [];
+    if (!stay.name || typeof stay.name !== "string" || !stay.name.trim()) {
+      errors.push("Name is required.");
+    } else if (stay.name.length > MAX_NAME_CHARS) {
+      errors.push(`Name must be at most ${MAX_NAME_CHARS} characters.`);
+    }
+    if (
+      !Array.isArray(stay.imgUrls) ||
+      stay.imgUrls.length !== NUMBER_OF_IMAGES ||
+      stay.imgUrls.some((img) => !img)
+    ) {
+      errors.push(`You must provide exactly ${NUMBER_OF_IMAGES} images.`);
+    }
+    if (!stay.roomType || !stay.roomType.trim()) {
+      errors.push("Room type is required.");
+    }
+    if (typeof stay.price !== "number" || stay.price <= MIN_PRICE) {
+      errors.push(`Price must be greater than ${MIN_PRICE}.`);
+    }
+    if (!stay.loc || stay.loc.lat == null || stay.loc.lng == null) {
+      errors.push("Location (latitude and longitude) is required.");
+    }
+    if (!stay.type || !stay.type.trim()) {
+      errors.push("Type is required.");
+    }
+    if (stay.summary && stay.summary.length > MAX_SUMMARY_CHARS) {
+      errors.push(`Summary must be at most ${MAX_SUMMARY_CHARS} characters.`);
+    }
+    return errors;
   }
 
   return (
@@ -441,6 +491,7 @@ export function StayEdit() {
         <LocationPicker
           location={stayToEdit.loc}
           onChange={handleLocationChange}
+          isExistingStay={stayToEdit._id}
         />
       </section>
       <section className="type-filter-section">

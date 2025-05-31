@@ -575,7 +575,7 @@ export function StayDetails() {
             city={loc.city}
             country={loc.country}
             lat={loc.lat}
-            lng={loc.lan}
+            lng={loc.lng}
           />
         </section>
         {isDetailsModalOpen && (

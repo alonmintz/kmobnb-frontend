@@ -21,7 +21,7 @@ const typeList = [
   "National parks",
   "Rooms",
   "Amazing pools",
-  "Camping",
+  "Campers",
   "Top of the world",
   "Skiing",
   "Tropical",

@@ -7,10 +7,11 @@ import customMapPin from "../../assets/img/map-pin.png";
 import { svgService } from "../../services/svg.service";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
 const zoom = 13;
 
-export function LocationPicker({ location, onChange }) {
+export function LocationPicker({ location, onChange, isExistingStay }) {
   const [coordinates, setCoordinates] = useState({
     lat: location.lat,
     lng: location.lng,
@@ -49,7 +50,9 @@ export function LocationPicker({ location, onChange }) {
         userLatLng.lng
       );
       onChange(userLoc);
-      alert("Map set to your location due to invalid coordinates");
+      if (isExistingStay) {
+        alert("Map set to your location due to invalid coordinates");
+      }
     } else {
       setCoordinates({ lat, lng });
     }
@@ -189,7 +192,7 @@ export function LocationPicker({ location, onChange }) {
 
       <div className="map">
         <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyD_qLVdSP8p5o9mze0KV_J_MJftGN4Rq7s" }}
+          bootstrapURLKeys={{ key: VITE_GOOGLE_MAPS_API_KEY }}
           center={coordinates}
           defaultZoom={zoom}
           onClick={handleMapClick}
