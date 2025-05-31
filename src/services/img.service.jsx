@@ -40,7 +40,7 @@ const images = [
   { name: "National parks", img: nationalParksImg },
   { name: "Rooms", img: roomsImg },
   { name: "Amazing pools", img: amazingPoolsImg },
-  { name: "Camping", img: campingImg },
+  { name: "Campers", img: campingImg },
   { name: "Top of the world", img: topOfTheWorldImg },
   { name: "Skiing", img: skiingImg },
   { name: "Tropical", img: tropicalImg },

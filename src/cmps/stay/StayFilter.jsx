@@ -3,16 +3,17 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSearchParams } from "react-router-dom";
 import filterIcon from "../../assets/img/filter-icon.svg";
+import { imgService } from "../../services/img.service";
 const typeList = [
   "OMG!",
   "Beachfront",
-  "Amazing Views",
+  "Amazing views",
   "Trending",
   "Design",
   "Luxe",
   "Countryside",
   "Top cities",
-  "Off-the-grid",
+  "Off the grid",
   "Historical homes",
   "Desert",
   "Cabins",
@@ -21,7 +22,7 @@ const typeList = [
   "National parks",
   "Rooms",
   "Amazing pools",
-  "Camping",
+  "Campers",
   "Top of the world",
   "Skiing",
   "Tropical",
@@ -34,8 +35,6 @@ export function StayFilter() {
   const LAST_SLIDE = "LAST_SLIDE";
   const FIRST_SLIDE_INDEX = 0;
   const LAST_SLIDE_INDEX = typeList.length - 1;
-  //TODO: change img url paths to imports and not direct paths
-  const IMG_URL_PATH = "../../src/assets/img/stay/type/";
   const [searchParams, setSearchParams] = useSearchParams();
   const [carouselSlide, setCarouselSlide] = useState(FIRST_SLIDE);
   const carouselRef = useRef(null);
@@ -185,7 +184,7 @@ export function StayFilter() {
             >
               <img
                 className="type-img"
-                src={`${IMG_URL_PATH}${type}.jpg`}
+                src={imgService.getImage(type)}
                 alt={`${type}-icon`}
               />
               <p className="type-name">{type}</p>

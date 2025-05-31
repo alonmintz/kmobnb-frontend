@@ -10,12 +10,13 @@ import istanbulIcon from "../../assets/img/city-icons/istanbul-icon.png";
 import hongKongIcon from "../../assets/img/city-icons/hong-kong-icon.png";
 import sydneyIcon from "../../assets/img/city-icons/sydney-icon.png";
 import rioDeJaneiroIcon from "../../assets/img/city-icons/rio-de-janeiro-icon.png";
+import { uploadService } from "../upload.service";
 
 export const stayService = {
   query,
   getById,
   save,
-  remove
+  remove,
 };
 
 const STORAGE_KEY = "STAY_DB";
@@ -98,7 +99,7 @@ const emptyFilter = {
   isPetsAllowed: false,
   type: "",
   hostId: "",
-}
+};
 
 async function query(
   filterBy = emptyFilter,
@@ -108,8 +109,16 @@ async function query(
   try {
     let stays = await storageService.query(STORAGE_KEY);
 
-    const { status, city, startDate, endDate, capacity, isPetsAllowed, type, hostId } =
-      filterBy;
+    const {
+      status,
+      city,
+      startDate,
+      endDate,
+      capacity,
+      isPetsAllowed,
+      type,
+      hostId,
+    } = filterBy;
 
     if (status) {
       stays = stays.filter((stay) => stay.status === status);
@@ -158,18 +167,13 @@ async function remove(stayId) {
 }
 
 async function save(stay) {
+  const imgUrlsToSave = await _uploadNewImages(stay.imgUrls);
+  const stayToSave = { ...stay, imgUrls: imgUrlsToSave };
   try {
     var savedStay;
-    if (stay._id) {
-      const stayToSave = {
-        ...stay,
-      };
+    if (stayToSave._id) {
       savedStay = await storageService.put(STORAGE_KEY, stayToSave);
     } else {
-      //TODO: later on, add a function that populates the added stay with data not presented in the "edit stay" in the UI
-      const stayToSave = {
-        ...stay,
-      };
       savedStay = await storageService.post(STORAGE_KEY, stayToSave);
     }
 
@@ -210,4 +214,26 @@ function _filterStaysByDates(stays, filterByStartDate, filterByEndDate) {
   });
 
   return stays;
+}
+
+async function _uploadNewImages(imgUrls) {
+  console.log("enter _uploadNewImages");
+
+  // if (
+  //   Array.isArray(imgUrls) &&
+  //   imgUrls.every((url) => typeof url === "string")
+  // ) {
+  //   return imgUrls;
+  // }
+  const uploadedUrls = await Promise.all(
+    imgUrls.map(async (imgObj) => {
+      if (typeof imgObj === "string") return imgObj;
+      if (imgObj && imgObj.file) {
+        const { secure_url } = await uploadService.uploadImg(imgObj.file);
+        return secure_url;
+      }
+      return imgObj; // fallback if not string or valid object
+    })
+  );
+  return uploadedUrls;
 }
