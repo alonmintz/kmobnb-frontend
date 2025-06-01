@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { StayList } from "../../cmps/stay/StayList";
 import { stayActions } from "../../store/actions/stay.actions";
 import { useEffect, useRef, useState } from "react";
+import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 
 export function StayIndex() {
   const stays = useSelector((storeState) => storeState.stayModule.stays);
@@ -23,7 +24,8 @@ export function StayIndex() {
 
     return () => observer.disconnect();
   }, []);
-  const filterToSet = { ...filterBy, status: 'active' }
+  const filterToSet = { ...filterBy, status: "active" };
+
   useEffect(() => {
     if (bulkIdx === 0) {
       stayActions.loadStays(filterToSet, bulkIdx);
@@ -32,7 +34,7 @@ export function StayIndex() {
     }
   }, [filterBy]);
 
-  useEffect(() => {
+  useEffectUpdate(() => {
     stayActions.loadStays(filterBy, bulkIdx);
   }, [bulkIdx]);
 

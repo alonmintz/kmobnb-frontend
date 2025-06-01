@@ -5,7 +5,7 @@ import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { Amenity } from "../../cmps/stay/Amenity";
 import { StayDatePicker } from "../../cmps/stay/StayDatePicker";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { stayService } from "../../services/stay/stay.service.local";
+import { stayService } from "../../services/stay";
 import { ReserveCard } from "../../cmps/order/ReserveCard";
 import { StayDetailsMap } from "../../cmps/stay/StayDetailsMap";
 import { format } from "date-fns";
@@ -16,72 +16,6 @@ import { getAverageRating } from "../../services/util.service";
 import { ReviewList } from "../../cmps/review/ReviewList";
 import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
 import { ReviewDisplay } from "../../cmps/review/ReviewDisplay";
-
-const conclusionList = [
-  {
-    title: "Peace and quiet",
-    desc: "This home is in a quiet area.",
-    svg: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 32 32"
-        aria-hidden="true"
-        role="presentation"
-        focusable="false"
-        style={{
-          display: "block",
-          height: "24px",
-          width: "24px",
-          fill: "currentcolor",
-        }}
-      >
-        <path d="M16 0a12 12 0 0 1 12 12c0 6.34-3.81 12.75-11.35 19.26l-.65.56-1.08-.93C7.67 24.5 4 18.22 4 12 4 5.42 9.4 0 16 0zm0 2C10.5 2 6 6.53 6 12c0 5.44 3.25 11.12 9.83 17.02l.17.15.58-.52C22.75 23 25.87 17.55 26 12.33V12A10 10 0 0 0 16 2zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
-      </svg>
-    ),
-  },
-  {
-    title: "Self check-in",
-    desc: "Check yourself in with the lockbox.",
-    svg: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 32 32"
-        aria-hidden="true"
-        role="presentation"
-        focusable="false"
-        style={{
-          display: "block",
-          height: "24px",
-          width: "24px",
-          fill: "currentcolor",
-        }}
-      >
-        <path d="M24.33 1.67a2 2 0 0 1 2 1.85v24.81h3v2H2.67v-2h3V3.67a2 2 0 0 1 1.85-2h.15zm-4 2H7.67v24.66h12.66zm4 0h-2v24.66h2zm-7 11a1.33 1.33 0 1 1 0 2.66 1.33 1.33 0 0 1 0-2.66z"></path>
-      </svg>
-    ),
-  },
-  {
-    title: "Park for free",
-    desc: "This is one of the few places in the area with free parking.",
-    svg: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 32 32"
-        aria-hidden="true"
-        role="presentation"
-        focusable="false"
-        style={{
-          display: "block",
-          height: "24px",
-          width: "24px",
-          fill: "currentcolor",
-        }}
-      >
-        <path d="M16 1a15 15 0 1 1 0 30 15 15 0 0 1 0-30zm0 2a13 13 0 1 0 0 26 13 13 0 0 0 0-26zm2 5a5 5 0 0 1 .22 10H13v6h-2V8zm0 2h-5v6h5a3 3 0 0 0 .18-6z"></path>
-      </svg>
-    ),
-  },
-];
 
 export function StayDetails() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -171,7 +105,7 @@ export function StayDetails() {
   function handleDatesSelect({ dates }) {
     setDatesRange([dates[0], dates[1]]);
   }
-
+  //todo: connect to users api- wishlist EP
   function onHeartClick() {
     if (!user) {
       setIsLoginModalVisible(true);
@@ -231,8 +165,7 @@ export function StayDetails() {
     roomType,
     host,
     loc,
-    reviews,
-    likedByUsers,
+    reviewsData,
     occupancy,
   } = stay;
 
@@ -241,10 +174,6 @@ export function StayDetails() {
       new Date(startDate),
       new Date(endDate),
     ]);
-  }
-
-  function getLimitedReviews() {
-    return reviews.length > 4 ? reviews.slice(0, 4) : reviews;
   }
 
   function onReserveClick() {
@@ -276,12 +205,14 @@ export function StayDetails() {
             <li>
               <span className="mini-avg-rate">
                 <img src={starIcon} />
-                {getAverageRating(reviews)}
+                {reviewsData.avgStarsRate}
               </span>
             </li>
             <li>
               <span className="mini-reviews">
-                {reviews.length ? `${reviews.length} reviews` : "no reviews"}
+                {reviewsData.reviews.length
+                  ? `${reviewsData.reviews.length} reviews`
+                  : "no reviews"}
                 {}
               </span>
             </li>
@@ -393,15 +324,19 @@ export function StayDetails() {
             <div className="ratings-container">
               <h2 className="title">
                 <img src={starIcon} />
-                <span>{getAverageRating(reviews)}</span>
+                <span>{reviewsData.avgStarsRate}</span>
               </h2>
-              <RatingsDisplay />
+              <RatingsDisplay
+                categoryRatings={reviewsData.categoryRatings}
+                starsRatings={reviewsData.starsRatings}
+              />
             </div>
             <div className="reviews-container">
-              <h2 className="title">{`${reviews.length} reviews`}</h2>
-              {reviews.map((review) => (
-                <ReviewDisplay key={review.id} review={review} />
-              ))}
+              <h2 className="title">{`${reviewsData.reviews.length} reviews`}</h2>
+              {reviewsData.reviews.length &&
+                reviewsData.reviews.map((review) => (
+                  <ReviewDisplay key={review.id} review={review} />
+                ))}
             </div>
           </div>
         );
@@ -498,13 +433,12 @@ export function StayDetails() {
             </ol>
             <span className="avg-rate">
               <img src={starIcon} />
-              {getAverageRating(reviews)}
+              {reviewsData.avgStarsRate}
             </span>
           </div>
           <div className="host-conclusions-grid">
             <div className="host-container">
-              {/* <img src={host.pictureUrl} alt={"host-img"} /> */}
-              <img src={guestUnknown} alt={"host-img"} />
+              <img src={host.imgUrl} alt={"host-img"} />
               <div className="host-desc">
                 <h2 className="host">{`Hosted by ${host.fullname}`}</h2>
                 {host.isSuperhost && (
@@ -550,14 +484,17 @@ export function StayDetails() {
           <h2 className="title reviews-title">
             <span className="avg-rate">
               <img src={starIcon} />
-              {getAverageRating(reviews)}
+              {reviewsData.avgStarsRate}
             </span>
             <span className="dot"></span>
-            <span>{`${reviews.length} reviews`}</span>
+            <span>{`${reviewsData.reviews.length} reviews`}</span>
           </h2>
-          <RatingsDisplay />
+          <RatingsDisplay
+            categoryRatings={reviewsData.categoryRatings}
+            starsRatings={reviewsData.starsRatings}
+          />
           <ReviewList
-            reviews={getLimitedReviews()}
+            reviews={reviewsData.reviews}
             isPreview
             onShowMore={() => setModalContentType("reviews")}
           />
@@ -567,7 +504,7 @@ export function StayDetails() {
               setModalContentType("reviews");
             }}
           >
-            Show all {reviews.length} reviews
+            Show all {reviewsData.reviews.length} reviews
           </button>
         </section>
         <section className="map-section" id="map-section">
@@ -585,3 +522,69 @@ export function StayDetails() {
     </>
   );
 }
+
+const conclusionList = [
+  {
+    title: "Peace and quiet",
+    desc: "This home is in a quiet area.",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style={{
+          display: "block",
+          height: "24px",
+          width: "24px",
+          fill: "currentcolor",
+        }}
+      >
+        <path d="M16 0a12 12 0 0 1 12 12c0 6.34-3.81 12.75-11.35 19.26l-.65.56-1.08-.93C7.67 24.5 4 18.22 4 12 4 5.42 9.4 0 16 0zm0 2C10.5 2 6 6.53 6 12c0 5.44 3.25 11.12 9.83 17.02l.17.15.58-.52C22.75 23 25.87 17.55 26 12.33V12A10 10 0 0 0 16 2zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
+      </svg>
+    ),
+  },
+  {
+    title: "Self check-in",
+    desc: "Check yourself in with the lockbox.",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style={{
+          display: "block",
+          height: "24px",
+          width: "24px",
+          fill: "currentcolor",
+        }}
+      >
+        <path d="M24.33 1.67a2 2 0 0 1 2 1.85v24.81h3v2H2.67v-2h3V3.67a2 2 0 0 1 1.85-2h.15zm-4 2H7.67v24.66h12.66zm4 0h-2v24.66h2zm-7 11a1.33 1.33 0 1 1 0 2.66 1.33 1.33 0 0 1 0-2.66z"></path>
+      </svg>
+    ),
+  },
+  {
+    title: "Park for free",
+    desc: "This is one of the few places in the area with free parking.",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style={{
+          display: "block",
+          height: "24px",
+          width: "24px",
+          fill: "currentcolor",
+        }}
+      >
+        <path d="M16 1a15 15 0 1 1 0 30 15 15 0 0 1 0-30zm0 2a13 13 0 1 0 0 26 13 13 0 0 0 0-26zm2 5a5 5 0 0 1 .22 10H13v6h-2V8zm0 2h-5v6h5a3 3 0 0 0 .18-6z"></path>
+      </svg>
+    ),
+  },
+];

@@ -5,6 +5,7 @@
     grid-template-columns: 4rem 1rem 1fr;
     grid-template-rows: auto auto;
     justify-content: start;
+    align-content: start;
     padding-block: 0.7rem;
 
     .user-container {
@@ -18,6 +19,7 @@
         justify-self: center;
         height: 4rem;
         width: 4rem;
+        border-radius: 50%;
       }
       .user-details {
         grid-column: 3;
