@@ -3,15 +3,16 @@ import { StayList } from "../../cmps/stay/StayList";
 import { stayActions } from "../../store/actions/stay.actions";
 import { useEffect, useRef, useState } from "react";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
+import { StayListSkeleton } from "../../cmps/skeleton/StayListSkeleton";
 
 export function StayIndex() {
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const [bulkIdx, setBulkIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const bottomDiv = useRef();
   //TODO: determine a min height to the index div so the bottom div won't be triggered on load.
-  //TODO: add loading when loading stays (animation or even better: empty preview templates (like in origin))
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -27,20 +28,25 @@ export function StayIndex() {
   const filterToSet = { ...filterBy, status: "active" };
 
   useEffect(() => {
+    setIsLoading(true);
     if (bulkIdx === 0) {
-      stayActions.loadStays(filterToSet, bulkIdx);
+      stayActions
+        .loadStays(filterToSet, bulkIdx)
+        .finally(() => setIsLoading(false));
     } else {
       setBulkIndex(0);
+      setIsLoading(false);
     }
   }, [filterBy]);
 
   useEffectUpdate(() => {
-    stayActions.loadStays(filterBy, bulkIdx);
+    if (bulkIdx === 0) setIsLoading(true);
+    stayActions.loadStays(filterBy, bulkIdx).finally(() => setIsLoading(false));
   }, [bulkIdx]);
 
   return (
     <section className="stay-index layout main full">
-      <StayList stays={stays} />
+      {isLoading ? <StayListSkeleton /> : <StayList stays={stays} />}
       <div ref={bottomDiv} className="bottom-div"></div>
     </section>
   );

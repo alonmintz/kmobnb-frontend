@@ -366,7 +366,10 @@ export function StayEdit() {
     }
     setValidationErrors([]);
     try {
-      const savedStay = stayActions.addStay(stayToEdit);
+      if (stayToEdit._id) {
+        delete stayToEdit.reviewsData;
+      }
+      const savedStay = stayService.save(stayToEdit);
       if (savedStay._id) {
         console.log("Successfully saved listing");
       }
