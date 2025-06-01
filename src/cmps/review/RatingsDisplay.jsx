@@ -1,59 +1,29 @@
 import { svgService } from "../../services/svg.service";
 import { OverallRating } from "./OverallRating";
 
-const tempRatings = {
-  starsRatings: [
-    {
-      rate: 1,
-      count: 2,
-    },
-    {
-      rate: 2,
-      count: 4,
-    },
-    {
-      rate: 3,
-      count: 6,
-    },
-    {
-      rate: 4,
-      count: 8,
-    },
-    {
-      rate: 5,
-      count: 10,
-    },
-  ],
-  categoryRatings: [
-    {
-      category: "Cleanliness",
-      avgRate: 4.9,
-    },
-    {
-      category: "Accuracy",
-      avgRate: 3.8,
-    },
-    {
-      category: "Check-in",
-      avgRate: 4.7,
-    },
-    {
-      category: "Communication",
-      avgRate: 4.3,
-    },
-    {
-      category: "Location",
-      avgRate: 4.4,
-    },
-    {
-      category: "Value",
-      avgRate: 4.9,
-    },
-  ],
-};
-//todo: ratings will come from DB
-export function RatingsDisplay({ ratings }) {
-  let { starsRatings, categoryRatings } = tempRatings;
+function CategoryRating({ category, avgRate }) {
+  const categoryDisplayNameMap = {
+    value: "Value",
+    location: "Location",
+    communications: "Communication",
+    checkIn: "Check-in",
+    accuracy: "Accuracy",
+    cleanliness: "Cleanliness",
+  };
+  return (
+    <div key={category} className="category-rating">
+      <h4>
+        <span>{categoryDisplayNameMap[category]}</span>
+        <span>{avgRate}</span>
+      </h4>
+      {svgService.getGenericSvg(
+        categoryDisplayNameMap[category],
+        "category-icon"
+      )}
+    </div>
+  );
+}
+export function RatingsDisplay({ categoryRatings, starsRatings }) {
   starsRatings = addPercentages(starsRatings);
 
   function addPercentages(stars) {
@@ -67,16 +37,15 @@ export function RatingsDisplay({ ratings }) {
 
   return (
     <section className="ratings-display">
-      <OverallRating starsRatings={starsRatings} />
-      {categoryRatings.map((rating) => (
-        <div key={rating.category} className="category-rating">
-          <h4>
-            <span>{rating.category}</span>
-            <span>{rating.avgRate}</span>
-          </h4>
-          {svgService.getGenericSvg(rating.category, "category-icon")}
-        </div>
-      ))}
+      {starsRatings && <OverallRating starsRatings={starsRatings} />}
+      {categoryRatings &&
+        Object.entries(categoryRatings).map(([category, avgRate]) => (
+          <CategoryRating
+            key={category}
+            category={category}
+            avgRate={avgRate}
+          />
+        ))}
     </section>
   );
 }

@@ -29,8 +29,7 @@ export function ReviewDisplay({ review, isPreview = false, onShowMore }) {
     <section className="review-display">
       <div className="review-by">
         <div className="user-container">
-          {/* <img src={by.imgUrl} alt={"user-img"} /> */}
-          <img className="user-img" src={guestUnknown} alt={"host-img"} />
+          <img className="user-img" src={by.imgUrl} alt={"user-img"} />
           <div className="user-details">
             <h4 className="user-fullname">{by.fullname}</h4>
             <span className="user-location">{by.location || "Israel"}</span>
@@ -42,7 +41,7 @@ export function ReviewDisplay({ review, isPreview = false, onShowMore }) {
               <img key={idx} src={starIcon} alt="star" className="star-icon" />
             ))}
           </li>
-          <li className="dot">{/* <span></span> */}</li>
+          <li className="dot"></li>
           <li className="time-ago">
             <span>{getTimeAgoFromNow(at)}</span>
           </li>

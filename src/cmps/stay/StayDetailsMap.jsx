@@ -1,5 +1,5 @@
 import GoogleMapReact from "google-map-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
 const LocationPin = () => (
@@ -28,7 +28,7 @@ const LocationPin = () => (
 //TODO: export google API key to env variable
 export function StayDetailsMap({ city, country, lat, lng }) {
   const [coordinates, setCoordinates] = useState({ lat, lng });
-  const zoom = 8;
+  const zoom = 15;
 
   return (
     <section className="stay-details-map-container">
@@ -37,10 +37,10 @@ export function StayDetailsMap({ city, country, lat, lng }) {
       <div className="map">
         <GoogleMapReact
           bootstrapURLKeys={{ key: VITE_GOOGLE_MAPS_API_KEY }}
-          center={coordinates}
+          defaultCenter={coordinates}
           defaultZoom={zoom}
         >
-          <LocationPin {...coordinates} />
+          <LocationPin lat={coordinates.lat} lng={coordinates.lng} />
         </GoogleMapReact>
       </div>
     </section>
