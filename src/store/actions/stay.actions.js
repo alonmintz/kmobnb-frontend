@@ -25,11 +25,15 @@ export const stayActions = {
   setDatesRange,
 };
 
-async function loadStays(filterBy, startIdx = 0, amount = 20) {
+async function loadStays(filterBy, bulkIdx = 0, bulkSize = 20) {
   try {
-    const stays = await stayService.query(filterBy, startIdx, amount);
+    const stays = await stayService.getStays({
+      ...filterBy,
+      bulkIdx,
+      bulkSize,
+    });
     store.dispatch({
-      type: startIdx !== 0 ? INCREMENT_STAYS : SET_STAYS,
+      type: bulkIdx !== 0 ? INCREMENT_STAYS : SET_STAYS,
       stays,
     });
 
