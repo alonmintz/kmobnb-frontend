@@ -1,5 +1,4 @@
 import starIcon from "../../assets/img/rating-star.svg";
-import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { useEffect, useRef, useState } from "react";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { Amenity } from "../../cmps/stay/Amenity";
@@ -12,10 +11,10 @@ import { format } from "date-fns";
 import { Modal } from "../../cmps/general/Modal";
 import { useSelector } from "react-redux";
 import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
-import { getAverageRating } from "../../services/util.service";
 import { ReviewList } from "../../cmps/review/ReviewList";
 import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
 import { ReviewDisplay } from "../../cmps/review/ReviewDisplay";
+import { StayDetailsSkeleton } from "../../cmps/skeleton/StayDetailsSkeleton";
 
 export function StayDetails() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -88,7 +87,7 @@ export function StayDetails() {
       setStay(stay);
     } catch (err) {
       alert("Error loading your request");
-      //todo: add navigation back to home including the search params
+      navigate("/");
     } finally {
       setIsLoading(false);
     }
@@ -151,7 +150,7 @@ export function StayDetails() {
       )}`;
   }
 
-  if (isLoading || !stay) return <div className="loader">loading</div>;
+  if (isLoading || !stay) return <StayDetailsSkeleton />;
 
   const {
     name,

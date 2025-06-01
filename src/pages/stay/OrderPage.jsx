@@ -13,6 +13,7 @@ import starIcon from "../../assets/img/rating-star.svg";
 import visaIcon from "../../assets/img/order/visa.svg";
 import { orderService } from "../../services/order/order.service.local";
 import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
+import { OrderPageSkeleton } from "../../cmps/skeleton/OrderPageSkeleton";
 
 //TODO: move to order service:
 const DAILY_FEE = 4;
@@ -20,7 +21,7 @@ const DAILY_FEE = 4;
 export function OrderPage() {
   const [isLoading, setIsLoading] = useState(true);
   const loggedInUser = useSelector((storeState) => storeState.userModule.user);
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false)
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [searchParams] = useSearchParams();
   const params = useParams();
   const [stayToOrder, setStayToOrder] = useState();
@@ -119,7 +120,7 @@ export function OrderPage() {
     return format(dayBefore, "MMM d");
   }
 
-  if (isLoading || !stayToOrder) return <div className="loader">loading</div>;
+  if (isLoading || !stayToOrder) return <OrderPageSkeleton />;
 
   const {
     _id,
@@ -127,16 +128,11 @@ export function OrderPage() {
     imgUrls,
     price: pricePerNight,
     host,
-    reviews,
+    reviewsData,
   } = stayToOrder;
 
-  function getAverageRate() {
-    const starSum = reviews.reduce((acc, review) => acc + review.starsRate, 0);
-    const avg = starSum / reviews.length;
-    return parseFloat(avg.toFixed(2));
-  }
-
-  const averageRate = getAverageRate();
+  const averageRate = reviewsData.avgStarsRate;
+  const reviewsCount = reviewsData.reviewsCount;
   const stayImgUrl = imgUrls[0];
   const pricePerNights = Math.imul(pricePerNight, nightsCount);
   const servicePrice = Math.imul(DAILY_FEE, nightsCount);
@@ -215,10 +211,12 @@ export function OrderPage() {
           <img src={starIcon} />
           <span>
             {averageRate}
-            {`(${reviews.length})`}
+            {`(${reviewsCount})`}
           </span>
+          {host.isSuperhost && (
+            <span className="super-host"> {"Superhost"}</span>
+          )}
         </span>
-        {host.isSuperhost && <span className="super-host">Superhost</span>}
       </div>
       <div className="cancel-desc">
         <h4 className="title">Free cancellation</h4>
@@ -283,7 +281,10 @@ export function OrderPage() {
   function renderOrderButton() {
     if (!loggedInUser) {
       return (
-        <button className="submit-btn" onClick={() => setIsLoginModalVisible(true)}>
+        <button
+          className="submit-btn"
+          onClick={() => setIsLoginModalVisible(true)}
+        >
           Please login
         </button>
       );
@@ -301,7 +302,11 @@ export function OrderPage() {
 
   return (
     <section className="order-page">
-      {!isLoginModalVisible ? "" : <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />}
+      {!isLoginModalVisible ? (
+        ""
+      ) : (
+        <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />
+      )}
       <div className="back-container">
         <Link
           className="back-link"

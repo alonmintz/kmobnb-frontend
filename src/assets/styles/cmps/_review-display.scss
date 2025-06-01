@@ -1,5 +1,6 @@
 .review-display {
   display: grid;
+  align-content: start;
   .review-by {
     display: grid;
     grid-template-columns: 4rem 1rem 1fr;

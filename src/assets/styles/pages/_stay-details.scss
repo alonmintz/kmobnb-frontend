@@ -448,3 +448,130 @@
     }
   }
 }
+
+.stay-details-skeleton {
+  .skeleton-title {
+    margin-block: 1em;
+    width: 40%;
+    height: 2.5rem;
+  }
+  .skeleton-btn {
+    width: 6rem;
+    height: 2rem;
+  }
+  .skeleton-img {
+    width: 100%;
+    height: 100%;
+  }
+  .skeleton-reserve {
+    width: 100%;
+    height: 18rem;
+    border-radius: 1rem;
+  }
+  .skeleton-room-title {
+    width: 60%;
+    height: 1.5rem;
+  }
+  .skeleton-room-detail1 {
+    width: 40%;
+    height: 1rem;
+  }
+  .skeleton-room-detail2 {
+    width: 30%;
+    height: 1rem;
+  }
+  .skeleton-host-img {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+  }
+  .skeleton-host-name {
+    margin-block: 0.5em;
+    width: 8rem;
+    height: 1rem;
+  }
+  .skeleton-host-status {
+    width: 5rem;
+    height: 0.8rem;
+  }
+  .skeleton-conclusion-img {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+  }
+  .skeleton-conclusion-title {
+    margin-block: 0.5em;
+    width: 6rem;
+    height: 1rem;
+  }
+  .skeleton-conclusion-desc {
+    width: 10rem;
+    height: 0.8rem;
+  }
+  .skeleton-summary-title {
+    margin-block: 0.5em;
+    width: 100%;
+    height: 2.5rem;
+  }
+  .skeleton-summary-desc {
+    width: 80%;
+    height: 1.5rem;
+  }
+  .skeleton-amenities-title {
+    width: 40%;
+    height: 1.5rem;
+  }
+  .skeleton-amenities-list {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .skeleton-amenity {
+    width: 6rem;
+    height: 1.2rem;
+  }
+  .skeleton-date-title {
+    margin-block: 0.5em;
+    width: 30%;
+    height: 1.5rem;
+  }
+  .skeleton-date-subtitle {
+    width: 50%;
+    height: 1rem;
+  }
+  .skeleton-date-picker {
+    width: 100%;
+    height: 3rem;
+    margin-top: 1rem;
+  }
+  .skeleton-reviews-title {
+    width: 30%;
+    height: 1.5rem;
+  }
+  .skeleton-reviews-list {
+    width: 100%;
+    height: 3rem;
+    margin-top: 1rem;
+  }
+  .skeleton-map {
+    width: 100%;
+    height: 20rem;
+    border-radius: 1rem;
+  }
+}
+
+.stay-details-skeleton .skeleton {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 37%, #ececec 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: 0.5rem;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
