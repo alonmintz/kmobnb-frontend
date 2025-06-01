@@ -1,7 +1,73 @@
 const { DEV, VITE_LOCAL } = import.meta.env;
 
-import { INITIAL_GUESTS, stayService as local } from "./stay.service.local";
+// import { INITIAL_GUESTS, stayService as local } from "./stay.service.local";
+import { stayService as local } from "./stay.service.local";
 import { stayService as remote } from "./stay.service.remote";
+import { imgService } from "../img.service";
+
+export const INITIAL_GUESTS = [
+  { type: "adults", desc: "Ages 13 or above", count: 0 },
+  { type: "children", desc: "Ages 2 – 12", count: 0 },
+  { type: "infants", desc: "Under 2", count: 0 },
+  { type: "pets", desc: "Bringing a service animal?", count: 0 },
+];
+
+export const CITY_OPTIONS = [
+  {
+    city: "Maui",
+    country: "United States",
+    phrase: "Tropical paradise with beaches and volcanoes",
+    imgUrl: imgService.getCityIconImage("Maui"),
+  },
+  {
+    city: "Montreal",
+    country: "Canada",
+    phrase: "French-Canadian charm and vibrant culture",
+    imgUrl: imgService.getCityIconImage("Montreal"),
+  },
+  {
+    city: "Porto",
+    country: "Portugal",
+    phrase: "Historic riverside city with wine and charm",
+    imgUrl: imgService.getCityIconImage("Porto"),
+  },
+  {
+    city: "New York",
+    country: "United States",
+    phrase: "The city that never sleeps",
+    imgUrl: imgService.getCityIconImage("New York"),
+  },
+  {
+    city: "Barcelona",
+    country: "Spain",
+    phrase: "Beachside beauty with Gaudí’s magic",
+    imgUrl: imgService.getCityIconImage("Barcelona"),
+  },
+  {
+    city: "Istanbul",
+    country: "Turkey",
+    phrase: "Where East meets West in stunning style",
+    imgUrl: imgService.getCityIconImage("Istanbul"),
+  },
+  {
+    city: "Hong Kong",
+    country: "Hong Kong",
+    phrase: "Skyline views, street food, and endless energy",
+    imgUrl: imgService.getCityIconImage("Hong Kong"),
+  },
+  {
+    city: "Sydney",
+    country: "Australia",
+    phrase: "Harbor life with iconic Aussie vibes",
+    imgUrl: imgService.getCityIconImage("Sydney"),
+  },
+  {
+    city: "Rio De Janeiro",
+    country: "Brazil",
+    phrase: "Beaches, samba, and breathtaking views",
+    imgUrl: imgService.getCityIconImage("Rio De Janeiro"),
+  },
+];
 
 function getEmptyStay() {
   return {

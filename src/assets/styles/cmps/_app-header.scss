@@ -46,7 +46,7 @@
           align-items: center;
           gap: rem(4px);
 
-          &>* {
+          & > * {
             margin: 0;
             cursor: pointer;
           }
@@ -125,6 +125,7 @@
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+              text-transform: capitalize;
               color: #222222;
             }
           }
@@ -173,7 +174,6 @@
             background-color: rgba(0, 0, 0, 0.1);
           }
         }
-
 
         a {
           color: #222222;

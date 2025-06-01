@@ -1,20 +1,24 @@
-import { httpService } from '../http.service'
+import { httpService } from "../http.service";
 
 export const reviewService = {
-	add,
-	query,
-	remove,
+  getReviewsByStayId,
+  getReviewsGeneralDataByStayId,
+  getReviewsDataByStayId,
+  save,
+};
+
+async function getReviewsByStayId(stayId) {
+  return await httpService.get(`review/${stayId}`);
 }
 
-function query(filterBy) {
-	var queryStr = !filterBy ? '' : `?name=${filterBy.name}&sort=anaAref`
-	return httpService.get(`review${queryStr}`)
+async function getReviewsGeneralDataByStayId(stayId) {
+  return await httpService.get(`review/${stayId}/general`);
 }
 
-async function remove(reviewId) {
-	await httpService.delete(`review/${reviewId}`)
+async function getReviewsDataByStayId(stayId) {
+  return await httpService.get(`review/${stayId}/data`);
 }
 
-async function add({ txt, aboutUserId }) {
-	return await httpService.post(`review`, { txt, aboutUserId })
+async function save(review) {
+  return await httpService.post(`review`, review);
 }

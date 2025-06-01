@@ -1,4 +1,4 @@
-import { INITIAL_GUESTS } from "../../services/stay/stay.service.local";
+import { INITIAL_GUESTS } from "../../services/stay/index";
 
 export const SET_STAYS = "SET_STAYS";
 export const INCREMENT_STAYS = "INCREMENT_STAYS";

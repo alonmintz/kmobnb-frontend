@@ -1,5 +1,5 @@
 import { SearchPickerWrapper } from "./SearchPickerWrapper";
-import { CITY_OPTIONS } from "../../services/stay/stay.service.local";
+import { CITY_OPTIONS } from "../../services/stay/index";
 
 export function SearchWherePicker({ type, onSelect, searchInputValue }) {
   function handleSelect({ city }) {

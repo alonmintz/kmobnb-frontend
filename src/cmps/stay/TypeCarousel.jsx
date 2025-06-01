@@ -194,7 +194,7 @@ export function TypeCarousel({ onSelect, selectedType }) {
             >
               <img
                 className="type-img"
-                src={imgService.getImage(type)}
+                src={imgService.getTypeImage(type)}
                 alt={`${type}-icon`}
               />
               <span className="type-name">{type}</span>

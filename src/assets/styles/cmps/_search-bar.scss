@@ -84,6 +84,7 @@
         background-color: transparent;
         outline: 0;
         font-weight: 500;
+        text-transform: capitalize;
         &::placeholder {
           font-weight: 400;
         }

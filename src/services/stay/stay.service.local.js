@@ -1,19 +1,10 @@
 import { storageService } from "../async-storage.service";
 import { loadFromStorage, saveToStorage } from "../util.service";
 import STAYS_DATA from "./stay_mockdata.json";
-import mauiIcon from "../../assets/img/city-icons/maui-icon.png";
-import montrealIcon from "../../assets/img/city-icons/montreal-icon.png";
-import portoIcon from "../../assets/img/city-icons/porto-icon.png";
-import newYorkIcon from "../../assets/img/city-icons/new-york-icon.png";
-import barcelonaIcon from "../../assets/img/city-icons/barcelona-icon.png";
-import istanbulIcon from "../../assets/img/city-icons/istanbul-icon.png";
-import hongKongIcon from "../../assets/img/city-icons/hong-kong-icon.png";
-import sydneyIcon from "../../assets/img/city-icons/sydney-icon.png";
-import rioDeJaneiroIcon from "../../assets/img/city-icons/rio-de-janeiro-icon.png";
 import { uploadService } from "../upload.service";
 
 export const stayService = {
-  query,
+  getStays,
   getById,
   save,
   remove,
@@ -26,70 +17,6 @@ _createStays();
 
 // window.cs = stayService;
 
-export const INITIAL_GUESTS = [
-  { type: "adults", desc: "Ages 13 or above", count: 0 },
-  { type: "children", desc: "Ages 2 – 12", count: 0 },
-  { type: "infants", desc: "Under 2", count: 0 },
-  { type: "pets", desc: "Bringing a service animal?", count: 0 },
-];
-
-export const CITY_OPTIONS = [
-  {
-    city: "Maui",
-    country: "United States",
-    phrase: "Tropical paradise with beaches and volcanoes",
-    imgUrl: mauiIcon,
-  },
-  {
-    city: "Montreal",
-    country: "Canada",
-    phrase: "French-Canadian charm and vibrant culture",
-    imgUrl: montrealIcon,
-  },
-  {
-    city: "Porto",
-    country: "Portugal",
-    phrase: "Historic riverside city with wine and charm",
-    imgUrl: portoIcon,
-  },
-  {
-    city: "New York",
-    country: "United States",
-    phrase: "The city that never sleeps",
-    imgUrl: newYorkIcon,
-  },
-  {
-    city: "Barcelona",
-    country: "Spain",
-    phrase: "Beachside beauty with Gaudí’s magic",
-    imgUrl: barcelonaIcon,
-  },
-  {
-    city: "Istanbul",
-    country: "Turkey",
-    phrase: "Where East meets West in stunning style",
-    imgUrl: istanbulIcon,
-  },
-  {
-    city: "Hong Kong",
-    country: "Hong Kong",
-    phrase: "Skyline views, street food, and endless energy",
-    imgUrl: hongKongIcon,
-  },
-  {
-    city: "Sydney",
-    country: "Australia",
-    phrase: "Harbor life with iconic Aussie vibes",
-    imgUrl: sydneyIcon,
-  },
-  {
-    city: "Rio De Janeiro",
-    country: "Brazil",
-    phrase: "Beaches, samba, and breathtaking views",
-    imgUrl: rioDeJaneiroIcon,
-  },
-];
-
 const emptyFilter = {
   status: "",
   city: "",
@@ -101,7 +28,7 @@ const emptyFilter = {
   hostId: "",
 };
 
-async function query(
+async function getStays(
   filterBy = emptyFilter,
   bulkIdx = 0,
   amount = STAYS_PER_LOAD
@@ -217,14 +144,6 @@ function _filterStaysByDates(stays, filterByStartDate, filterByEndDate) {
 }
 
 async function _uploadNewImages(imgUrls) {
-  console.log("enter _uploadNewImages");
-
-  // if (
-  //   Array.isArray(imgUrls) &&
-  //   imgUrls.every((url) => typeof url === "string")
-  // ) {
-  //   return imgUrls;
-  // }
   const uploadedUrls = await Promise.all(
     imgUrls.map(async (imgObj) => {
       if (typeof imgObj === "string") return imgObj;

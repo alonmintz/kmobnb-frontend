@@ -22,7 +22,17 @@ import tropicalImg from "../assets/img/stay/type/Tropical.jpg";
 import creativeSpacesImg from "../assets/img/stay/type/Creative spaces.jpg";
 import castlesImg from "../assets/img/stay/type/Castles.jpg";
 
-const images = [
+import mauiIcon from "../assets/img/city-icons/maui-icon.png";
+import montrealIcon from "../assets/img/city-icons/montreal-icon.png";
+import portoIcon from "../assets/img/city-icons/porto-icon.png";
+import newYorkIcon from "../assets/img/city-icons/new-york-icon.png";
+import barcelonaIcon from "../assets/img/city-icons/barcelona-icon.png";
+import istanbulIcon from "../assets/img/city-icons/istanbul-icon.png";
+import hongKongIcon from "../assets/img/city-icons/hong-kong-icon.png";
+import sydneyIcon from "../assets/img/city-icons/sydney-icon.png";
+import rioDeJaneiroIcon from "../assets/img/city-icons/rio-de-janeiro-icon.png";
+
+const stayTypeImages = [
   { name: "OMG!", img: omgImg },
   { name: "Beachfront", img: beachfrontImg },
   { name: "Amazing views", img: amazingViewsImg },
@@ -48,12 +58,31 @@ const images = [
   { name: "Castles", img: castlesImg },
 ];
 
+const cityIconsImages = [
+  { name: "Maui", img: mauiIcon },
+  { name: "Montreal", img: montrealIcon },
+  { name: "Porto", img: portoIcon },
+  { name: "New York", img: newYorkIcon },
+  { name: "Barcelona", img: barcelonaIcon },
+  { name: "Istanbul", img: istanbulIcon },
+  { name: "Hong Kong", img: hongKongIcon },
+  { name: "Sydney", img: sydneyIcon },
+  { name: "Rio De Janeiro", img: rioDeJaneiroIcon },
+];
+
 export const imgService = {
-  getImage,
+  getTypeImage,
+  getCityIconImage,
 };
 
-function getImage(imgName) {
-  const imgObj = images.find((obj) => imgName === obj.name);
+function getTypeImage(imgName) {
+  const imgObj = stayTypeImages.find((obj) => imgName === obj.name);
+  const img = imgObj?.img || null;
+  return img;
+}
+
+function getCityIconImage(imgName) {
+  const imgObj = cityIconsImages.find((obj) => imgName === obj.name);
   const img = imgObj?.img || null;
   return img;
 }

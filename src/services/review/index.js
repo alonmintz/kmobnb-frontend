@@ -2,7 +2,7 @@ const { DEV, VITE_LOCAL } = import.meta.env;
 
 import { reviewService as local } from "./review.service.local";
 import { reviewService as remote } from "./review.service.remote";
-//TODO: is review service needed to our project?
+
 export const reviewService = VITE_LOCAL === "true" ? local : remote;
 
 // Easy access to this service from the dev tools console

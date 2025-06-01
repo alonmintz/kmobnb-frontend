@@ -184,7 +184,7 @@ export function StayFilter() {
             >
               <img
                 className="type-img"
-                src={imgService.getImage(type)}
+                src={imgService.getTypeImage(type)}
                 alt={`${type}-icon`}
               />
               <p className="type-name">{type}</p>
