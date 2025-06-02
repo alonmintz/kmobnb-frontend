@@ -4,7 +4,7 @@ import { uploadService } from "../upload.service";
 //TODO: complete refactor
 const STORAGE_KEY_LOGGEDIN_USER = "loggedinUser";
 //TODO: change to actual cloudinary url
-export const DEFAULT_USE_IMAGE_URL = "change to actual url";
+export const DEFAULT_USE_IMAGE_URL = "https://robohash.org/CUX.png?set=set2";
 
 export const userService = {
   login,
@@ -46,11 +46,11 @@ async function login(userCred) {
   if (user) return saveLoggedinUser(user);
 }
 
-async function signup(userCred) {
-  const imgUrlToSave = await _uploadNewImage(userCred.imgUrl);
-  const userCredToSave = { ...userCred, imgUrl: imgUrlToSave };
+async function signup(userInput) {
+  const imgUrlToSave = await _uploadNewImage(userInput.imgUrl);
+  const userInputToSave = { ...userInput, imgUrl: imgUrlToSave };
 
-  const user = await httpService.post("auth/signup", userCredToSave);
+  const user = await httpService.post("auth/signup", userInputToSave);
   return saveLoggedinUser(user);
 }
 
@@ -59,7 +59,6 @@ async function logout() {
   return await httpService.post("auth/logout");
 }
 
-//TODO: Eyal do we need these?
 function getLoggedinUser() {
   return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER));
 }
