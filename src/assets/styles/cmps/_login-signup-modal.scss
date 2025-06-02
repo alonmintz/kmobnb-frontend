@@ -14,7 +14,7 @@
     border-bottom: 1px solid #000;
     border-color: #ededed;
 
-    > h1 {
+    >h1 {
       text-align: center;
       margin: 0 auto;
       font-weight: 550;
@@ -25,7 +25,7 @@
   .login-modal-content {
     padding-block-start: 1.7rem;
 
-    > h2 {
+    >h2 {
       font-size: rem(22px);
       font-weight: 440;
       padding-bottom: 1.5rem;
@@ -35,6 +35,70 @@
       display: flex;
       gap: 1.25rem;
     }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1.25rem;
+
+      input {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+        border: 2px solid rgb(176, 176, 176);
+        border-radius: 8px;
+        transition: border-color 0.2s ease;
+
+        &:first-child {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          border-bottom-width: 1px;
+        }
+
+        &:last-of-type {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          margin-bottom: 1rem;
+          border-top-width: 1px;
+        }
+
+        &:focus {
+          outline: none;
+          border-color: #222222;
+        }
+
+        &::placeholder {
+          color: rgb(113, 113, 113);
+          font-size: rem(14px);
+        }
+      }
+
+      .error-message {
+        color: #c13515;
+        background-color: #fff8f6;
+        padding: 12px;
+        margin-top: 16px;
+        border-radius: 4px;
+        border: 1px solid #c13515;
+        font-size: rem(14px);
+        display: flex;
+        align-items: center;
+
+        &::before {
+          content: "⚠️";
+          margin-right: 8px;
+        }
+      }
+
+      input.error {
+        border-color: #c13515;
+
+        &:focus {
+          border-color: #c13515;
+        }
+      }
+    }
+
 
     .modal-button {
       width: 100%;
@@ -46,6 +110,15 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      transition: transform 0.1s ease;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
     }
 
     .divider {

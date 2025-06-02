@@ -1,5 +1,4 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faX } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 import { Modal } from "../../cmps/general/Modal";
 import { userActions } from "../../store/actions/user.actions";
 
@@ -12,10 +11,32 @@ export function LoginSignupModal({ onClose }) {
     username: "patty",
     password: "patty1"
   }
+  const [creds, setCreds] = useState({
+    username: '',
+    password: ''
+  })
+  const [error, setError] = useState('')
 
-  async function handleDemoUserLoginClick(creds) {
-    onClose();
-    await userActions.login(creds);
+  function handleChange(ev) {
+    const { name, value } = ev.target
+    setCreds(prevCreds => ({
+      ...prevCreds,
+      [name]: value
+    }))
+  }
+
+  async function handleSubmit(ev) {
+    ev.preventDefault()
+    try {
+      setError('')
+      const user = await userActions.login(creds);
+      if (user) {
+        onClose()
+      }
+    } catch (err) {
+      console.error('Failed to log in:', err)
+      setError('Invalid username or password')
+    }
   }
 
   return (
@@ -26,18 +47,42 @@ export function LoginSignupModal({ onClose }) {
         </header>
         <div className="login-modal-content">
           <h2>Welcome to Kmobnb</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="login-form">
+              <input
+                type="username"
+                name="username"
+                placeholder="Username"
+                value={creds.username}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={creds.password}
+                onChange={handleChange}
+                required
+              />
+              <button className="modal-button" type="submit">
+                Log in
+              </button>
+              {error && <div className="error-message">{error}</div>}
+            </div>
+          </form>
           <div className="demo-buttons">
             <button
               className="modal-button"
-              onClick={() => handleDemoUserLoginClick(demoGuestCreds)}
+              onClick={() => setCreds(demoGuestCreds)}
             >
-              Login as demo GUEST
+              Use demo GUEST creds
             </button>
             <button
               className="modal-button"
-              onClick={() => handleDemoUserLoginClick(demoHostCreds)}
+              onClick={() => setCreds(demoHostCreds)}
             >
-              Login as demo HOST
+              Use demo HOST creds
             </button>
           </div>
           <div className="divider">or</div>
