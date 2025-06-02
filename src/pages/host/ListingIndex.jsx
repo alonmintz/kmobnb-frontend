@@ -47,7 +47,7 @@ export function ListingIndex() {
       </div>
       <div className="listing-list">
         {listings.map((listing) => (
-          <div key={listing._id} className={`listing-preview`}>
+          <div key={listing._id} className={`listing-preview ${listing.status === "inactive" ? "inactive" : ""}`}>
             <div className="img-container">
               <img src={listing.imgUrls[0]} />
               <div className="hover-buttons">

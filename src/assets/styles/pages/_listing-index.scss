@@ -135,6 +135,14 @@
                 color: gray;
             }
 
+            &.inactive {
+                .img-container {
+                    img {
+                        filter: opacity(0.4) grayscale(0.8);
+                    }
+                }
+            }
+
         }
     }
 }
