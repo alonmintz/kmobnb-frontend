@@ -9,12 +9,11 @@ import { faBan, faPen, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 export function ListingIndex() {
   const navigate = useNavigate();
   const user = useSelector((storeState) => storeState.userModule.user);
-  const listings = useSelector((storeState) => storeState.stayModule.stays);
+  const listings = useSelector((storeState) => storeState.stayModule.hostListings);
 
   useEffect(() => {
     if (user) {
-      //TODO: refactor to listType:"by-host"
-      stayActions.loadStays({ hostId: user._id });
+      stayActions.loadHostListings();
     }
   }, [user]);
 

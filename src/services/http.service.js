@@ -39,7 +39,7 @@ async function ajax(endpoint, method = "GET", data = null) {
     );
     console.dir(err);
     // if (err.response && err.response.status === 401) {
-    //   sessionStorage.clear();
+    //   localStorage.clear();
     //   window.location.assign("/");
     // }
     throw err;
