@@ -19,15 +19,8 @@ export function ListingIndex() {
 
   async function onChangeStatusClick(ev, listing, status) {
     ev.stopPropagation();
-    const listingToSave = { ...listing, status };
     try {
-      stayActions.updateStay(listingToSave);
-      console.log(
-        "Listing",
-        listing._id,
-        "status changed successfully to",
-        status
-      );
+      await stayActions.updateListingStatus(listing, status);
     } catch (err) {
       console.log("Failed updating listing's", listing._id, "status:", err);
     }
