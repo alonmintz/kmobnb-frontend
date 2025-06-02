@@ -8,6 +8,8 @@ export const SET_STAY = "SET_STAY";
 export const REMOVE_STAY = "REMOVE_STAY";
 export const ADD_STAY = "ADD_STAY";
 export const UPDATE_STAY = "UPDATE_STAY";
+export const SET_LISTINGS = "SET_LISTINGS";
+export const INCREMENT_LISTINGS = "INCREMENT_LISTINGS";
 export const ADD_STAY_MSG = "ADD_STAY_MSG";
 export const SET_FILTER_BY = "SET_FILTER_BY";
 export const REPLACE_FILTER_BY = "REPLACE_FILTER_BY";
@@ -17,6 +19,7 @@ export const SET_DATES_RANGE = "SET_DATES_RANGE";
 
 const initialState = {
   stays: [],
+  hostListings: [],
   stay: null,
   lastRemovedStay: null,
   filterBy: {},
@@ -47,6 +50,10 @@ export function stayReducer(state = initialState, action = {}) {
       );
       return { ...state, stays };
     }
+    case SET_LISTINGS:
+      return { ...state, hostListings: action.hostListings };
+    case INCREMENT_LISTINGS:
+      return { ...state, hostListings: [...state.hostListings, ...action.hostListings] };
     case SET_FILTER_BY:
       return {
         ...state,

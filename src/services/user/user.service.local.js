@@ -63,11 +63,11 @@ async function signup(userCred) {
 }
 
 async function logout() {
-  sessionStorage.removeItem(LOGGEDIN_USER_STORAGE_KEY);
+  localStorage.removeItem(LOGGEDIN_USER_STORAGE_KEY);
 }
 
 function getLoggedinUser() {
-  return JSON.parse(sessionStorage.getItem(LOGGEDIN_USER_STORAGE_KEY));
+  return JSON.parse(localStorage.getItem(LOGGEDIN_USER_STORAGE_KEY));
 }
 
 function saveLoggedinUser(user) {
@@ -80,7 +80,7 @@ function saveLoggedinUser(user) {
     isAdmin: user.isAdmin,
     isHost: user.isHost
   };
-  sessionStorage.setItem(LOGGEDIN_USER_STORAGE_KEY, JSON.stringify(user));
+  localStorage.setItem(LOGGEDIN_USER_STORAGE_KEY, JSON.stringify(user));
   return user;
 }
 

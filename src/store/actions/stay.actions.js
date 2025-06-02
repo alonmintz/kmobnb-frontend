@@ -11,6 +11,8 @@ import {
   RESET_FILTER_BY,
   SET_GUESTS,
   SET_DATES_RANGE,
+  SET_LISTINGS,
+  INCREMENT_LISTINGS,
 } from "../reducers/stay.reducer";
 
 export const stayActions = {
@@ -23,6 +25,7 @@ export const stayActions = {
   resetFilterBy,
   setGuests,
   setDatesRange,
+  loadHostListings,
 };
 
 async function loadStays(filterBy, bulkIdx = 0, bulkSize = 20) {
@@ -140,6 +143,26 @@ async function setDatesRange(datesRange) {
     await store.dispatch({ type: SET_DATES_RANGE, datesRange });
   } catch (err) {
     console.log("cannot set dates range", err);
+    throw err;
+  }
+}
+
+async function loadHostListings(filterBy = {}, bulkIdx = 0, bulkSize = 20) {
+  try {
+    filterBy = {
+      listType: "by-host",
+      bulkIdx,
+      bulkSize
+    }
+    const hostListings = await stayService.getStays(filterBy)
+    store.dispatch({
+      type: bulkIdx !== 0 ? INCREMENT_LISTINGS : SET_LISTINGS,
+      hostListings,
+    });
+
+    return hostListings;
+  } catch (err) {
+    console.log("Cannot load listings:", err)
     throw err;
   }
 }
