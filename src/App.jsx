@@ -15,7 +15,6 @@ import { NotFound } from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import { OrderIndex } from "./pages/host/OrderIndex";
 import { HostOrderPage } from "./pages/host/HostOrderPage";
-import { UserPage } from "./pages/user/UserPage";
 import { Wishlist } from "./pages/user/WishList";
 
 export function App() {

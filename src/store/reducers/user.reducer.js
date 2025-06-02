@@ -15,7 +15,7 @@ const initialState = {
   user: userService.getLoggedinUser(),
   users: [],
   watchedUser: null,
-  wishlistDisplay: userService.getLoggedinUser().wishlist || [],
+  wishlistDisplay: userService.getLoggedinUser()?.wishlist || [],
 };
 
 export function userReducer(state = initialState, action) {
