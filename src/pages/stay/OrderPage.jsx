@@ -11,11 +11,10 @@ import { stayService } from "../../services/stay";
 import { subDays, format } from "date-fns";
 import starIcon from "../../assets/img/rating-star.svg";
 import visaIcon from "../../assets/img/order/visa.svg";
-import { orderService } from "../../services/order/order.service.local";
+import { orderService } from "../../services/order";
 import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
 import { OrderPageSkeleton } from "../../cmps/skeleton/OrderPageSkeleton";
 
-//TODO: move to order service:
 const DAILY_FEE = 4;
 
 export function OrderPage() {
@@ -236,7 +235,7 @@ export function OrderPage() {
         <h4 className="title">price details</h4>
         <h4 className="desc">
           <span>{`$${pricePerNight}x${nightsCount} night${
-            nightsCount > 1 && "s"
+            nightsCount > 1 ? "s" : ""
           }`}</span>
           <span>{`$${pricePerNights}`}</span>
         </h4>

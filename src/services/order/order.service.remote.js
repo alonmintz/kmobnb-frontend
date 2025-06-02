@@ -15,7 +15,7 @@ export const orderService = {
 
 
 async function save(order) {
-
+  return httpService.post(`order`, {order})
 }
 
 async function getOrdersByUserId(userId) {
