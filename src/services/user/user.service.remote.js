@@ -1,7 +1,6 @@
 import { httpService } from "../http.service";
 import { uploadService } from "../upload.service";
 
-//TODO: complete refactor
 const STORAGE_KEY_LOGGEDIN_USER = "loggedinUser";
 //TODO: change to actual cloudinary url
 export const DEFAULT_USE_IMAGE_URL = "https://robohash.org/CUX.png?set=set2";
