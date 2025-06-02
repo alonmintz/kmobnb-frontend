@@ -1,0 +1,61 @@
+.wishlist {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+  height: 100%;
+  margin-block-start: 1rem;
+  .map-container {
+    //debug
+    position: sticky;
+    top: 100px;
+    height: 85vh;
+    width: 100%;
+    border-radius: 0.7rem;
+    overflow: hidden;
+    > .map {
+      height: 100%;
+      .location-pin {
+        position: absolute;
+        transform: translate(-50%, -100%);
+        // position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30px;
+        width: 30px;
+        background-color: white;
+        border-radius: 50%;
+        font-size: 3em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+        transition: scale 0.3s ease;
+        &.stay-hover {
+          scale: 1.1;
+          background-color: #222222;
+          .home-icon {
+            color: white;
+          }
+        }
+        &:hover {
+          cursor: pointer;
+        }
+
+        .home-icon {
+          color: #222222;
+        }
+
+        .pin-point {
+          position: absolute;
+          bottom: -4px;
+          right: 15px;
+          height: 10px;
+          width: 10px;
+          background-color: #222222;
+          border-radius: 2px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+          transform: translate(-50%, 0px) rotate(45deg);
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,6 @@ import { StayDetails } from "./pages/stay/StayDetails";
 import { OrderPage } from "./pages/stay/OrderPage";
 import { UserDetails } from "./pages/user/UserDetails";
 import { Trips } from "./pages/user/Trips";
-import { WishLists } from "./pages/user/WishLists";
 import { Host } from "./pages/host/Host";
 import { HostDashboard } from "./pages/host/HostDashboard";
 import { ListingIndex } from "./pages/host/ListingIndex";
@@ -16,6 +15,8 @@ import { NotFound } from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import { OrderIndex } from "./pages/host/OrderIndex";
 import { HostOrderPage } from "./pages/host/HostOrderPage";
+import { UserPage } from "./pages/user/UserPage";
+import { Wishlist } from "./pages/user/WishList";
 
 export function App() {
   const location = useLocation();
@@ -26,7 +27,11 @@ export function App() {
   }, [location]);
 
   function getLayoutClass() {
-    return location.pathname === "/" ? "main" : "secondary";
+    const layoutClass =
+      location.pathname === "/" || location.pathname.startsWith("/wishlist")
+        ? "main"
+        : "secondary";
+    return layoutClass;
   }
 
   return (
@@ -36,10 +41,10 @@ export function App() {
         <Route path="" element={<StayIndex />} />
         <Route path="stay/:stayId" element={<StayDetails />} />
         <Route path="order/:stayId" element={<OrderPage />} />
-        <Route path="user/:userId" element={<UserDetails />} />
-        <Route path="trips/:userId" element={<Trips />} />
-        <Route path="wishlists" element={<WishLists />} />
-        <Route path="host" element={<Host />} >
+        <Route path="profile" element={<UserDetails />} />
+        <Route path="wishlist" element={<Wishlist />} />
+        <Route path="trips" element={<Trips />} />
+        <Route path="host" element={<Host />}>
           <Route path="dashboard" index element={<HostDashboard />} />
           <Route path="listings" element={<ListingIndex />} />
           <Route path="listing/edit" element={<StayEdit />} />
