@@ -26,7 +26,7 @@ export function AppHeader() {
     if (pathname.startsWith("/host")) return "host-listings-header";
     if (isStayDetailsPage) return "stay-details-header";
     if (isOrderPage) return "order-page-header";
-    if (pathname.startsWith("/user")) return "user-page-header";
+    if (pathname.startsWith("/wishlist")) return "user-page-header";
   }
 
   function headerRenderSwitch() {

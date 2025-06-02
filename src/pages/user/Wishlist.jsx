@@ -138,6 +138,9 @@ export function Wishlist() {
   return (
     <section className="wishlist">
       <section className="list-container">
+        <div className="title-container">
+          <h2>My wishlist</h2>
+        </div>
         <StayList
           stays={displayWishlistStays}
           isWishlist
