@@ -1,5 +1,5 @@
 import { useParams } from "react-router"
-import { orderService } from "../../services/order/order.service.local"
+import { orderService } from "../../services/order"
 import { APPROVED, CANCELED } from "../../services/order/order.service.local"
 import { useEffect, useState } from "react"
 import { capitalize } from "../../services/util.service"
@@ -10,9 +10,8 @@ export function HostOrderPage() {
   const orderId = params.orderId
 
   useEffect(() => {
-    // const orderdemo = orderService.getOrderById(orderId)
     loadOrder()
-  }, [])
+  }, [orderId])
 
   async function loadOrder() {
     const orderData = await orderService.getOrderById(orderId)
@@ -33,7 +32,7 @@ export function HostOrderPage() {
     return (
       <div className="host-order-page">
         <div className="section-title">
-          <h1>Loading order. . .</h1>
+          <h1>Loading order . . .</h1>
         </div>
       </div>
     )
