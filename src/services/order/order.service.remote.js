@@ -1,7 +1,5 @@
 import { httpService } from "../http.service";
 
-console.log('using remote order service!')
-
 // Order statuses
 export const PENDING = 'pending'
 export const APPROVED = 'approved'
@@ -10,7 +8,8 @@ export const CANCELED = 'canceled'
 export const orderService = {
   save,
   getOrdersByUserId,
-  getOrdersByHostId
+  getOrdersByHostId,
+  getOrderById
 };
 
 
@@ -24,4 +23,8 @@ async function getOrdersByUserId(userId) {
 
 async function getOrdersByHostId(filter) {
   return httpService.get(`order`, filter)
+}
+
+async function getOrderById(orderId) {
+  return httpService.get(`order/${orderId}`)
 }
