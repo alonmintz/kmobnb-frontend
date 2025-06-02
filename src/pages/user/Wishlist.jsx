@@ -112,29 +112,42 @@ const demoWishlist = [
     roomType: "Entire home/apartment",
   },
 ];
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { StayList } from "../../cmps/stay/StayList";
 import { StayMultiLocationMap } from "../../cmps/stay/StayMultiLocationMap";
+import { userService } from "../../services/user";
 
 export function Wishlist() {
+  const [staysToShow, setStaysToShow] = useState([]);
+  // var staysToShow;
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function load() {
+    const wishlistFromDB = await userService.getUserWishlist();
+    setStaysToShow(wishlistFromDB);
+  }
+
   //when backecd is working:
   // const userWishlist = useSelector(
-  //   (storeState) => storeState.userModule.user.wishlist
+  //   (storeState) => storeState.userModule.wishlistDisplay
   // );
   //for front dev:
-  const userWishlist = [...demoWishlist];
-  const [wishlistToUpdate, setWishlistToUpdate] = useState(
-    structuredClone(userWishlist)
-  );
+  // const userWishlist = [...demoWishlist];
+  // const [wishlistToUpdate, setWishlistToUpdate] = useState(
+  //   structuredClone(userWishlist)
+  // );
 
-  const displayWishlistStays = [...structuredClone(userWishlist)];
+  // const displayWishlistStays = [...structuredClone(userWishlist)];
+  // const displayWishlistStays = [];
   const [hoveredStayId, setHoveredStayId] = useState("");
 
   function onMapPinClick(stayId) {
     console.log({ stayId });
   }
-
+  if (!staysToShow) return <div>sdafgsdgasdfsfdgafg</div>;
   return (
     <section className="wishlist">
       <section className="list-container">
@@ -142,14 +155,16 @@ export function Wishlist() {
           <h2>My wishlist</h2>
         </div>
         <StayList
-          stays={displayWishlistStays}
+          // stays={displayWishlistStays}
+          stays={staysToShow}
           isWishlist
           onHoverStay={setHoveredStayId}
         />
       </section>
       <section className="map-container">
         <StayMultiLocationMap
-          stays={displayWishlistStays}
+          // stays={displayWishlistStays}
+          stays={staysToShow}
           hoveredStayId={hoveredStayId}
           onPinClick={onMapPinClick}
         />

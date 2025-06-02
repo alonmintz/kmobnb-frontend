@@ -8,6 +8,10 @@ import {
   SET_USER,
   SET_USERS,
   SET_WATCHED_USER,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
+  ADD_TO_WISHLIST_NO_DISPLAY_EFFECT,
+  REMOVE_FROM_WISHLIST_NO_DISPLAY_EFFECT,
 } from "../reducers/user.reducer";
 
 export const userActions = {
@@ -16,8 +20,12 @@ export const userActions = {
   login,
   signup,
   logout,
-  loadUser
-}
+  loadUser,
+  addToWishlist,
+  removeFromWishlist,
+  addToWishlist_noDisplayEffect,
+  removeFromWishlist_noDisplayEffect,
+};
 
 async function loadUsers() {
   try {
@@ -47,7 +55,7 @@ async function login(credentials) {
     const user = await userService.login(credentials);
     store.dispatch({ type: SET_USER, user });
     // socketService.login(user._id)
-    console.log("logged in successfully as", user)
+    console.log("logged in successfully as", user);
     return user;
   } catch (err) {
     console.log("Cannot login:", err);
@@ -91,5 +99,53 @@ async function loadUser(userId) {
   } catch (err) {
     showErrorMsg("Cannot load user");
     console.log("Cannot load user", err);
+  }
+}
+
+async function addToWishlist(stayId) {
+  try {
+    const wishlist = await userService.addToWishlist([stayId]);
+    //debug:
+    console.log({ wishlist });
+    store.dispatch({ type: ADD_TO_WISHLIST, wishlist });
+  } catch (err) {
+    console.log("Cannot add to wishlist:", err);
+    throw err;
+  }
+}
+
+async function removeFromWishlist(stayId) {
+  try {
+    await userService.removeFromWishlist([stayId]);
+    //debug:
+    store.dispatch({ type: REMOVE_FROM_WISHLIST, stayId });
+  } catch (err) {
+    console.log("Cannot add to wishlist:", err);
+    throw err;
+  }
+}
+
+async function addToWishlist_noDisplayEffect(stayId) {
+  try {
+    const wishlist = await userService.addToWishlist([stayId]);
+    //debug:
+    console.log({ wishlist });
+    store.dispatch({ type: ADD_TO_WISHLIST_NO_DISPLAY_EFFECT, wishlist });
+  } catch (err) {
+    console.log("Cannot add to wishlist:", err);
+    throw err;
+  }
+}
+
+async function removeFromWishlist_noDisplayEffect(stayId) {
+  console.log("removeFromWishlist_noDisplayEffect");
+
+  try {
+    await userService.removeFromWishlist([stayId]);
+    //debug:
+    store.dispatch({ type: REMOVE_FROM_WISHLIST_NO_DISPLAY_EFFECT, stayId });
+  } catch (err) {
+    console.log("Cannot add to wishlist:", err);
+    throw err;
   }
 }

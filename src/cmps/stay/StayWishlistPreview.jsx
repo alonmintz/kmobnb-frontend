@@ -1,69 +1,57 @@
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { StayPhotoGallery } from "./StayPhotoGallery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
 import starIcon from "../../assets/img/rating-star.svg";
+import { userActions } from "../../store/actions/user.actions";
+import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 
 export function StayWishlistPreview({
   stay,
-  onWishlistHeartClick,
+  // onWishlistHeartClick,
   onHoverStay,
 }) {
-  // const currLng = 32.086722;
-  // const currLat = 34.789777;
-
-  const [heartClicked, setHeartClicked] = useState(false);
-  const user = useSelector((storeState) => storeState.userModule.user);
+  const userWishlist = useSelector(
+    (storeState) => storeState.userModule.user.wishlist
+  );
+  const [isWishlisted, setIsWishlisted] = useState(checkIsWishlisted());
+  // const [isColored, setIsColored] = useState(true);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
-  // function calcDistance(lat1, lng1, lat2, lng2) {
-  //   const EARTH_RADIUS_KM = 6371;
+  useEffect(() => {
+    setIsWishlisted(checkIsWishlisted());
+  }, [userWishlist]);
 
-  //   function degreesToRadians(degrees) {
-  //     return degrees * (Math.PI / 180);
-  //   }
+  // useEffectUpdate(() => {
+  //   triggerWishlistAction(isWishlisted);
+  // }, [isWishlisted]);
 
-  //   const deltaLat = degreesToRadians(lat2 - lat1);
-  //   const deltaLng = degreesToRadians(lng2 - lng1);
+  function checkIsWishlisted() {
+    return userWishlist.some((wishStay) => wishStay.stayId === stay.stayId);
+  }
 
-  //   const lat1Rad = degreesToRadians(lat1);
-  //   const lat2Rad = degreesToRadians(lat2);
+  function triggerWishlistAction() {
+    if (isWishlisted) {
+      //call delete action
+      console.log("here on remove");
 
-  //   // Haversine formula
-  //   const a =
-  //     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-  //     Math.cos(lat1Rad) *
-  //       Math.cos(lat2Rad) *
-  //       Math.sin(deltaLng / 2) *
-  //       Math.sin(deltaLng / 2);
+      userActions.removeFromWishlist_noDisplayEffect(stay.stayId);
+    } else {
+      //call add action
+      console.log("here on add");
 
-  //   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  //   // Distance in kilometers
-  //   const distance = Math.round(EARTH_RADIUS_KM * c);
-
-  //   return distance;
-  // }
-
-  // function formatDatesDisplay({ startDate, endDate }) {
-  //   const start = new Date(startDate);
-  //   const end = new Date(endDate);
-
-  //   const sameMonth = start.getMonth() === end.getMonth();
-
-  //   if (sameMonth) {
-  //     return `${format(start, "MMM d")} - ${format(end, "d")}`;
-  //   } else {
-  //     return `${format(start, "MMM d")} - ${format(end, "MMM d")}`;
-  //   }
-  // }
+      userActions.addToWishlist_noDisplayEffect(stay.stayId);
+    }
+  }
 
   //todo: connect to users api- wishlist EP
   function onHeartClick(ev) {
     ev.stopPropagation();
     ev.preventDefault();
-    onWishlistHeartClick(stay.stayId);
+    triggerWishlistAction();
+    // setIsColored((prev) => !prev);
+    // setIsWishlisted((prev) => !prev);
     // if (!user) {
     //   setIsLoginModalVisible(true);
     //   return;
@@ -96,15 +84,11 @@ export function StayWishlistPreview({
       ) : (
         <LoginSignupModal onClose={() => setIsLoginModalVisible(false)} />
       )}
-      {/* <StayPhotoGallery
-        imgUrls={stay.imgUrls}
-        onPreviewClick={onPreviewClick}
-      /> */}
       <div className="image-container">
         <img src={stay.imgUrl} alt="stay-image" />
       </div>
       <div
-        className={`heart-button ${heartClicked ? "clicked" : ""}`}
+        className={`heart-button ${isWishlisted ? "clicked" : ""}`}
         onClick={onHeartClick}
       >
         <svg
@@ -121,21 +105,6 @@ export function StayWishlistPreview({
         <div className="bold-text">
           {stay.loc.city}, {stay.loc.country}
         </div>
-        {/* <div className="normal-text">
-          {calcDistance(
-            currLat,
-            currLng,
-            stay.loc.lat,
-            stay.loc.lng
-          ).toLocaleString()}{" "}
-          kilometers away
-        </div> */}
-        {/* <div className="normal-text">
-          {formatDatesDisplay(stay.nearAvailableDates)}
-        </div> */}
-        {/* <div className="price">
-          $<span className="bold-text">{stay.price}</span> night
-        </div> */}
         <div className="rating">
           <span>
             <img className="star-image" src={starIcon} />{" "}
@@ -143,6 +112,24 @@ export function StayWishlistPreview({
           </span>
         </div>
       </div>
+      {/* <button
+        onClick={(ev) => {
+          ev.stopPropagation();
+          ev.preventDefault();
+          userActions.addToWishlist_noDisplayEffect(stay.stayId);
+        }}
+      >
+        add
+      </button>
+      <button
+        onClick={(ev) => {
+          ev.stopPropagation();
+          ev.preventDefault();
+          userActions.removeFromWishlist_noDisplayEffect(stay.stayId);
+        }}
+      >
+        remove
+      </button> */}
     </div>
   );
 }

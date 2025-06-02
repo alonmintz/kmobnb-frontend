@@ -4,7 +4,7 @@ import { StayWishlistPreview } from "./StayWishlistPreview";
 export function StayList({
   stays,
   isWishlist = false,
-  onWishlistHeartClick,
+  // onWishlistHeartClick,
   onHoverStay,
 }) {
   if (!stays || !stays.length)
@@ -21,7 +21,7 @@ export function StayList({
             <StayWishlistPreview
               key={stay.stayId}
               stay={stay}
-              onWishlistHeartClick={onWishlistHeartClick}
+              // onWishlistHeartClick={onWishlistHeartClick}
               onHoverStay={onHoverStay}
             />
           ))
