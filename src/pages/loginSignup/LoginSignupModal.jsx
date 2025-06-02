@@ -4,12 +4,18 @@ import { Modal } from "../../cmps/general/Modal";
 import { userActions } from "../../store/actions/user.actions";
 
 export function LoginSignupModal({ onClose }) {
-  const demoGuest = "dan"
-  const demoHost = "patty"
+  const demoGuestCreds = {
+    username: "dan",
+    password: "dan1"
+  }
+  const demoHostCreds = {
+    username: "patty",
+    password: "patty1"
+  }
 
-  async function handleDemoUserLoginClick(username) {
+  async function handleDemoUserLoginClick(creds) {
     onClose();
-    await userActions.login({ username });
+    await userActions.login(creds);
   }
 
   return (
@@ -23,13 +29,13 @@ export function LoginSignupModal({ onClose }) {
           <div className="demo-buttons">
             <button
               className="modal-button"
-              onClick={() => handleDemoUserLoginClick(demoGuest)}
+              onClick={() => handleDemoUserLoginClick(demoGuestCreds)}
             >
               Login as demo GUEST
             </button>
             <button
               className="modal-button"
-              onClick={() => handleDemoUserLoginClick(demoHost)}
+              onClick={() => handleDemoUserLoginClick(demoHostCreds)}
             >
               Login as demo HOST
             </button>
