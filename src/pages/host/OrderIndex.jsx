@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { stayActions } from "../../store/actions/stay.actions";
-import { orderService } from "../../services/order/order.service.local";
+import { stayActions } from "../../store/actions/stay.actions";
+import { orderService } from "../../services/order";
 import { capitalize, humanDateFormat, humanDateTimeFormat } from "../../services/util.service";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { stayActions } from "../../store/actions/stay.actions";
 
 export function OrderIndex() {
   const user = useSelector(storeState => storeState.userModule.user)
@@ -15,7 +14,10 @@ export function OrderIndex() {
 
   useEffect(() => {
     if (!user) return
+    loadOrders()
+  }, [user])
 
+  async function loadOrders() {
     const filter = {
       listingId: searchParams.get('listingId')
     }
@@ -23,20 +25,21 @@ export function OrderIndex() {
     if (filter.listingId) {
       stayActions.getStayById(filter.listingId)
         .then(stay => {
-          console.log('Listing details:', stay.name)
           setListingName(stay.name)
         })
         .catch(err => console.log('Failed to load listing details:', err))
     }
 
-    orderService.getOrdersByHostId(user._id)
+
+    await orderService.getOrdersByHostId(filter)
       .then(orders => {
         const filteredOrders = filter.listingId
           ? orders.filter(order => order.stayId === filter.listingId)
           : orders;
         setOrders(filteredOrders);
-      }).catch(err => console.log('Failed to load orders:', err))
-  }, [user, searchParams])
+      })
+      .catch(err => console.log('Failed to load orders:', err))
+  }
 
   function getTiming(orderStartDate, orderEndDate) {
     const now = new Date();
