@@ -38,10 +38,10 @@ async function ajax(endpoint, method = "GET", data = null) {
       data
     );
     console.dir(err);
-    if (err.response && err.response.status === 401) {
-      sessionStorage.clear();
-      window.location.assign("/");
-    }
+    // if (err.response && err.response.status === 401) {
+    //   sessionStorage.clear();
+    //   window.location.assign("/");
+    // }
     throw err;
   }
 }
