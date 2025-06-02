@@ -65,7 +65,7 @@ async function signup(credentials) {
     // socketService.login(user._id)
     return user;
   } catch (err) {
-    console.log("Cannot signup", err);
+    console.log("Cannot signup:", err);
     throw err;
   }
 }
@@ -77,9 +77,10 @@ async function logout() {
       type: SET_USER,
       user: null,
     });
+    window.location.assign("/");
     // socketService.logout()
   } catch (err) {
-    console.log("Cannot logout", err);
+    console.log("Cannot logout:", err);
     throw err;
   }
 }
@@ -90,6 +91,6 @@ async function loadUser(userId) {
     store.dispatch({ type: SET_WATCHED_USER, user });
   } catch (err) {
     showErrorMsg("Cannot load user");
-    console.log("Cannot load user", err);
+    console.log("Cannot load user:", err);
   }
 }
