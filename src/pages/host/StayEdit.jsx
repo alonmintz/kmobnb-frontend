@@ -10,7 +10,6 @@ import { Modal } from "../../cmps/general/Modal";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { LocationPicker } from "../../cmps/stay/LocationPicker";
 import { ImagesDisplayEditor } from "../../cmps/stay/ImagesDisplayEditor";
-import { stayActions } from "../../store/actions/stay.actions";
 
 const ROOM_TYPES_NAMES = [
   "Entire home/apartment",
