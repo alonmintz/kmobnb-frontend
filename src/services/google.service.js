@@ -145,7 +145,12 @@ function _extractLocationDataFromAddressComponents(components = []) {
       if (
         !acc.city &&
         comp.types.some((type) =>
-          ["locality", "natural_feature", "establishment"].includes(type)
+          [
+            "locality",
+            "natural_feature",
+            "establishment",
+            "postal_town",
+          ].includes(type)
         )
       ) {
         acc.city = comp.long_name;

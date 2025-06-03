@@ -10,6 +10,7 @@ import { Modal } from "../../cmps/general/Modal";
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { LocationPicker } from "../../cmps/stay/LocationPicker";
 import { ImagesDisplayEditor } from "../../cmps/stay/ImagesDisplayEditor";
+import { stayActions } from "../../store/actions/stay.actions";
 
 const ROOM_TYPES_NAMES = [
   "Entire home/apartment",
@@ -367,10 +368,15 @@ export function StayEdit() {
     try {
       if (stayToEdit._id) {
         delete stayToEdit.reviewsData;
-      }
-      const savedStay = stayService.save(stayToEdit);
-      if (savedStay._id) {
-        console.log("Successfully saved listing");
+        const savedStay = await stayActions.updateStay(stayToEdit);
+        if (savedStay) {
+          console.log("Successfully updated listing");
+        }
+      } else {
+        const savedStay = await stayActions.addStay(stayToEdit);
+        if (savedStay._id) {
+          console.log("Successfully saved listing");
+        }
       }
     } catch (err) {
       console.log("Error saving listing");

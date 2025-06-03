@@ -43,7 +43,11 @@ export function stayReducer(state = initialState, action = {}) {
       return { ...state, stays, lastRemovedStay };
     }
     case ADD_STAY:
-      return { ...state, stays: [...state.stays, action.stay] };
+      return {
+        ...state,
+        stays: [...state.stays, action.stay],
+        hostListings: [...state.hostListings, action.stay],
+      };
     case UPDATE_STAY: {
       const stays = state.stays.map((stay) =>
         stay._id === action.stay._id ? action.stay : stay
@@ -56,7 +60,10 @@ export function stayReducer(state = initialState, action = {}) {
     case SET_LISTINGS:
       return { ...state, hostListings: action.hostListings };
     case INCREMENT_LISTINGS:
-      return { ...state, hostListings: [...state.hostListings, ...action.hostListings] };
+      return {
+        ...state,
+        hostListings: [...state.hostListings, ...action.hostListings],
+      };
     case SET_FILTER_BY:
       return {
         ...state,

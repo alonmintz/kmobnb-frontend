@@ -521,14 +521,18 @@ export function StayDetails() {
             isPreview
             onShowMore={() => setModalContentType("reviews")}
           />
-          <button
-            className="show-more-btn"
-            onClick={() => {
-              setModalContentType("reviews");
-            }}
-          >
-            Show all {reviewsData.reviews.length} reviews
-          </button>
+          {reviewsData.reviews.length ? (
+            <button
+              className="show-more-btn"
+              onClick={() => {
+                setModalContentType("reviews");
+              }}
+            >
+              Show all {reviewsData.reviews.length} reviews
+            </button>
+          ) : (
+            ""
+          )}
         </section>
         <section className="map-section" id="map-section">
           <StayDetailsMap

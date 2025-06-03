@@ -90,10 +90,9 @@ export function LocationPicker({ location, onChange, isExistingStay }) {
   }
 
   async function searchGoogleLocation(input) {
-    const loc =
-      typeof input === "string"
-        ? await googleService.getGeoInfoByAddress(input)
-        : input;
+    const loc = input.address
+      ? await googleService.getGeoInfoByAddress(input.address)
+      : input;
 
     const { lat, lng } = loc;
     setCoordinates({ lat, lng });
