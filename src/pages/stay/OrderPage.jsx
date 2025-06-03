@@ -263,14 +263,10 @@ export function OrderPage() {
 
   async function submitOrder() {
     const orderToSave = {
-      userId: loggedInUser._id,
-      userFullname: loggedInUser.fullname,
-      userImgUrl: loggedInUser.imgUrl,
       stayName: name,
       stayId: _id,
       startDate,
       endDate,
-      price: totalPrice,
       guests: +searchParams.get("capacity") || 0,
     };
     await orderService.save(orderToSave);
