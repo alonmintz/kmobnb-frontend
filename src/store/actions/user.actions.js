@@ -8,6 +8,9 @@ import {
   SET_USER,
   SET_USERS,
   SET_WATCHED_USER,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
+  SET_USER_WISHLIST,
 } from "../reducers/user.reducer";
 
 export const userActions = {
@@ -16,8 +19,11 @@ export const userActions = {
   login,
   signup,
   logout,
-  loadUser
-}
+  loadUser,
+  addToWishlist,
+  removeFromWishlist,
+  setUserWishlist,
+};
 
 async function loadUsers() {
   try {
@@ -47,7 +53,7 @@ async function login(credentials) {
     const user = await userService.login(credentials);
     store.dispatch({ type: SET_USER, user });
     // socketService.login(user._id)
-    console.log("logged in successfully as", user)
+    console.log("logged in successfully as", user);
     return user;
   } catch (err) {
     console.log("Cannot login:", err);
@@ -92,5 +98,34 @@ async function loadUser(userId) {
   } catch (err) {
     showErrorMsg("Cannot load user");
     console.log("Cannot load user:", err);
+  }
+}
+
+async function addToWishlist(stayId) {
+  try {
+    const wishlist = await userService.addToWishlist([stayId]);
+    store.dispatch({ type: ADD_TO_WISHLIST, wishlist });
+  } catch (err) {
+    console.log("Cannot add to wishlist:", err);
+    throw err;
+  }
+}
+
+async function removeFromWishlist(stayId) {
+  try {
+    await userService.removeFromWishlist([stayId]);
+    store.dispatch({ type: REMOVE_FROM_WISHLIST, stayId });
+  } catch (err) {
+    console.log("Cannot add to wishlist:", err);
+    throw err;
+  }
+}
+
+async function setUserWishlist(wishlist) {
+  try {
+    store.dispatch({ type: SET_USER_WISHLIST, wishlist });
+  } catch (err) {
+    console.log("Cannot set wishlist:", err);
+    throw err;
   }
 }

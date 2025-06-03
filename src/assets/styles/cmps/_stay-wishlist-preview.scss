@@ -1,0 +1,71 @@
+.stay-wishlist-preview {
+  position: relative;
+  display: grid;
+  grid-template-rows: 265px auto;
+  row-gap: 1rem;
+  font-family: "Airbnb";
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .heart-button {
+    position: absolute;
+    display: block;
+    right: rem(15px);
+    top: rem(15px);
+    fill: rgba(0, 0, 0, 0.5);
+    height: rem(24px);
+    width: rem(24px);
+    stroke: white;
+    stroke-width: 2;
+    overflow: visible;
+
+    transition: transform 0.2s ease;
+
+    &.clicked {
+      fill: rgb(255, 56, 92);
+    }
+
+    &:hover {
+      transform: scale(1.08);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .image-container {
+    border-radius: 0.7rem;
+    overflow: hidden;
+    img {
+      height: 100%;
+      width: 100%;
+      object-position: center;
+      object-fit: cover;
+    }
+  }
+  > .text-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: rem(15px);
+    align-items: end;
+
+    .bold-text {
+      font-weight: 400;
+    }
+
+    .rating {
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .star-image {
+        display: inline-block;
+        height: rem(12px);
+      }
+    }
+  }
+}

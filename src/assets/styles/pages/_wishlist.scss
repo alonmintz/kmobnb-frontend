@@ -1,0 +1,86 @@
+.wishlist {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  column-gap: 1rem;
+  .list-container {
+    position: relative;
+    .title-container {
+      position: sticky;
+      top: 90px;
+
+      padding-block: 1rem;
+      margin-block-end: 1rem;
+      background-color: white;
+      border-bottom: 1px solid lightgray;
+      z-index: 1;
+      h2 {
+        font-size: 2rem;
+        font-weight: 500;
+      }
+    }
+    .stay-list {
+      padding-inline-end: 1px;
+    }
+  }
+  .map-container {
+    position: sticky;
+    top: 110px;
+    margin-block-start: 1rem;
+    height: 85vh;
+    width: 100%;
+    border-radius: 0.7rem;
+    overflow: hidden;
+    > .map {
+      height: 100%;
+      .location-pin {
+        position: absolute;
+        transform: translate(-50%, -100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30px;
+        width: 30px;
+        background-color: white;
+        border-radius: 50%;
+        font-size: 3em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+        transition: scale 0.1s ease;
+        &.stay-hover {
+          scale: 1.1;
+          background-color: #222222;
+          .home-icon {
+            color: white;
+          }
+          .heart-icon {
+            fill: white;
+            stroke: #222222;
+          }
+        }
+        &:hover {
+          cursor: pointer;
+          scale: 1.1;
+        }
+
+        .home-icon {
+          color: #222222;
+        }
+
+        .heart-icon {
+          position: absolute;
+          display: block;
+          right: -2px;
+          top: -20px;
+          fill: rgb(255, 56, 92);
+          height: rem(16px);
+          width: rem(16px);
+          stroke: white;
+          stroke-width: 3;
+          overflow: visible;
+
+          transition: transform 0.2s ease;
+        }
+      }
+    }
+  }
+}

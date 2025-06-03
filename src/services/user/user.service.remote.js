@@ -15,6 +15,9 @@ export const userService = {
   // update,
   getLoggedinUser,
   saveLoggedinUser,
+  addToWishlist,
+  removeFromWishlist,
+  getUserWishlist,
 };
 
 // function getUsers() {
@@ -56,6 +59,22 @@ async function signup(userInput) {
 async function logout() {
   localStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
   return await httpService.post("auth/logout");
+}
+
+async function getUserWishlist() {
+  const result = await httpService.get("user/wishlist");
+  console.log({ result });
+
+  return result;
+}
+
+async function addToWishlist(stayIds) {
+  const result = await httpService.post("user/wishlist", { stayIds });
+  return result;
+}
+
+async function removeFromWishlist(stayIds) {
+  return await httpService.delete("user/wishlist", { stayIds });
 }
 
 function getLoggedinUser() {

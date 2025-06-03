@@ -10,7 +10,6 @@ export function StayIndex() {
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const [bulkIdx, setBulkIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
   const bottomDiv = useRef();
   //TODO: determine a min height to the index div so the bottom div won't be triggered on load.
   useEffect(() => {
