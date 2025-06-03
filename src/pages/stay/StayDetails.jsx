@@ -15,8 +15,11 @@ import { ReviewList } from "../../cmps/review/ReviewList";
 import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
 import { ReviewDisplay } from "../../cmps/review/ReviewDisplay";
 import { StayDetailsSkeleton } from "../../cmps/skeleton/StayDetailsSkeleton";
+import { userActions } from "../../store/actions/user.actions";
+import { userService } from "../../services/user";
 
 export function StayDetails() {
+  const user = useSelector((storeState) => storeState.userModule.user);
   const [searchParams, setSearchParams] = useSearchParams();
   const params = useParams();
   const [stay, setStay] = useState(null);
@@ -28,20 +31,31 @@ export function StayDetails() {
     searchParams.get("endDate"),
   ]);
   const [isDatesChosen, setIsDatesChosen] = useState(checkDatesRange());
-  const [heartClicked, setHeartClicked] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(checkIsWishlisted());
   const [showAnchorNav, setShowAnchorNav] = useState(false);
   const [showMiniReserve, setShowMiniReserve] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-
-  const user = useSelector((storeState) => storeState.userModule.user);
 
   const imgSectionRef = useRef();
   const datePickerSectionRef = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
+    initUserWishlist();
+  }, []);
+
+  async function initUserWishlist() {
+    const wishlistFromDB = await userService.getUserWishlist();
+    userActions.setUserWishlist(wishlistFromDB);
+  }
+
+  useEffect(() => {
     loadStay();
   }, [params.stayId]);
+
+  useEffect(() => {
+    setIsWishlisted(checkIsWishlisted());
+  }, [user, stay]);
 
   useEffect(() => {
     function handleScroll() {
@@ -93,6 +107,28 @@ export function StayDetails() {
     }
   }
 
+  function checkIsWishlisted() {
+    if (!user || !stay) return false;
+
+    return user.wishlist.some((wishStay) => wishStay.stayId === stay._id);
+  }
+
+  function onHeartClick() {
+    if (!user) {
+      setIsLoginModalVisible(true);
+      return;
+    }
+    triggerWishlistAction();
+  }
+
+  function triggerWishlistAction() {
+    if (isWishlisted) {
+      userActions.removeFromWishlist(stay._id);
+    } else {
+      userActions.addToWishlist(stay._id);
+    }
+  }
+
   function checkDatesRange() {
     return datesRange[0] && datesRange[1];
   }
@@ -103,18 +139,6 @@ export function StayDetails() {
 
   function handleDatesSelect({ dates }) {
     setDatesRange([dates[0], dates[1]]);
-  }
-  //todo: connect to users api- wishlist EP
-  function onHeartClick() {
-    if (!user) {
-      setIsLoginModalVisible(true);
-      return;
-    }
-    if (heartClicked) {
-      setHeartClicked(false);
-    } else {
-      setHeartClicked(true);
-    }
   }
 
   function getNumberOfNights() {
@@ -381,7 +405,7 @@ export function StayDetails() {
         <section className="title-section">
           <h1>{name}</h1>
           <button className="save-btn" onClick={onHeartClick}>
-            <div className={`heart-icon ${heartClicked ? "clicked" : ""}`}>
+            <div className={`heart-icon ${isWishlisted ? "clicked" : ""}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
@@ -393,7 +417,7 @@ export function StayDetails() {
               </svg>
             </div>
             <span className="save-btn-text">{`Save${
-              heartClicked ? "d" : ""
+              isWishlisted ? "d" : ""
             }`}</span>
           </button>
         </section>

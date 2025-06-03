@@ -6,16 +6,12 @@ export const REMOVE_USER = "REMOVE_USER";
 export const SET_USERS = "SET_USERS";
 export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
 export const REMOVE_FROM_WISHLIST = "REMOVE_FROM_WISHLIST";
-export const ADD_TO_WISHLIST_NO_DISPLAY_EFFECT =
-  "ADD_TO_WISHLIST_NO_DISPLAY_EFFECT";
-export const REMOVE_FROM_WISHLIST_NO_DISPLAY_EFFECT =
-  "REMOVE_FROM_WISHLIST_NO_DISPLAY_EFFECT";
+export const SET_USER_WISHLIST = "SET_USER_WISHLIST";
 
 const initialState = {
   user: userService.getLoggedinUser(),
   users: [],
   watchedUser: null,
-  wishlistDisplay: userService.getLoggedinUser()?.wishlist || [],
 };
 
 export function userReducer(state = initialState, action) {
@@ -43,7 +39,6 @@ export function userReducer(state = initialState, action) {
           ...state.user,
           wishlist: action.wishlist,
         },
-        wishlistDisplay: action.wishlist,
       };
       break;
     case REMOVE_FROM_WISHLIST:
@@ -55,28 +50,14 @@ export function userReducer(state = initialState, action) {
             (stay) => stay.stayId !== action.stayId
           ),
         },
-        wishlistDisplay: state.user.wishlist.filter(
-          (stay) => stay.stayId !== action.stayId
-        ),
       };
       break;
-    case ADD_TO_WISHLIST_NO_DISPLAY_EFFECT:
+    case SET_USER_WISHLIST:
       newState = {
         ...state,
         user: {
           ...state.user,
           wishlist: action.wishlist,
-        },
-      };
-      break;
-    case REMOVE_FROM_WISHLIST_NO_DISPLAY_EFFECT:
-      newState = {
-        ...state,
-        user: {
-          ...state.user,
-          wishlist: state.user.wishlist.filter(
-            (stay) => stay.stayId !== action.stayId
-          ),
         },
       };
       break;

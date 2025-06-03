@@ -1,16 +1,34 @@
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { StayPhotoGallery } from "./StayPhotoGallery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
+import { userActions } from "../../store/actions/user.actions";
 
 export function StayPreview({ stay }) {
   const currLng = 32.086722;
   const currLat = 34.789777;
 
-  const [heartClicked, setHeartClicked] = useState(false);
   const user = useSelector((storeState) => storeState.userModule.user);
+  const [isWishlisted, setIsWishlisted] = useState(checkIsWishlisted());
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+
+  useEffect(() => {
+    setIsWishlisted(checkIsWishlisted());
+  }, [user]);
+
+  function checkIsWishlisted() {
+    if (!user) return false;
+    return user.wishlist.some((wishStay) => wishStay.stayId === stay._id);
+  }
+
+  function triggerWishlistAction() {
+    if (isWishlisted) {
+      userActions.removeFromWishlist(stay._id);
+    } else {
+      userActions.addToWishlist(stay._id);
+    }
+  }
 
   function calcDistance(lat1, lng1, lat2, lng2) {
     const EARTH_RADIUS_KM = 6371;
@@ -54,17 +72,12 @@ export function StayPreview({ stay }) {
     }
   }
 
-  //todo: connect to users api- wishlist EP
   function onHeartClick() {
     if (!user) {
       setIsLoginModalVisible(true);
       return;
     }
-    if (heartClicked) {
-      setHeartClicked(false);
-    } else {
-      setHeartClicked(true);
-    }
+    triggerWishlistAction();
   }
 
   function onPreviewClick() {
@@ -84,7 +97,7 @@ export function StayPreview({ stay }) {
         onPreviewClick={onPreviewClick}
       />
       <div
-        className={`heart-button ${heartClicked ? "clicked" : ""}`}
+        className={`heart-button ${isWishlisted ? "clicked" : ""}`}
         onClick={onHeartClick}
       >
         <svg

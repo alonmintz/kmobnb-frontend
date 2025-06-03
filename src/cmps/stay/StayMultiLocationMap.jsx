@@ -1,9 +1,9 @@
 import GoogleMapReact from "google-map-react";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
 export function StayMultiLocationMap({ stays, hoveredStayId, onPinClick }) {
-  const locations = stays.map((stay) => stay.loc);
   const { center, zoom } = getMapCenterAndZoom(stays);
 
   function getMapCenterAndZoom(stays) {
@@ -48,7 +48,7 @@ export function StayMultiLocationMap({ stays, hoveredStayId, onPinClick }) {
     <div className="map">
       <GoogleMapReact
         bootstrapURLKeys={{ key: VITE_GOOGLE_MAPS_API_KEY }}
-        defaultCenter={center}
+        center={center}
         defaultZoom={zoom}
       >
         {stays.map((stay, idx) => (
@@ -67,6 +67,19 @@ export function StayMultiLocationMap({ stays, hoveredStayId, onPinClick }) {
 }
 
 function LocationPin({ lat, lng, stayId, hoveredStayId, onPinClick }) {
+  const userWishlist = useSelector(
+    (storeState) => storeState.userModule.user.wishlist
+  );
+  const [showHeart, setShowHeart] = useState(checkUserWishlist());
+
+  useEffect(() => {
+    setShowHeart(checkUserWishlist());
+  }, [userWishlist]);
+
+  function checkUserWishlist() {
+    if (!userWishlist) return false;
+    return userWishlist.some((wishStay) => wishStay.stayId === stayId);
+  }
   const hoverClass = stayId === hoveredStayId ? "stay-hover" : "";
   return (
     <div
@@ -90,18 +103,19 @@ function LocationPin({ lat, lng, stayId, hoveredStayId, onPinClick }) {
           <path d="m8.94959955 1.13115419 5.71719515 4.68049298c.2120231.18970472.3332053.46073893.3332053.74524138v7.94311145c0 .2761424-.2238576.5-.5.5h-4.5v-5.5c0-.24545989-.17687516-.44960837-.41012437-.49194433l-.08987563-.00805567h-3c-.27614237 0-.5.22385763-.5.5v5.5h-4.5c-.27614237 0-.5-.2238576-.5-.5v-7.95162536c0-.28450241.12118221-.55553661.3502077-.75978249l5.70008742-4.65820288c.55265671-.45163993 1.34701168-.45132001 1.89930443.00076492z"></path>
         </svg>
       </div>
-      <div className={`heart-icon`}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          aria-hidden="true"
-          role="presentation"
-          focusable="false"
-        >
-          <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
-        </svg>
-      </div>
-      {/* <div className="pin-point"></div> */}
+      {showHeart && (
+        <div className={`heart-icon`}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+          >
+            <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
+          </svg>
+        </div>
+      )}
     </div>
   );
 }

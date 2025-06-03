@@ -1,31 +1,19 @@
-import { format } from "date-fns";
 import { useSelector } from "react-redux";
-import { StayPhotoGallery } from "./StayPhotoGallery";
 import { useEffect, useState } from "react";
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
 import starIcon from "../../assets/img/rating-star.svg";
 import { userActions } from "../../store/actions/user.actions";
-import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 
-export function StayWishlistPreview({
-  stay,
-  // onWishlistHeartClick,
-  onHoverStay,
-}) {
+export function StayWishlistPreview({ stay, onHoverStay }) {
   const userWishlist = useSelector(
     (storeState) => storeState.userModule.user.wishlist
   );
   const [isWishlisted, setIsWishlisted] = useState(checkIsWishlisted());
-  // const [isColored, setIsColored] = useState(true);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
   useEffect(() => {
     setIsWishlisted(checkIsWishlisted());
   }, [userWishlist]);
-
-  // useEffectUpdate(() => {
-  //   triggerWishlistAction(isWishlisted);
-  // }, [isWishlisted]);
 
   function checkIsWishlisted() {
     return userWishlist.some((wishStay) => wishStay.stayId === stay.stayId);
@@ -33,34 +21,16 @@ export function StayWishlistPreview({
 
   function triggerWishlistAction() {
     if (isWishlisted) {
-      //call delete action
-      console.log("here on remove");
-
-      userActions.removeFromWishlist_noDisplayEffect(stay.stayId);
+      userActions.removeFromWishlist(stay.stayId);
     } else {
-      //call add action
-      console.log("here on add");
-
-      userActions.addToWishlist_noDisplayEffect(stay.stayId);
+      userActions.addToWishlist(stay.stayId);
     }
   }
 
-  //todo: connect to users api- wishlist EP
   function onHeartClick(ev) {
     ev.stopPropagation();
     ev.preventDefault();
     triggerWishlistAction();
-    // setIsColored((prev) => !prev);
-    // setIsWishlisted((prev) => !prev);
-    // if (!user) {
-    //   setIsLoginModalVisible(true);
-    //   return;
-    // }
-    // if (heartClicked) {
-    //   setHeartClicked(false);
-    // } else {
-    //   setHeartClicked(true);
-    // }
   }
 
   function onPreviewClick() {
@@ -108,28 +78,10 @@ export function StayWishlistPreview({
         <div className="rating">
           <span>
             <img className="star-image" src={starIcon} />{" "}
-            {/* {stay.starsRate} */}6
+            <span>{stay.avgStarsRate || "Not rated"}</span>
           </span>
         </div>
       </div>
-      {/* <button
-        onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          userActions.addToWishlist_noDisplayEffect(stay.stayId);
-        }}
-      >
-        add
-      </button>
-      <button
-        onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          userActions.removeFromWishlist_noDisplayEffect(stay.stayId);
-        }}
-      >
-        remove
-      </button> */}
     </div>
   );
 }

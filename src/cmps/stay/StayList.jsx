@@ -1,18 +1,9 @@
 import { StayPreview } from "./StayPreview";
 import { StayWishlistPreview } from "./StayWishlistPreview";
 
-export function StayList({
-  stays,
-  isWishlist = false,
-  // onWishlistHeartClick,
-  onHoverStay,
-}) {
+export function StayList({ stays, isWishlist = false, onHoverStay }) {
   if (!stays || !stays.length)
     return <div className="stay-list">No stays to show</div>;
-  //debug:
-  // console.log({ stays });
-
-  //   const wishlistClass = isWishlist ? "wishlist-list" : "";
 
   return (
     <div className={`stay-list`}>
@@ -21,7 +12,6 @@ export function StayList({
             <StayWishlistPreview
               key={stay.stayId}
               stay={stay}
-              // onWishlistHeartClick={onWishlistHeartClick}
               onHoverStay={onHoverStay}
             />
           ))

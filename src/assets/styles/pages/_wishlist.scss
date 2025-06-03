@@ -3,8 +3,6 @@
   display: grid;
   grid-template-columns: 3fr 2fr;
   column-gap: 1rem;
-  //   height: 100%;
-  //   margin-block-start: 1rem;
   .list-container {
     position: relative;
     .title-container {
@@ -26,7 +24,6 @@
     }
   }
   .map-container {
-    //debug
     position: sticky;
     top: 110px;
     margin-block-start: 1rem;

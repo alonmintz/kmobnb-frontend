@@ -10,8 +10,7 @@ import {
   SET_WATCHED_USER,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-  ADD_TO_WISHLIST_NO_DISPLAY_EFFECT,
-  REMOVE_FROM_WISHLIST_NO_DISPLAY_EFFECT,
+  SET_USER_WISHLIST,
 } from "../reducers/user.reducer";
 
 export const userActions = {
@@ -23,8 +22,7 @@ export const userActions = {
   loadUser,
   addToWishlist,
   removeFromWishlist,
-  addToWishlist_noDisplayEffect,
-  removeFromWishlist_noDisplayEffect,
+  setUserWishlist,
 };
 
 async function loadUsers() {
@@ -105,8 +103,6 @@ async function loadUser(userId) {
 async function addToWishlist(stayId) {
   try {
     const wishlist = await userService.addToWishlist([stayId]);
-    //debug:
-    console.log({ wishlist });
     store.dispatch({ type: ADD_TO_WISHLIST, wishlist });
   } catch (err) {
     console.log("Cannot add to wishlist:", err);
@@ -117,7 +113,6 @@ async function addToWishlist(stayId) {
 async function removeFromWishlist(stayId) {
   try {
     await userService.removeFromWishlist([stayId]);
-    //debug:
     store.dispatch({ type: REMOVE_FROM_WISHLIST, stayId });
   } catch (err) {
     console.log("Cannot add to wishlist:", err);
@@ -125,27 +120,11 @@ async function removeFromWishlist(stayId) {
   }
 }
 
-async function addToWishlist_noDisplayEffect(stayId) {
+async function setUserWishlist(wishlist) {
   try {
-    const wishlist = await userService.addToWishlist([stayId]);
-    //debug:
-    console.log({ wishlist });
-    store.dispatch({ type: ADD_TO_WISHLIST_NO_DISPLAY_EFFECT, wishlist });
+    store.dispatch({ type: SET_USER_WISHLIST, wishlist });
   } catch (err) {
-    console.log("Cannot add to wishlist:", err);
-    throw err;
-  }
-}
-
-async function removeFromWishlist_noDisplayEffect(stayId) {
-  console.log("removeFromWishlist_noDisplayEffect");
-
-  try {
-    await userService.removeFromWishlist([stayId]);
-    //debug:
-    store.dispatch({ type: REMOVE_FROM_WISHLIST_NO_DISPLAY_EFFECT, stayId });
-  } catch (err) {
-    console.log("Cannot add to wishlist:", err);
+    console.log("Cannot set wishlist:", err);
     throw err;
   }
 }
