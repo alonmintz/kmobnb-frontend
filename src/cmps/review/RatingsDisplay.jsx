@@ -24,7 +24,7 @@ function CategoryRating({ category, avgRate }) {
   );
 }
 export function RatingsDisplay({ categoryRatings, starsRatings }) {
-  starsRatings = addPercentages(starsRatings);
+  const starsRatingsToDisplay = addPercentages(starsRatings);
 
   function addPercentages(stars) {
     const total = stars.reduce((sum, entry) => sum + entry.count, 0);
@@ -37,7 +37,7 @@ export function RatingsDisplay({ categoryRatings, starsRatings }) {
 
   return (
     <section className="ratings-display">
-      {starsRatings && <OverallRating starsRatings={starsRatings} />}
+      {starsRatings && <OverallRating starsRatings={starsRatingsToDisplay} />}
       {categoryRatings &&
         Object.entries(categoryRatings).map(([category, avgRate]) => (
           <CategoryRating

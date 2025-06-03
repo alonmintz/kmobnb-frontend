@@ -24,7 +24,7 @@ export function App() {
   useEffect(() => {
     setLayoutClass(getLayoutClass());
     window.scrollTo(0, 0);
-  }, [location]);
+  }, [location.pathname]);
 
   function getLayoutClass() {
     const layoutClass =

@@ -78,11 +78,16 @@ async function removeStay(stayId) {
 async function addStay(stay) {
   try {
     const savedStay = await stayService.save(stay);
+    const stayToStore = {
+      ...savedStay,
+      nearAvailableDates: _populateNearAvailableDates(),
+    };
+
     store.dispatch({
       type: ADD_STAY,
-      stay,
+      stay: stayToStore,
     });
-    return savedStay;
+    return stayToStore;
   } catch (err) {
     console.log("Cannot add stay", err);
     throw err;
@@ -153,9 +158,9 @@ async function loadHostListings(filterBy = {}, bulkIdx = 0, bulkSize = 20) {
     filterBy = {
       listType: "by-host",
       bulkIdx,
-      bulkSize
-    }
-    const hostListings = await stayService.getStays(filterBy)
+      bulkSize,
+    };
+    const hostListings = await stayService.getStays(filterBy);
     store.dispatch({
       type: bulkIdx !== 0 ? INCREMENT_LISTINGS : SET_LISTINGS,
       hostListings,
@@ -163,22 +168,40 @@ async function loadHostListings(filterBy = {}, bulkIdx = 0, bulkSize = 20) {
 
     return hostListings;
   } catch (err) {
-    console.log("Cannot load listings:", err)
+    console.log("Cannot load listings:", err);
     throw err;
   }
 }
 
 async function updateListingStatus(listing, status) {
   try {
-    const savedListing = await stayService.updateStatus(listing._Id, { _id: listing._id, status });
+    const savedListing = await stayService.updateStatus(listing._Id, {
+      _id: listing._id,
+      status,
+    });
     store.dispatch({
       type: UPDATE_STAY,
       stay: savedListing,
     });
     return savedListing;
   } catch (err) {
-    console.log("Update listing status failed:", err)
+    console.log("Update listing status failed:", err);
   }
+}
+
+function _populateNearAvailableDates() {
+  const now = new Date();
+  const startDate = now.toISOString();
+
+  // Add 2 nights (2 days) to now
+  const end = new Date(now);
+  end.setDate(now.getDate() + 2);
+  const endDate = end.toISOString();
+
+  return {
+    startDate,
+    endDate,
+  };
 }
 
 // unitTestActions()

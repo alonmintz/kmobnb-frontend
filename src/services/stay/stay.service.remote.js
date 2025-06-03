@@ -18,18 +18,18 @@ function getById(stayId) {
 
 async function save(stay) {
   const imgUrlsToSave = await _uploadNewImages(stay.imgUrls);
-  const stayToSave = { ...stay, imgUrls: imgUrlsToSave };
+  const stayToSave = { ...stay, imgUrls: imgUrlsToSave, status: "active" };
   var savedStay;
   if (stayToSave._id) {
-    savedStay = await httpService.put(`stay/${stay._id}`, stay);
+    savedStay = await httpService.put(`stay/${stay._id}`, stayToSave);
   } else {
-    savedStay = await httpService.post("stay", stay);
+    savedStay = await httpService.post("stay", stayToSave);
   }
   return savedStay;
 }
 
 async function updateStatus(listingId, statusObj) {
-  return httpService.put(`stay/${listingId}/status`, statusObj );
+  return httpService.put(`stay/${listingId}/status`, statusObj);
 }
 
 //private functions:
