@@ -56,7 +56,7 @@ async function getOrdersByStayId(stayId) {
 
 async function getOrdersByHostId(hostId) {
   try {
-    const listings = await stayService.query({ filterBy: { hostId } })
+    const listings = await stayService.getStays({ filterBy: { hostId } })
     const listingIds = listings.map(listing => listing._id)
     const orders = await storageService.query(STORAGE_KEY);
 

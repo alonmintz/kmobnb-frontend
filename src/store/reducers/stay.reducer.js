@@ -48,7 +48,10 @@ export function stayReducer(state = initialState, action = {}) {
       const stays = state.stays.map((stay) =>
         stay._id === action.stay._id ? action.stay : stay
       );
-      return { ...state, stays };
+      const hostListings = state.hostListings.map((listing) =>
+        listing._id === action.stay._id ? action.stay : listing
+      );
+      return { ...state, stays, hostListings };
     }
     case SET_LISTINGS:
       return { ...state, hostListings: action.hostListings };

@@ -28,8 +28,8 @@ async function save(stay) {
   return savedStay;
 }
 
-async function updateStatus(statusObj, stayId) {
-  return httpService.put(`stay/${stayId}/status`, statusObj);
+async function updateStatus(listingId, statusObj) {
+  return httpService.put(`stay/${listingId}/status`, statusObj );
 }
 
 //private functions:

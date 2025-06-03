@@ -26,6 +26,7 @@ export const stayActions = {
   setGuests,
   setDatesRange,
   loadHostListings,
+  updateListingStatus,
 };
 
 async function loadStays(filterBy, bulkIdx = 0, bulkSize = 20) {
@@ -164,6 +165,19 @@ async function loadHostListings(filterBy = {}, bulkIdx = 0, bulkSize = 20) {
   } catch (err) {
     console.log("Cannot load listings:", err)
     throw err;
+  }
+}
+
+async function updateListingStatus(listing, status) {
+  try {
+    const savedListing = await stayService.updateStatus(listing._Id, { _id: listing._id, status });
+    store.dispatch({
+      type: UPDATE_STAY,
+      stay: savedListing,
+    });
+    return savedListing;
+  } catch (err) {
+    console.log("Update listing status failed:", err)
   }
 }
 

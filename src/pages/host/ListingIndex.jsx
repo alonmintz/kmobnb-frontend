@@ -19,15 +19,8 @@ export function ListingIndex() {
 
   async function onChangeStatusClick(ev, listing, status) {
     ev.stopPropagation();
-    const listingToSave = { ...listing, status };
     try {
-      stayActions.updateStay(listingToSave);
-      console.log(
-        "Listing",
-        listing._id,
-        "status changed successfully to",
-        status
-      );
+      await stayActions.updateListingStatus(listing, status);
     } catch (err) {
       console.log("Failed updating listing's", listing._id, "status:", err);
     }
@@ -54,7 +47,7 @@ export function ListingIndex() {
       </div>
       <div className="listing-list">
         {listings.map((listing) => (
-          <div key={listing._id} className={`listing-preview`}>
+          <div key={listing._id} className={`listing-preview ${listing.status === "inactive" ? "inactive" : ""}`}>
             <div className="img-container">
               <img src={listing.imgUrls[0]} />
               <div className="hover-buttons">
