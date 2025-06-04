@@ -112,6 +112,13 @@ export function ListingIndex() {
           ))}
         </div>
       }
+      {!isLoading && !listings.length &&
+        <div className="section-title">
+          <h1>
+            No listings
+          </h1>
+        </div>
+      }
     </section>
   );
 }
