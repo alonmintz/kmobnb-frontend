@@ -34,7 +34,10 @@ export function StayWishlistPreview({ stay, onHoverStay }) {
   }
 
   function onPreviewClick() {
-    window.open(`/stay/${stay.stayId}` + window.location.search);
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("city", stay.loc.city);
+    const url = `/stay/${stay.stayId}?${searchParams.toString()}`;
+    window.open(url);
   }
 
   if (!stay) return <div className="stay-wishlist-preview">Loading...</div>;
