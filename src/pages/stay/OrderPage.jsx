@@ -255,7 +255,7 @@ export function OrderPage() {
 
   function onSubmit() {
     if (isOrderComplete) {
-      navigate("/");
+      navigate("/trips");
     } else {
       submitOrder();
     }
@@ -286,7 +286,7 @@ export function OrderPage() {
     }
     return isOrderComplete ? (
       <button className="submit-btn completed" onClick={onSubmit}>
-        Reservation completed
+        Reserved! To my trips
       </button>
     ) : (
       <button className="submit-btn" onClick={onSubmit}>

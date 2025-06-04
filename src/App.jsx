@@ -28,7 +28,9 @@ export function App() {
 
   function getLayoutClass() {
     const layoutClass =
-      location.pathname === "/" || location.pathname.startsWith("/wishlist")
+      location.pathname === "/" ||
+      location.pathname.startsWith("/wishlist") ||
+      location.pathname.startsWith("/trips")
         ? "main"
         : "secondary";
     return layoutClass;

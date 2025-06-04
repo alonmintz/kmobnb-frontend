@@ -35,7 +35,7 @@ export function ReviewForm({ stayId, onClose }) {
     console.log({ reviewToEdit });
   }, [reviewToEdit]);
 
-  if (!user) return <LoginSignupModal onClose={onclose} />;
+  if (!user) return <LoginSignupModal onClose={onClose} />;
 
   function onRatingClick(rateKey, value) {
     setReviewToEdit((prevReviewToSubmit) => ({
@@ -89,7 +89,7 @@ export function ReviewForm({ stayId, onClose }) {
   }
 
   return (
-    <Modal lockScroll isBackdrop onClose={onclose}>
+    <Modal lockScroll isBackdrop onClose={onClose}>
       <section className="review-form-container">
         <section className="review-form">
           <h2 className="title">How was your experience</h2>
