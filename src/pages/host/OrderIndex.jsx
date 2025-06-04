@@ -58,6 +58,34 @@ export function OrderIndex() {
     }
   }
 
+
+  function handleSort(key) {
+    setSortConfig(prev => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+    }))
+  }
+
+  function getSortedOrders() {
+    let sortedOrders = [...orders]
+    if (sortConfig.key) {
+      sortedOrders.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? -1 : 1
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? 1 : -1
+        }
+        return 0
+      })
+    }
+    return sortedOrders.filter(order => {
+      return (!filters.status || order.status === filters.status) &&
+        (!filters.timing || getTiming(order.startDate, order.endDate) === filters.timing)
+    })
+  }
+
+
   if (!user) {
     return (
       <div className="orders">
@@ -88,17 +116,47 @@ export function OrderIndex() {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Status</th>
-              <th>Listing Name</th>
-              <th>Timing</th>
-              <th>Check-in</th>
-              <th>Check-out</th>
-              <th>Order Time</th>
+              <th>
+                Status
+                <select
+                  value={filters.status}
+                  onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
+                >
+                  <option value="">All</option>
+                  <option value="pending">Pending</option>
+                  <option value="approved">Approved</option>
+                  <option value="canceled">Canceled</option>
+                </select>
+              </th>
+              <th className="clickable" onClick={() => handleSort('stayName')}>
+                Listing Name {sortConfig.key === 'stayName' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
+              <th>
+                Timing
+                <select
+                  value={filters.timing}
+                  onChange={(e) => setFilters(prev => ({ ...prev, timing: e.target.value }))}
+                >
+                  <option value="">All</option>
+                  <option value="Future">Future</option>
+                  <option value="Active">Active</option>
+                  <option value="Past">Past</option>
+                </select>
+              </th>
+              <th className="clickable" onClick={() => handleSort('startDate')}>
+                Check-in {sortConfig.key === 'startDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
+              <th className="clickable" onClick={() => handleSort('endDate')}>
+                Check-out {sortConfig.key === 'endDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
+              <th className="clickable" onClick={() => handleSort('orderTime')}>
+                Order Time {sortConfig.key === 'orderTime' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
               <th>Guests</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map(order => (
+            {getSortedOrders().map(order => (
               <tr key={order._id} onClick={() => navigate(`../order/${order._id}`)}>
                 <td title={order._id}>{order._id.slice(-6)}</td>
                 <td>{order.status ? capitalize(order.status) : "Pending"}</td>
