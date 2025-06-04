@@ -85,6 +85,14 @@ export function OrderIndex() {
     })
   }
 
+  function getStatusClass(status) {
+    switch (status) {
+      case 'canceled': return 'status-canceled'
+      case 'approved': return 'status-approved'
+      case 'pending': return 'status-pending'
+      default: return ''
+    }
+  }
 
   if (!user) {
     return (
@@ -157,9 +165,9 @@ export function OrderIndex() {
           </thead>
           <tbody>
             {getSortedOrders().map(order => (
-              <tr key={order._id} onClick={() => navigate(`../order/${order._id}`)}>
+              <tr key={order._id} className={getStatusClass(order.status)} onClick={() => navigate(`../order/${order._id}`)}>
                 <td title={order._id}>{order._id.slice(-6)}</td>
-                <td>{order.status ? capitalize(order.status) : "Pending"}</td>
+                <td >{order.status ? capitalize(order.status) : "Pending"}</td>
                 <td>{order.stayName}</td>
                 <td>{getTiming(order.startDate, order.endDate)}</td>
                 <td>{humanDateFormat(order.startDate)}</td>

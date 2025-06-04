@@ -23,8 +23,8 @@
       background-color: #f7f7f7;
 
       user-select: none;
-      
-      
+
+
       &:hover.clickable {
         cursor: pointer;
         background-color: #dedede;
@@ -40,8 +40,27 @@
       }
     }
 
-    tr:hover {
-      background-color: #f9f9f9;
+    tr {
+      
+      
+      &.status-canceled {
+        color: #717171;
+      }
+
+      &.status-approved {
+        color: #00a308;
+      }
+
+      &.status-pending {
+        background-color: #fff8e6;
+      }
+
+      &:hover {
+        background-color: #f9f9f9;
+      }
     }
+
+    // tr:hover {
+    // }
   }
 }
