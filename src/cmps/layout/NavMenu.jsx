@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
 import { useSelector } from "react-redux";
 import { userActions } from "../../store/actions/user.actions";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 export function NavMenu({ onClose, triggeringButtonRef }) {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const user = useSelector((storeState) => storeState.userModule.user);
   const navMenuRef = useRef(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -35,7 +36,8 @@ export function NavMenu({ onClose, triggeringButtonRef }) {
 
   function onNavigateTo(path) {
     onClose();
-    navigate(path);
+    const search = location.search || "";
+    navigate(`${path}${search}`);
   }
 
   function onLogout() {
