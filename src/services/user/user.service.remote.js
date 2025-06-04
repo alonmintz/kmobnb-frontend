@@ -63,7 +63,6 @@ async function logout() {
 
 async function getUserWishlist() {
   const result = await httpService.get("user/wishlist");
-  console.log({ result });
 
   return result;
 }
