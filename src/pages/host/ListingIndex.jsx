@@ -1,21 +1,27 @@
 import { useSelector } from "react-redux";
 import { stayActions } from "../../store/actions/stay.actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBan, faPen, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
 export function ListingIndex() {
+  const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate();
   const user = useSelector((storeState) => storeState.userModule.user);
   const listings = useSelector((storeState) => storeState.stayModule.hostListings);
 
   useEffect(() => {
     if (user) {
-      stayActions.loadHostListings();
+      loadListings()
     }
-  }, [user]);
+  }, [user])
+
+  async function loadListings() {
+    await stayActions.loadHostListings();
+    setIsLoading(false)
+  }
 
   async function onChangeStatusClick(ev, listing, status) {
     ev.stopPropagation();
@@ -26,17 +32,16 @@ export function ListingIndex() {
     }
   }
 
-  if (!listings || !listings.length || !user) {
+  if (!user) {
     return (
       <div className="listings">
         <div className="section-title">
-          <h1>No listings to show</h1>
+          <h1>Please log in</h1>
         </div>
       </div>
-    );
+    )
   }
 
-  //TODO: create ListingPreview component for cleaner code
   return (
     <section className="listings">
       <div className="section-title">
@@ -45,60 +50,68 @@ export function ListingIndex() {
           Add listing
         </Link>
       </div>
-      <div className="listing-list">
-        {listings.map((listing) => (
-          <div key={listing._id} className={`listing-preview ${listing.status === "inactive" ? "inactive" : ""}`}>
-            <div className="img-container">
-              <img src={listing.imgUrls[0]} />
-              <div className="hover-buttons">
-                <button
-                  title="Edit"
-                  className="round-btn edit-btn"
-                  onClick={(ev) => {
-                    ev.stopPropagation();
-                    navigate(`../listing/edit/${listing._id}`);
-                  }}
-                >
-                  <FontAwesomeIcon icon={faPen} />
-                </button>
-                {listing.status === "active" ? (
-                  <button
-                    title="Deactivate"
-                    className="round-btn deactivate-btn"
-                    onClick={(ev) =>
-                      onChangeStatusClick(ev, listing, "inactive")
-                    }
-                  >
-                    <FontAwesomeIcon className="icon" icon={faBan} />
-                  </button>
-                ) : (
-                  <button
-                    title="Reactivate"
-                    className="round-btn reactivate-btn"
-                    onClick={(ev) => onChangeStatusClick(ev, listing, "active")}
-                  >
-                    <FontAwesomeIcon className="icon" icon={faRotateLeft} />
-                  </button>
-                )}
-              </div>
-            </div>
-            <div className="listing-name">{listing.name}</div>
-            <div className="listing-location">
-              {listing.loc.country}, {listing.loc.city}
-            </div>
-            <Link to={`../orders?listingId=${listing._id}`} className="button">
-              View orders
-            </Link>
-            <Link
-              to={`/stay/${listing._id}`}
-              onClick={(ev) => ev.stopPropagation()}
-              className="button"
-            >
-              View listing as guest
-            </Link>
+      {isLoading ?
+        <div className="listings">
+          <div className="section-title">
+            <h1>Loading . . .</h1>
           </div>
-        ))}
-      </div>
+        </div>
+        :
+        <div className="listing-list">
+          {listings.map((listing) => (
+            <div key={listing._id} className={`listing-preview ${listing.status === "inactive" ? "inactive" : ""}`}>
+              <div className="img-container">
+                <img src={listing.imgUrls[0]} />
+                <div className="hover-buttons">
+                  <button
+                    title="Edit"
+                    className="round-btn edit-btn"
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      navigate(`../listing/edit/${listing._id}`);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPen} />
+                  </button>
+                  {listing.status === "active" ? (
+                    <button
+                      title="Deactivate"
+                      className="round-btn deactivate-btn"
+                      onClick={(ev) =>
+                        onChangeStatusClick(ev, listing, "inactive")
+                      }
+                    >
+                      <FontAwesomeIcon className="icon" icon={faBan} />
+                    </button>
+                  ) : (
+                    <button
+                      title="Reactivate"
+                      className="round-btn reactivate-btn"
+                      onClick={(ev) => onChangeStatusClick(ev, listing, "active")}
+                    >
+                      <FontAwesomeIcon className="icon" icon={faRotateLeft} />
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="listing-name">{listing.name}</div>
+              <div className="listing-location">
+                {listing.loc.country}, {listing.loc.city}
+              </div>
+              <Link to={`../orders?listingId=${listing._id}`} className="button">
+                View orders
+              </Link>
+              <Link
+                to={`/stay/${listing._id}`}
+                onClick={(ev) => ev.stopPropagation()}
+                className="button"
+              >
+                View listing as guest
+              </Link>
+            </div>
+          ))}
+        </div>
+      }
     </section>
   );
 }
