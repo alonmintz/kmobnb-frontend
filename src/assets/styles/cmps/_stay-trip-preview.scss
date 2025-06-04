@@ -1,0 +1,95 @@
+.stay-trip-preview {
+  position: relative;
+  display: grid;
+  grid-template-rows: 265px auto;
+  row-gap: 0.5rem;
+  font-family: "Airbnb";
+
+  .status {
+    position: absolute;
+    top: 0;
+    padding: 0.5rem;
+    border-bottom-right-radius: 0.7rem;
+    border-top-left-radius: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    z-index: 1;
+  }
+
+  &.approved {
+    .status {
+      background-color: #00a699;
+    }
+  }
+  &.canceled {
+    .status {
+      background-color: #ff5a5f;
+    }
+  }
+  &.pending {
+    .status {
+      background-color: #fecf57;
+    }
+  }
+
+  .image-container {
+    position: relative;
+    border-radius: 0.7rem;
+    overflow: hidden;
+    &.approved {
+      border: 5px solid #00a699;
+      .status {
+        background-color: #00a699;
+      }
+    }
+    &.canceled {
+      border: 5px solid #ff5a5f;
+    }
+    &.pending {
+      border: 5px solid #fecf57;
+    }
+    img {
+      height: 100%;
+      width: 100%;
+      object-position: center;
+      object-fit: cover;
+    }
+  }
+
+  .bottom-container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, 1fr);
+    .text-container {
+      display: grid;
+      .city {
+        font-weight: 500;
+        line-height: 1.125rem;
+        font-size: 0.875rem;
+      }
+      .dates {
+        font-weight: 400;
+        line-height: 1rem;
+        font-size: 0.75rem;
+        color: #6a6a6a;
+      }
+    }
+    .review-btn {
+      height: fit-content;
+      width: fit-content;
+      align-self: center;
+      justify-self: end;
+      padding-inline: 1rem;
+      margin: 0;
+      border-radius: 0.5rem;
+      background-color: rgb(236, 235, 235);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background-color 0.1s ease;
+      &:hover {
+        background-color: lightgray;
+      }
+    }
+  }
+}

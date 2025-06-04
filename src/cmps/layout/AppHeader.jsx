@@ -26,7 +26,8 @@ export function AppHeader() {
     if (pathname.startsWith("/host")) return "host-listings-header";
     if (isStayDetailsPage) return "stay-details-header";
     if (isOrderPage) return "order-page-header";
-    if (pathname.startsWith("/wishlist")) return "user-page-header";
+    if (pathname.startsWith("/wishlist") || pathname.startsWith("/trips"))
+      return "user-page-header";
   }
 
   function headerRenderSwitch() {
@@ -34,7 +35,7 @@ export function AppHeader() {
     if (pathname.startsWith("/host")) return <HeaderHost viewport={viewport} />;
     if (isStayDetailsPage) return <HeaderStayDetails viewport={viewport} />;
     if (isOrderPage) return <HeaderOrderPage viewport={viewport} />;
-    if (pathname.startsWith("/wishlist"))
+    if (pathname.startsWith("/wishlist") || pathname.startsWith("/trips"))
       return <HeaderUser viewport={viewport} />;
   }
 

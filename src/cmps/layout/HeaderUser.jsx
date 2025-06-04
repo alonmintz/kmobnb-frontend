@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import logo from "../../assets/img/logo.png";
 import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { NavMenu } from "../layout/NavMenu";
+import { BnbYourButton } from "./BnbYourButton";
 
 export function HeaderUser({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
@@ -29,13 +30,8 @@ export function HeaderUser({ viewport }) {
             {viewport === "desktop" && <h3>kmobnb</h3>}{" "}
           </div>
         </NavLink>
-        {/* <div className="homes-title-container">
-                    <h2>Hosting</h2>
-                </div> */}
         <nav>
-          {/* <NavLink to="/" className="bnb-your-button">
-                        Back to guest mode
-                    </NavLink> */}
+          <BnbYourButton />
           <button
             className="user-info"
             onClick={handleUserIconClick}
