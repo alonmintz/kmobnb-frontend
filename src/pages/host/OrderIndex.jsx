@@ -7,9 +7,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function OrderIndex() {
   const user = useSelector(storeState => storeState.userModule.user)
+  const [isLoading, setIsLoading] = useState(true)
   const [orders, setOrders] = useState([])
-  const [searchParams] = useSearchParams()
   const [listingName, setListingName] = useState('')
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' })
+  const [filters, setFilters] = useState({})
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -30,7 +33,6 @@ export function OrderIndex() {
         .catch(err => console.log('Failed to load listing details:', err))
     }
 
-
     await orderService.getOrdersByHostId(filter)
       .then(orders => {
         const filteredOrders = filter.listingId
@@ -39,6 +41,7 @@ export function OrderIndex() {
         setOrders(filteredOrders);
       })
       .catch(err => console.log('Failed to load orders:', err))
+    setIsLoading(false)
   }
 
   function getTiming(orderStartDate, orderEndDate) {
@@ -55,11 +58,21 @@ export function OrderIndex() {
     }
   }
 
-  if (!orders || !orders.length || !user) {
+  if (!user) {
     return (
       <div className="orders">
         <div className="section-title">
-          <h1>No orders to show</h1>
+          <h1>Please log in</h1>
+        </div>
+      </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <div className="orders">
+        <div className="section-title">
+          <h1>Loading . . .</h1>
         </div>
       </div>
     )
@@ -100,6 +113,13 @@ export function OrderIndex() {
           </tbody>
         </table>
       </div>
+      {!orders.length &&
+        <div className="section-title">
+          <h1>
+            No orders
+          </h1>
+        </div>
+      }
     </section>
   )
 }
