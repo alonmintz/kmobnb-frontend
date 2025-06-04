@@ -21,10 +21,10 @@ export function Host() {
                 <span className="anchor-name">Orders</span>
                 <span className="anchor-hover-line"></span>
               </NavLink>
-              <NavLink to="dashboard" className="anchor-link">
+              {/* <NavLink to="dashboard" className="anchor-link">
                 <span className="anchor-name">Dashboard</span>
                 <span className="anchor-hover-line"></span>
-              </NavLink>
+              </NavLink> */}
             </nav>
           </div>
         }
