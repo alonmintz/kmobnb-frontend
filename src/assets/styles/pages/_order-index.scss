@@ -1,5 +1,5 @@
 .order-index {
-  font-size: rem(14px);
+  font-size: rem(12px);
 
   .orders-table {
     width: 100%;
@@ -21,9 +21,15 @@
       font-weight: 400;
       color: #222;
       background-color: #f7f7f7;
-
       user-select: none;
 
+
+      select {
+        margin-top: 8px;
+        font-size: rem(14px);
+        padding: 2px;
+        border-radius: 0.5rem;
+      }
 
       &:hover.clickable {
         cursor: pointer;
@@ -32,17 +38,9 @@
         transition: all 0.2s ease;
       }
 
-      select {
-        margin-top: 8px;
-        font-size: rem(14px);
-        padding: 2px;
-        border-radius: 0.5rem;
-      }
     }
 
     tr {
-      
-      
       &.status-canceled {
         color: #717171;
       }
@@ -60,7 +58,8 @@
       }
     }
 
-    // tr:hover {
-    // }
+    .last-column {
+      text-align: right;
+    }
   }
 }

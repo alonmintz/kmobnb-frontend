@@ -10,7 +10,7 @@ export function OrderIndex() {
   const [isLoading, setIsLoading] = useState(true)
   const [orders, setOrders] = useState([])
   const [listingName, setListingName] = useState('')
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' })
+  const [sortConfig, setSortConfig] = useState({ key: 'startDate', direction: 'desc' })
   const [filters, setFilters] = useState({})
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -125,7 +125,7 @@ export function OrderIndex() {
             <tr>
               <th>Order ID</th>
               <th>
-                Status
+                Status<br/>
                 <select
                   value={filters.status}
                   onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
@@ -140,7 +140,7 @@ export function OrderIndex() {
                 Listing Name {sortConfig.key === 'stayName' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
               </th>
               <th>
-                Timing
+                Timing<br/>
                 <select
                   value={filters.timing}
                   onChange={(e) => setFilters(prev => ({ ...prev, timing: e.target.value }))}
@@ -160,7 +160,7 @@ export function OrderIndex() {
               <th className="clickable" onClick={() => handleSort('orderTime')}>
                 Order Time {sortConfig.key === 'orderTime' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
               </th>
-              <th>Guests</th>
+              <th className="last-column">Guests</th>
             </tr>
           </thead>
           <tbody>
@@ -173,7 +173,7 @@ export function OrderIndex() {
                 <td>{humanDateFormat(order.startDate)}</td>
                 <td>{humanDateFormat(order.endDate)}</td>
                 <td>{humanDateTimeFormat(order.orderTime)}</td>
-                <td>{order.guests}</td>
+                <td className="last-column">{order.guests}</td>
               </tr>
             ))}
           </tbody>
