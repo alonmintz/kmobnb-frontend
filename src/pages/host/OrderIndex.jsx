@@ -7,9 +7,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function OrderIndex() {
   const user = useSelector(storeState => storeState.userModule.user)
+  const [isLoading, setIsLoading] = useState(true)
   const [orders, setOrders] = useState([])
-  const [searchParams] = useSearchParams()
   const [listingName, setListingName] = useState('')
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' })
+  const [filters, setFilters] = useState({})
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -30,7 +33,6 @@ export function OrderIndex() {
         .catch(err => console.log('Failed to load listing details:', err))
     }
 
-
     await orderService.getOrdersByHostId(filter)
       .then(orders => {
         const filteredOrders = filter.listingId
@@ -39,6 +41,7 @@ export function OrderIndex() {
         setOrders(filteredOrders);
       })
       .catch(err => console.log('Failed to load orders:', err))
+    setIsLoading(false)
   }
 
   function getTiming(orderStartDate, orderEndDate) {
@@ -55,11 +58,57 @@ export function OrderIndex() {
     }
   }
 
-  if (!orders || !orders.length || !user) {
+
+  function handleSort(key) {
+    setSortConfig(prev => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+    }))
+  }
+
+  function getSortedOrders() {
+    let sortedOrders = [...orders]
+    if (sortConfig.key) {
+      sortedOrders.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? -1 : 1
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? 1 : -1
+        }
+        return 0
+      })
+    }
+    return sortedOrders.filter(order => {
+      return (!filters.status || order.status === filters.status) &&
+        (!filters.timing || getTiming(order.startDate, order.endDate) === filters.timing)
+    })
+  }
+
+  function getStatusClass(status) {
+    switch (status) {
+      case 'canceled': return 'status-canceled'
+      case 'approved': return 'status-approved'
+      case 'pending': return 'status-pending'
+      default: return ''
+    }
+  }
+
+  if (!user) {
     return (
       <div className="orders">
         <div className="section-title">
-          <h1>No orders to show</h1>
+          <h1>Please log in</h1>
+        </div>
+      </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <div className="orders">
+        <div className="section-title">
+          <h1>Loading . . .</h1>
         </div>
       </div>
     )
@@ -75,20 +124,50 @@ export function OrderIndex() {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Status</th>
-              <th>Listing Name</th>
-              <th>Timing</th>
-              <th>Check-in</th>
-              <th>Check-out</th>
-              <th>Order Time</th>
+              <th>
+                Status
+                <select
+                  value={filters.status}
+                  onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
+                >
+                  <option value="">All</option>
+                  <option value="pending">Pending</option>
+                  <option value="approved">Approved</option>
+                  <option value="canceled">Canceled</option>
+                </select>
+              </th>
+              <th className="clickable" onClick={() => handleSort('stayName')}>
+                Listing Name {sortConfig.key === 'stayName' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
+              <th>
+                Timing
+                <select
+                  value={filters.timing}
+                  onChange={(e) => setFilters(prev => ({ ...prev, timing: e.target.value }))}
+                >
+                  <option value="">All</option>
+                  <option value="Future">Future</option>
+                  <option value="Active">Active</option>
+                  <option value="Past">Past</option>
+                </select>
+              </th>
+              <th className="clickable" onClick={() => handleSort('startDate')}>
+                Check-in {sortConfig.key === 'startDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
+              <th className="clickable" onClick={() => handleSort('endDate')}>
+                Check-out {sortConfig.key === 'endDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
+              <th className="clickable" onClick={() => handleSort('orderTime')}>
+                Order Time {sortConfig.key === 'orderTime' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
               <th>Guests</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map(order => (
-              <tr key={order._id} onClick={() => navigate(`../order/${order._id}`)}>
+            {getSortedOrders().map(order => (
+              <tr key={order._id} className={getStatusClass(order.status)} onClick={() => navigate(`../order/${order._id}`)}>
                 <td title={order._id}>{order._id.slice(-6)}</td>
-                <td>{order.status ? capitalize(order.status) : "Pending"}</td>
+                <td >{order.status ? capitalize(order.status) : "Pending"}</td>
                 <td>{order.stayName}</td>
                 <td>{getTiming(order.startDate, order.endDate)}</td>
                 <td>{humanDateFormat(order.startDate)}</td>
@@ -100,6 +179,13 @@ export function OrderIndex() {
           </tbody>
         </table>
       </div>
+      {!orders.length &&
+        <div className="section-title">
+          <h1>
+            No orders
+          </h1>
+        </div>
+      }
     </section>
   )
 }

@@ -41,7 +41,9 @@ export function StayDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    initUserWishlist();
+    if (user) {
+      initUserWishlist();
+    }
   }, []);
 
   async function initUserWishlist() {

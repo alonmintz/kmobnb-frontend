@@ -7,7 +7,9 @@ export function Host() {
 
   return (
     <section className="host-page layout secondary full">
-        <div className="anchor-header host-anchor-header">
+
+      <div className="anchor-header host-anchor-header">
+        {!user?.isHost ? "" :
           <div className="anchor-header-container">
             <h1>{user ? "Hello, host " + user.fullname : "Please log in"}</h1>
             <nav className="anchor-nav">
@@ -25,7 +27,8 @@ export function Host() {
               </NavLink>
             </nav>
           </div>
-        </div>
+        }
+      </div>
       <Outlet />
     </section>
   );
