@@ -11,10 +11,11 @@
       padding: 0.75rem;
       text-align: left;
       border-bottom: 1px solid #ddd;
+      
     }
 
     td {
-      cursor: pointer;
+      vertical-align: middle;
     }
 
     th {
@@ -23,10 +24,9 @@
       background-color: #f7f7f7;
       user-select: none;
 
-
       select {
         margin-top: 8px;
-        font-size: rem(14px);
+        font-size: rem(12px);
         padding: 2px;
         border-radius: 0.5rem;
       }

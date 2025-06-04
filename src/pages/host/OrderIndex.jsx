@@ -94,6 +94,26 @@ export function OrderIndex() {
     }
   }
 
+  function getDateRange(startDate, endDate) {
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    const currentYear = new Date().getFullYear()
+
+    const formatDate = (date) => {
+      const options = { month: 'short', day: 'numeric' }
+      if (date.getFullYear() !== currentYear) {
+        options.year = 'numeric'
+      }
+      return date.toLocaleDateString('en-US', options)
+    }
+
+    if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+      return `${formatDate(start)}-${end.getDate()}`
+    } else {
+      return `${formatDate(start)}-${formatDate(end)}`
+    }
+  }
+
   if (!user) {
     return (
       <div className="orders">
@@ -117,7 +137,7 @@ export function OrderIndex() {
   return (
     <section className="order-index">
       <header className="section-title">
-        <h1>Your Orders{listingName ? ` - filtering for listing "${listingName}"` : ""}</h1>
+        <h1>Orders{listingName ? ` - filtering for listing "${listingName}"` : ""}</h1>
       </header>
       <div className="order-list">
         <table className="orders-table">
@@ -125,7 +145,7 @@ export function OrderIndex() {
             <tr>
               <th>Order ID</th>
               <th>
-                Status<br/>
+                Status<br />
                 <select
                   value={filters.status}
                   onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
@@ -140,7 +160,7 @@ export function OrderIndex() {
                 Listing Name {sortConfig.key === 'stayName' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
               </th>
               <th>
-                Timing<br/>
+                Timing<br />
                 <select
                   value={filters.timing}
                   onChange={(e) => setFilters(prev => ({ ...prev, timing: e.target.value }))}
@@ -152,13 +172,13 @@ export function OrderIndex() {
                 </select>
               </th>
               <th className="clickable" onClick={() => handleSort('startDate')}>
-                Check-in {sortConfig.key === 'startDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
-              </th>
-              <th className="clickable" onClick={() => handleSort('endDate')}>
-                Check-out {sortConfig.key === 'endDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+                Dates {sortConfig.key === 'startDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
               </th>
               <th className="clickable" onClick={() => handleSort('orderTime')}>
                 Order Time {sortConfig.key === 'orderTime' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+              </th>
+              <th className="clickable" onClick={() => handleSort('price')}>
+                Price {sortConfig.key === 'price' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
               </th>
               <th className="last-column">Guests</th>
             </tr>
@@ -166,13 +186,13 @@ export function OrderIndex() {
           <tbody>
             {getSortedOrders().map(order => (
               <tr key={order._id} className={getStatusClass(order.status)} onClick={() => navigate(`../order/${order._id}`)}>
-                <td title={order._id}>{order._id.slice(-6)}</td>
+                <td title={order._id}>{order._id.slice(-5)}</td>
                 <td >{order.status ? capitalize(order.status) : "Pending"}</td>
                 <td>{order.stayName}</td>
                 <td>{getTiming(order.startDate, order.endDate)}</td>
-                <td>{humanDateFormat(order.startDate)}</td>
-                <td>{humanDateFormat(order.endDate)}</td>
+                <td>{getDateRange(order.startDate, order.endDate)}</td>
                 <td>{humanDateTimeFormat(order.orderTime)}</td>
+                <td>${order.price}</td>
                 <td className="last-column">{order.guests}</td>
               </tr>
             ))}
