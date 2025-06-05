@@ -32,7 +32,7 @@
             color: #2e7d32;
 
             &:hover {
-              background-color: #2e7d32;
+              background-color: #00a699;
               color: white;
               transform: scale(1.1);
               box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
@@ -89,11 +89,11 @@
       height: 60px;
 
       &.status-canceled {
-        color: #717171;
+        color: #a1a1a1;
       }
 
       &.status-approved {
-        color: #00a308;
+        color: #00a699;
       }
 
       // &.status-pending {

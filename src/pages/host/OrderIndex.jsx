@@ -201,7 +201,7 @@ export function OrderIndex() {
             {getSortedOrders().map(order => (
               <tr key={order._id} className={getStatusClass(order.status)}>
                 <td title={order._id}>{order._id.slice(-5)}</td>
-                <td className="">{order.status ? capitalize(order.status) : "Pending"}</td>
+                <td>{order.status ? capitalize(order.status) : ""}</td>
                 <td>{order.stayName}</td>
                 <td>{getTiming(order.startDate, order.endDate)}</td>
                 <td>{getDateRange(order.startDate, order.endDate)}</td>
