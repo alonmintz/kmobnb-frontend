@@ -1,2 +1,2 @@
 # Kmobnb - frontend
-@alonmintz @keyal
+By (@alonmintz)[https://github.com/alonmintz] and (@keyal)[https://github.com/keyal]
