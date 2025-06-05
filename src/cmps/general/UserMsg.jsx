@@ -9,7 +9,13 @@ import { useState, useEffect, useRef } from "react";
 import {
   socketService,
   SOCKET_EVENT_ORDER_STATUS_UPDATE,
+  SOCKET_EVENT_ORDER_ADDED,
 } from "../../services/socket.service";
+import {
+  HOST_NOTIFICATION,
+  TRIP_NOTIFICATION,
+  userActions,
+} from "../../store/actions/user.actions";
 
 export function UserMsg() {
   const [msg, setMsg] = useState(null);
@@ -25,7 +31,8 @@ export function UserMsg() {
       timeoutIdRef.current = setTimeout(closeMsg, 5000);
     });
 
-    socketService.on(SOCKET_EVENT_ORDER_STATUS_UPDATE, showOrderStatusMsg);
+    socketService.on(SOCKET_EVENT_ORDER_STATUS_UPDATE, handleOrderStatusEvent);
+    socketService.on(SOCKET_EVENT_ORDER_ADDED, handleAddedOrderEvent);
 
     return () => {
       unsubscribe();
@@ -33,7 +40,7 @@ export function UserMsg() {
     };
   }, []);
 
-  function showOrderStatusMsg({ status, stayName }) {
+  function handleOrderStatusEvent({ status, stayName }) {
     if (status === "approved") {
       showSuccessMsg(
         `Your reservation to ${stayName} was approved by the host`
@@ -41,6 +48,20 @@ export function UserMsg() {
     } else if (status === "canceled") {
       showErrorMsg(`Your reservation to ${stayName} was canceled by the host`);
     }
+
+    userActions.setUserNotification({
+      notificationType: TRIP_NOTIFICATION,
+      isNotified: true,
+    });
+  }
+
+  function handleAddedOrderEvent({ hostId, stayName, stayId }) {
+    showSuccessMsg(`New reservation at ${stayName}! `);
+
+    userActions.setUserNotification({
+      notificationType: HOST_NOTIFICATION,
+      isNotified: true,
+    });
   }
 
   function closeMsg() {

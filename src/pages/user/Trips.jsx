@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { orderService } from "../../services/order";
 import { StayTripPreview } from "../../cmps/stay/StayTripPreview";
+import {
+  TRIP_NOTIFICATION,
+  userActions,
+} from "../../store/actions/user.actions";
 
 export function Trips() {
   const user = useSelector((storeState) => storeState.userModule.user);
@@ -16,26 +20,22 @@ export function Trips() {
   const [timeChosen, setTimeChosen] = useState("future");
 
   useEffect(() => {
+    userActions.setUserNotification({
+      notificationType: TRIP_NOTIFICATION,
+      isNotified: false,
+    });
     loadOrders();
   }, []);
 
   useEffect(() => {
-    console.log(timeChosen);
-
     setTripsToDisplay(userOrders[timeChosen]);
-    // window.scrollTo(0, 0);
   }, [userOrders, timeChosen]);
-
-  useEffect(() => {
-    console.log({ tripsToDisplay });
-  }, [tripsToDisplay]);
 
   async function loadOrders() {
     if (user) {
       setIsLoading(true);
       try {
         const orders = await orderService.getOrdersByUserId(user._id);
-        console.log({ orders });
         setUserOrders(orders);
       } catch (err) {
         console.log("error loading user orders");

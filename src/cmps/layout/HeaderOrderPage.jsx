@@ -11,6 +11,9 @@ import { BnbYourButton } from "./BnbYourButton";
 //TODO: complete bnb your home link functionality and then undo the disable
 export function HeaderOrderPage({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
+  const showTripsNotification = useSelector(
+    (storeState) => storeState.userModule.showTripsNotification
+  );
   const [isNavMenuVisible, setIsNavMenuVisible] = useState(false);
   const userIconRef = useRef();
 
@@ -39,6 +42,9 @@ export function HeaderOrderPage({ viewport }) {
             onClick={handleUserIconClick}
             ref={userIconRef}
           >
+            {showTripsNotification && (
+              <div className="notification-circle"></div>
+            )}
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
