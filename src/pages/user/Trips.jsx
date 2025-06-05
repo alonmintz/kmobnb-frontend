@@ -9,6 +9,7 @@ import {
   TRIP_NOTIFICATION,
   userActions,
 } from "../../store/actions/user.actions";
+import { StayListSkeleton } from "../../cmps/skeleton/StayListSkeleton";
 
 export function Trips() {
   const user = useSelector((storeState) => storeState.userModule.user);
@@ -16,7 +17,7 @@ export function Trips() {
     orderService.getEmptyUserOrders()
   );
   const [tripsToDisplay, setTripsToDisplay] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [timeChosen, setTimeChosen] = useState("future");
 
   useEffect(() => {
@@ -51,9 +52,8 @@ export function Trips() {
         <h2 className="title">My trips</h2>
         <div className="category-container">
           <div
-            className={`trip-time-category ${
-              timeChosen === "future" ? "chosen" : ""
-            }`}
+            className={`trip-time-category ${timeChosen === "future" ? "chosen" : ""
+              }`}
             onClick={() => setTimeChosen("future")}
           >
             <img
@@ -65,9 +65,7 @@ export function Trips() {
           </div>
 
           <div
-            className={`trip-time-category ${
-              timeChosen === "active" ? "chosen" : ""
-            }`}
+            className={`trip-time-category ${timeChosen === "active" ? "chosen" : ""}`}
             onClick={() => setTimeChosen("active")}
           >
             <img
@@ -78,9 +76,7 @@ export function Trips() {
             <span>Active trips</span>
           </div>
           <div
-            className={`trip-time-category ${
-              timeChosen === "past" ? "chosen" : ""
-            }`}
+            className={`trip-time-category ${timeChosen === "past" ? "chosen" : ""}`}
             onClick={() => setTimeChosen("past")}
           >
             <img
@@ -95,7 +91,8 @@ export function Trips() {
       <div className="trips-list-container">
         <h2 className="title">{`${timeChosen} trips`}</h2>
         <div className="trips-list">
-          {tripsToDisplay.length ? (
+          {isLoading && <StayListSkeleton />}
+          {!isLoading && tripsToDisplay.length > 0 && (
             tripsToDisplay.map((trip) => (
               <StayTripPreview
                 key={trip._id}
@@ -103,7 +100,8 @@ export function Trips() {
                 isPast={timeChosen === "past"}
               />
             ))
-          ) : (
+          )}
+          {!isLoading && !tripsToDisplay.length && (
             <span>{`No ${timeChosen} trips to show`}</span>
           )}
         </div>

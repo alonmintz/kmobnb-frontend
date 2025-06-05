@@ -3,9 +3,12 @@ import { StayList } from "../../cmps/stay/StayList";
 import { StayMultiLocationMap } from "../../cmps/stay/StayMultiLocationMap";
 import { userService } from "../../services/user";
 import { userActions } from "../../store/actions/user.actions";
+import { StayListSkeleton } from "../../cmps/skeleton/StayListSkeleton";
 
 export function Wishlist() {
+  const [isLoading, setIsLoading] = useState(true);
   const [staysToShow, setStaysToShow] = useState([]);
+
   useEffect(() => {
     load();
   }, []);
@@ -14,6 +17,7 @@ export function Wishlist() {
     const wishlistFromDB = await userService.getUserWishlist();
     setStaysToShow(wishlistFromDB);
     userActions.setUserWishlist(wishlistFromDB);
+    setIsLoading(false)
   }
 
   const [hoveredStayId, setHoveredStayId] = useState("");
@@ -28,11 +32,14 @@ export function Wishlist() {
         <div className="title-container">
           <h2>My wishlist</h2>
         </div>
-        <StayList
-          stays={staysToShow}
-          isWishlist
-          onHoverStay={setHoveredStayId}
-        />
+        {isLoading ? <StayListSkeleton />
+          :
+          <StayList
+            stays={staysToShow}
+            isWishlist
+            onHoverStay={setHoveredStayId}
+          />
+        }
       </section>
       <section className="map-container">
         <StayMultiLocationMap
