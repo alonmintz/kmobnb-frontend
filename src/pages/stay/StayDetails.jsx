@@ -17,6 +17,7 @@ import { ReviewDisplay } from "../../cmps/review/ReviewDisplay";
 import { StayDetailsSkeleton } from "../../cmps/skeleton/StayDetailsSkeleton";
 import { userActions } from "../../store/actions/user.actions";
 import { userService } from "../../services/user";
+import { reviewService } from "../../services/review";
 
 export function StayDetails() {
   const user = useSelector((storeState) => storeState.userModule.user);
@@ -35,6 +36,7 @@ export function StayDetails() {
   const [showAnchorNav, setShowAnchorNav] = useState(false);
   const [showMiniReserve, setShowMiniReserve] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const [allReviews, setAllReviews] = useState([]);
 
   const imgSectionRef = useRef();
   const datePickerSectionRef = useRef();
@@ -96,10 +98,17 @@ export function StayDetails() {
     setIsDetailsModalOpen(modalContentType ? true : false);
   }, [modalContentType]);
 
+  useEffect(() => {
+    if (stay) {
+      loadAllReviews();
+    }
+  }, [stay]);
+
   async function loadStay() {
     setIsLoading(true);
     try {
       const stay = await stayService.getById(params.stayId);
+
       setStay(stay);
     } catch (err) {
       alert("Error loading your request");
@@ -107,6 +116,11 @@ export function StayDetails() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  async function loadAllReviews() {
+    const reviews = await fetchAllReviews(stay._id);
+    setAllReviews(reviews);
   }
 
   function checkIsWishlisted() {
@@ -359,8 +373,8 @@ export function StayDetails() {
             <div className="reviews-container">
               <h2 className="title">{`${reviewsData.reviews.length} reviews`}</h2>
               {reviewsData.reviews.length &&
-                reviewsData.reviews.map((review) => (
-                  <ReviewDisplay key={review.id} review={review} />
+                allReviews.map((review) => (
+                  <ReviewDisplay key={review._id} review={review} />
                 ))}
             </div>
           </div>
@@ -368,6 +382,16 @@ export function StayDetails() {
 
       default:
         break;
+    }
+  }
+
+  async function fetchAllReviews(stayId) {
+    try {
+      const allReviews = await reviewService.getReviewsByStayId(stayId);
+      console.log({ allReviews });
+      return allReviews;
+    } catch (err) {
+      console.log("error fetching reviews");
     }
   }
 
@@ -530,7 +554,7 @@ export function StayDetails() {
                 setModalContentType("reviews");
               }}
             >
-              Show all {reviewsData.reviews.length} reviews
+              Show all {reviewsData.reviewsCount} reviews
             </button>
           ) : (
             ""
