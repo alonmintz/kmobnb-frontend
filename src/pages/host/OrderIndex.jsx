@@ -96,7 +96,8 @@ export function OrderIndex() {
       return (
         (!filters.status || order.status === filters.status) &&
         (!filters.timing ||
-          getTiming(order.startDate, order.endDate) === filters.timing)
+          getTiming(order.startDate, order.endDate) === filters.timing) &&
+        (!filters.stayName || order.stayName === filters.stayName)
       );
     });
   }
@@ -136,6 +137,12 @@ export function OrderIndex() {
       return `${formatDate(start)}-${formatDate(end)}`;
     }
   }
+
+function getUniqueListingNames() {
+  return [...new Set(orders.map(order => order.stayName))]
+    .filter(name => name) // filter out empty/null/undefined values
+    .sort();
+}
 
   async function handleStatusChange(e, orderId, status) {
     e.preventDefault();
@@ -202,6 +209,18 @@ export function OrderIndex() {
                 Listing Name{" "}
                 {sortConfig.key === "stayName" &&
                   (sortConfig.direction === "asc" ? "↑" : "↓")}
+                <br />
+                <select
+                  value={filters.stayName || ""}
+                  onChange={(e) =>
+                    setFilters((prev) => ({ ...prev, stayName: e.target.value }))
+                  }
+                >
+                  <option value="">All</option>
+                  {getUniqueListingNames().map(name => (
+                    <option key={name} value={name}>{name}</option>
+                  ))}
+                </select>
               </th>
               <th>
                 Timing
@@ -279,7 +298,7 @@ export function OrderIndex() {
       </div>
       {!orders.length && (
         <div className="section-title">
-          <h1>No orders</h1>
+          <h1>No orders to show</h1>
         </div>
       )}
     </section>
