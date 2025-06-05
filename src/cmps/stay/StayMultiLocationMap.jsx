@@ -2,6 +2,7 @@ import GoogleMapReact from "google-map-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
+console.log({ VITE_GOOGLE_MAPS_API_KEY });
 
 export function StayMultiLocationMap({ stays, hoveredStayId, onPinClick }) {
   const { center, zoom } = getMapCenterAndZoom(stays);
