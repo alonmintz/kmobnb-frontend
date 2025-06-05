@@ -98,7 +98,7 @@ export function Trips() {
           {tripsToDisplay.length ? (
             tripsToDisplay.map((trip) => (
               <StayTripPreview
-                key={trip.stayId}
+                key={trip._id}
                 trip={trip}
                 isPast={timeChosen === "past"}
               />
