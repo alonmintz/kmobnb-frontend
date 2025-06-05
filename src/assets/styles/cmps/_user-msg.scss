@@ -1,39 +1,56 @@
 .user-msg {
-    position: fixed;
-    top: 60px;
-    right: .2em;
+  position: fixed;
+  bottom: 2rem;
+  right: 2em;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    padding: .2em;
-    padding-inline-end: 20px;
-    background-color: grey;
+  padding: 1rem;
+  padding-inline-start: 2rem;
+  padding-inline-end: 100px;
+  background-color: grey;
+  border-radius: 1rem;
+  font-weight: 500;
 
-    color:white;
-    font-size: .9em;
+  color: white;
+  font-size: 0.9em;
 
-    opacity: 0;
-    translate: 150%;
-    transition: 600ms;
+  opacity: 0;
+  translate: 150%;
+  transition: 600ms;
 }
 
 .user-msg.visible {
-    opacity: 1;
-    translate: 0;
+  opacity: 1;
+  translate: 0;
 }
 
 .user-msg button {
-    background-color: $gray1;
-    padding: 1px 6px;
-    border:0;
-    border-radius: 50%;
-    color: $gray4;
+  position: absolute;
+  right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  width: 25px;
+  margin: 0;
+  padding: 0.75rem;
+  font-size: rem(10px);
+  color: white;
+  stroke: 2;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: rgb(231, 230, 230, 0.5);
+  }
 }
 
 .user-msg.success {
-    background-color: rgb(41, 189, 73);
+  background-color: #00a699;
 }
 .user-msg.error {
-    background-color: rgb(216, 59, 59);
+  background-color: #ff5a5f;
 }

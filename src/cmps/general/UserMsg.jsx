@@ -1,10 +1,15 @@
-//TODO: uncomment when we know the use of socket service
-import { eventBus, showSuccessMsg } from "../../services/event-bus.service";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import {
+  eventBus,
+  showErrorMsg,
+  showSuccessMsg,
+} from "../../services/event-bus.service";
 import { useState, useEffect, useRef } from "react";
-// import {
-//   socketService,
-//   SOCKET_EVENT_REVIEW_ABOUT_YOU,
-// } from "../../services/socket.service";
+import {
+  socketService,
+  SOCKET_EVENT_ORDER_STATUS_UPDATE,
+} from "../../services/socket.service";
 
 export function UserMsg() {
   const [msg, setMsg] = useState(null);
@@ -17,18 +22,26 @@ export function UserMsg() {
         timeoutIdRef.current = null;
         clearTimeout(timeoutIdRef.current);
       }
-      timeoutIdRef.current = setTimeout(closeMsg, 3000);
+      timeoutIdRef.current = setTimeout(closeMsg, 5000);
     });
 
-    // socketService.on(SOCKET_EVENT_REVIEW_ABOUT_YOU, review => {
-    // 	showSuccessMsg(`New review about me ${review.txt}`)
-    // })
+    socketService.on(SOCKET_EVENT_ORDER_STATUS_UPDATE, showOrderStatusMsg);
 
-    // return () => {
-    // 	unsubscribe()
-    // 	socketService.off(SOCKET_EVENT_REVIEW_ABOUT_YOU)
-    // }
+    return () => {
+      unsubscribe();
+      socketService.off(SOCKET_EVENT_ORDER_STATUS_UPDATE);
+    };
   }, []);
+
+  function showOrderStatusMsg({ status, stayName }) {
+    if (status === "approved") {
+      showSuccessMsg(
+        `Your reservation to ${stayName} was approved by the host`
+      );
+    } else if (status === "canceled") {
+      showErrorMsg(`Your reservation to ${stayName} was canceled by the host`);
+    }
+  }
 
   function closeMsg() {
     setMsg(null);
@@ -39,8 +52,10 @@ export function UserMsg() {
   }
   return (
     <section className={`user-msg ${msg?.type} ${msgClass()}`}>
-      <button onClick={closeMsg}>x</button>
-      {msg?.txt}
+      <button type="button" className="reset-btn" onClick={closeMsg}>
+        <FontAwesomeIcon icon={faX} />
+      </button>
+      <span className="msg-txt">{msg?.txt}</span>
     </section>
   );
 }

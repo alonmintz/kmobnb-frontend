@@ -4,6 +4,8 @@ import { StayPhotoGallery } from "./StayPhotoGallery";
 import { useEffect, useState } from "react";
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
 import { userActions } from "../../store/actions/user.actions";
+import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
 export function StayPreview({ stay }) {
   const currLng = 32.086722;
@@ -12,6 +14,8 @@ export function StayPreview({ stay }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [isWishlisted, setIsWishlisted] = useState(checkIsWishlisted());
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setIsWishlisted(checkIsWishlisted());
@@ -81,7 +85,7 @@ export function StayPreview({ stay }) {
   }
 
   function onPreviewClick() {
-    window.open(`/stay/${stay._id}` + window.location.search);
+    navigate(`/stay/${stay._id}${location.search}`);
   }
 
   if (!stay) return <div className="stay-preview">Loading...</div>;
