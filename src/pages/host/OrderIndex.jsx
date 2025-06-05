@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { stayActions } from "../../store/actions/stay.actions";
 import { orderService } from "../../services/order";
-import { capitalize, humanDateFormat, humanDateTimeFormat } from "../../services/util.service";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { capitalize, humanDateTimeFormat } from "../../services/util.service";
+import { useSearchParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 export function OrderIndex() {
   const user = useSelector(storeState => storeState.userModule.user)
@@ -13,7 +15,6 @@ export function OrderIndex() {
   const [sortConfig, setSortConfig] = useState({ key: 'startDate', direction: 'desc' })
   const [filters, setFilters] = useState({})
   const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (!user) return
@@ -57,7 +58,6 @@ export function OrderIndex() {
       return "Active";
     }
   }
-
 
   function handleSort(key) {
     setSortConfig(prev => ({
@@ -114,6 +114,20 @@ export function OrderIndex() {
     }
   }
 
+  async function handleStatusChange(e, orderId, status) {
+    e.preventDefault()
+    try {
+      await orderService.changeOrderStatus(orderId, status)
+      setOrders(prevOrders => prevOrders.map(order =>
+        order._id === orderId
+          ? { ...order, status }
+          : order
+      ))
+    } catch (err) {
+      throw new Error('Failed to change order status:', err)
+    }
+  }
+
   if (!user) {
     return (
       <div className="orders">
@@ -157,7 +171,7 @@ export function OrderIndex() {
                 </select>
               </th>
               <th className="clickable" onClick={() => handleSort('stayName')}>
-                Listing Name {sortConfig.key === 'stayName' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+                Listing Name {sortConfig.key === 'stayName' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
               </th>
               <th>
                 Timing<br />
@@ -172,28 +186,47 @@ export function OrderIndex() {
                 </select>
               </th>
               <th className="clickable" onClick={() => handleSort('startDate')}>
-                Dates {sortConfig.key === 'startDate' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+                Dates {sortConfig.key === 'startDate' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
               </th>
               <th className="clickable" onClick={() => handleSort('orderTime')}>
-                Order Time {sortConfig.key === 'orderTime' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+                Order Time {sortConfig.key === 'orderTime' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
               </th>
               <th className="clickable" onClick={() => handleSort('price')}>
-                Price {sortConfig.key === 'price' && (sortConfig.direction === 'asc' ? '⬆' : '⬇')}
+                Price {sortConfig.key === 'price' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
               </th>
-              <th className="last-column">Guests</th>
+              <th className="last-column">Action</th>
             </tr>
           </thead>
           <tbody>
             {getSortedOrders().map(order => (
-              <tr key={order._id} className={getStatusClass(order.status)} onClick={() => navigate(`../order/${order._id}`)}>
+              <tr key={order._id} className={getStatusClass(order.status)}>
                 <td title={order._id}>{order._id.slice(-5)}</td>
-                <td >{order.status ? capitalize(order.status) : "Pending"}</td>
+                <td className="">{order.status ? capitalize(order.status) : "Pending"}</td>
                 <td>{order.stayName}</td>
                 <td>{getTiming(order.startDate, order.endDate)}</td>
                 <td>{getDateRange(order.startDate, order.endDate)}</td>
                 <td>{humanDateTimeFormat(order.orderTime)}</td>
-                <td>${order.price}</td>
-                <td className="last-column">{order.guests}</td>
+                <td className="text-bold">${order.price.toLocaleString('en-US')}</td>
+                <td className="last-column">
+                  {order.status === 'pending' && (
+                    <div className="action-buttons">
+                      <button
+                        className="btn-action approve"
+                        onClick={(e) => handleStatusChange(e, order._id, 'approved')}
+                        title="Approve Order"
+                      >
+                        <FontAwesomeIcon icon={faCheck} />
+                      </button>
+                      <button
+                        className="btn-action cancel"
+                        onClick={(e) => handleStatusChange(e, order._id, 'canceled')}
+                        title="Cancel Order"
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </button>
+                    </div>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

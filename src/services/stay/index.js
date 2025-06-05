@@ -154,7 +154,7 @@ function getEmptyLocation() {
   };
 }
 
-console.log("vite_local_env:", VITE_LOCAL);
+// console.log("vite_local_env:", VITE_LOCAL);
 
 //TODO: modify to remote when we learn backend
 const service = VITE_LOCAL === "true" ? local : remote;
