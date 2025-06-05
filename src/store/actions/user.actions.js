@@ -11,7 +11,12 @@ import {
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
   SET_USER_WISHLIST,
+  SET_SHOW_TRIPS_NOTIFICATION,
+  SET_SHOW_HOST_NOTIFICATION,
 } from "../reducers/user.reducer";
+
+export const TRIP_NOTIFICATION = "trip-notification";
+export const HOST_NOTIFICATION = "host-notification";
 
 export const userActions = {
   loadUsers,
@@ -23,6 +28,7 @@ export const userActions = {
   addToWishlist,
   removeFromWishlist,
   setUserWishlist,
+  setUserNotification,
 };
 
 async function loadUsers() {
@@ -124,6 +130,22 @@ async function setUserWishlist(wishlist) {
     store.dispatch({ type: SET_USER_WISHLIST, wishlist });
   } catch (err) {
     console.log("Cannot set wishlist:", err);
+    throw err;
+  }
+}
+
+async function setUserNotification({ notificationType, isNotified }) {
+  console.log("setUserNotification");
+
+  try {
+    if (notificationType === TRIP_NOTIFICATION) {
+      store.dispatch({ type: SET_SHOW_TRIPS_NOTIFICATION, isNotified });
+    }
+    if (notificationType === HOST_NOTIFICATION) {
+      store.dispatch({ type: SET_SHOW_HOST_NOTIFICATION, isNotified });
+    }
+  } catch (err) {
+    console.log(`Cannot set ${notificationType}:`, err);
     throw err;
   }
 }

@@ -22,7 +22,12 @@
     margin: 10px;
 
     .anchor-name {
+      position: relative;
       font-weight: 100;
+      .notification-circle {
+        top: -10px;
+        right: -5px;
+      }
     }
 
     &.active {

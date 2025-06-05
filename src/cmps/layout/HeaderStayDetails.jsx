@@ -18,6 +18,9 @@ import { BnbYourButton } from "./BnbYourButton";
 //TODO: complete bnb your home link functionality and then undo the disable
 export function HeaderStayDetails({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
+  const showTripsNotification = useSelector(
+    (storeState) => storeState.userModule.showTripsNotification
+  );
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeSearchControl, setActiveSearchControl] = useState("");
   const city = useSelector((storeState) => storeState.stayModule.filterBy.city);
@@ -207,6 +210,9 @@ export function HeaderStayDetails({ viewport }) {
             onClick={handleUserIconClick}
             ref={userIconRef}
           >
+             {showTripsNotification && (
+              <div className="notification-circle"></div>
+            )}
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>

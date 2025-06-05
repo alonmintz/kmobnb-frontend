@@ -7,11 +7,15 @@ export const SET_USERS = "SET_USERS";
 export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
 export const REMOVE_FROM_WISHLIST = "REMOVE_FROM_WISHLIST";
 export const SET_USER_WISHLIST = "SET_USER_WISHLIST";
+export const SET_SHOW_TRIPS_NOTIFICATION = "SET_SHOW_TRIPS_NOTIFICATION";
+export const SET_SHOW_HOST_NOTIFICATION = "SET_SHOW_HOST_NOTIFICATION";
 
 const initialState = {
   user: userService.getLoggedinUser(),
   users: [],
   watchedUser: null,
+  showTripsNotification: false,
+  showHostNotification: false,
 };
 
 export function userReducer(state = initialState, action) {
@@ -60,6 +64,12 @@ export function userReducer(state = initialState, action) {
           wishlist: action.wishlist,
         },
       };
+      break;
+    case SET_SHOW_TRIPS_NOTIFICATION:
+      newState = { ...state, showTripsNotification: action.isNotified };
+      break;
+    case SET_SHOW_HOST_NOTIFICATION:
+      newState = { ...state, showHostNotification: action.isNotified };
       break;
     default:
   }

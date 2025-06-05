@@ -10,6 +10,9 @@ import { BnbYourButton } from "./BnbYourButton";
 
 export function HeaderUser({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
+  const showTripsNotification = useSelector(
+    (storeState) => storeState.userModule.showTripsNotification
+  );
   const [isNavMenuVisible, setIsNavMenuVisible] = useState(false);
   const userIconRef = useRef();
 
@@ -37,6 +40,9 @@ export function HeaderUser({ viewport }) {
             onClick={handleUserIconClick}
             ref={userIconRef}
           >
+            {showTripsNotification && (
+              <div className="notification-circle"></div>
+            )}
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>
