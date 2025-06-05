@@ -1,5 +1,5 @@
 import { userService } from "../../services/user";
-// import { socketService } from "../../services/socket.service";
+import { socketService } from "../../services/socket.service";
 import { store } from "../store";
 import { showErrorMsg } from "../../services/event-bus.service";
 import { LOADING_DONE, LOADING_START } from "../reducers/system.reducer";
@@ -46,13 +46,11 @@ async function removeUser(userId) {
   }
 }
 
-//TODO: uncomment when we know the use of socket service
-
 async function login(credentials) {
   try {
     const user = await userService.login(credentials);
     store.dispatch({ type: SET_USER, user });
-    // socketService.login(user._id)
+    socketService.login(user._id);
     console.log("logged in successfully as", user);
     return user;
   } catch (err) {
@@ -68,7 +66,7 @@ async function signup(credentials) {
       type: SET_USER,
       user,
     });
-    // socketService.login(user._id)
+    socketService.login(user._id);
     return user;
   } catch (err) {
     console.log("Cannot signup:", err);
@@ -84,7 +82,7 @@ async function logout() {
       user: null,
     });
     window.location.assign("/");
-    // socketService.logout()
+    socketService.logout();
   } catch (err) {
     console.log("Cannot logout:", err);
     throw err;

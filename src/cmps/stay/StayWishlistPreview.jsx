@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
 import starIcon from "../../assets/img/rating-star.svg";
 import { userActions } from "../../store/actions/user.actions";
+import { useNavigate, useLocation } from "react-router";
 
 export function StayWishlistPreview({ stay, onHoverStay }) {
   const userWishlist = useSelector(
@@ -10,6 +11,8 @@ export function StayWishlistPreview({ stay, onHoverStay }) {
   );
   const [isWishlisted, setIsWishlisted] = useState(checkIsWishlisted());
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setIsWishlisted(checkIsWishlisted());
@@ -34,10 +37,10 @@ export function StayWishlistPreview({ stay, onHoverStay }) {
   }
 
   function onPreviewClick() {
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = new URLSearchParams(location.search);
     searchParams.set("city", stay.loc.city);
     const url = `/stay/${stay.stayId}?${searchParams.toString()}`;
-    window.open(url);
+    navigate(url);
   }
 
   if (!stay) return <div className="stay-wishlist-preview">Loading...</div>;

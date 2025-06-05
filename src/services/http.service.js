@@ -4,7 +4,7 @@ const { VITE_NODE_ENV } = import.meta.env;
 //     ? '/api/'
 //     : '//localhost:3030/api/'
 const BASE_URL =
-  VITE_NODE_ENV === "production" ? "/api/" : "//localhost:3030/api/";
+  VITE_NODE_ENV === "development" ? "//localhost:3030/api/" : "/api/";
 
 const axios = Axios.create({ withCredentials: true });
 
