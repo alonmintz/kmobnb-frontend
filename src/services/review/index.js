@@ -1,4 +1,4 @@
-const { DEV, VITE_LOCAL } = import.meta.env;
+const { DEV, LOCAL } = import.meta.env;
 
 import { userService } from "../user";
 import { reviewService as local } from "./review.service.local";
@@ -28,7 +28,7 @@ export function getEmptyReviewWithLoggedinUser() {
   };
 }
 
-const service = VITE_LOCAL === "true" ? local : remote;
+const service = LOCAL === "true" ? local : remote;
 export const reviewService = { getEmptyReviewWithLoggedinUser, ...service };
 
 // Easy access to this service from the dev tools console

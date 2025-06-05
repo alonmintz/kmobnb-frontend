@@ -1,4 +1,4 @@
-const { DEV, VITE_LOCAL } = import.meta.env;
+const { DEV, LOCAL } = import.meta.env;
 
 // import { INITIAL_GUESTS, stayService as local } from "./stay.service.local";
 import { stayService as local } from "./stay.service.local";
@@ -154,10 +154,10 @@ function getEmptyLocation() {
   };
 }
 
-// console.log("vite_local_env:", VITE_LOCAL);
+// console.log("local_env:", LOCAL);
 
 //TODO: modify to remote when we learn backend
-const service = VITE_LOCAL === "true" ? local : remote;
+const service = LOCAL === "true" ? local : remote;
 export const stayService = {
   getEmptyStay,
   getDefaultFilter,
