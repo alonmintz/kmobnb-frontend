@@ -286,7 +286,7 @@ export function OrderPage() {
     }
     return isOrderComplete ? (
       <button className="submit-btn completed" onClick={onSubmit}>
-        Reserved! To my trips
+        Reserved! Go to my trips
       </button>
     ) : (
       <button className="submit-btn" onClick={onSubmit}>

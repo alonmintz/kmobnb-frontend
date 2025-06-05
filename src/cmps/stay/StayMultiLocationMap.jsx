@@ -49,7 +49,7 @@ export function StayMultiLocationMap({ stays, hoveredStayId, onPinClick }) {
       <GoogleMapReact
         bootstrapURLKeys={{ key: VITE_GOOGLE_MAPS_API_KEY }}
         center={center}
-        defaultZoom={zoom}
+        zoom={zoom}
       >
         {stays.map((stay, idx) => (
           <LocationPin
