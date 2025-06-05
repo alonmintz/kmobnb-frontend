@@ -369,12 +369,12 @@ export function StayEdit() {
     try {
       if (stayToEdit._id) {
         delete stayToEdit.reviewsData;
-        const savedStay = await stayActions.updateStay(stayToEdit);
+        const savedStay = await stayActions.updateListing(stayToEdit);
         if (savedStay) {
           console.log("Successfully updated listing");
         }
       } else {
-        const savedStay = await stayActions.addStay(stayToEdit);
+        const savedStay = await stayActions.addListing(stayToEdit);
         if (savedStay._id) {
           console.log("Successfully saved listing");
         }

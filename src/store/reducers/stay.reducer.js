@@ -10,6 +10,8 @@ export const ADD_STAY = "ADD_STAY";
 export const UPDATE_STAY = "UPDATE_STAY";
 export const SET_LISTINGS = "SET_LISTINGS";
 export const INCREMENT_LISTINGS = "INCREMENT_LISTINGS";
+export const ADD_LISTING = "ADD_LISTING";
+export const UPDATE_LISTING = "UPDATE_LISTING";
 export const ADD_STAY_MSG = "ADD_STAY_MSG";
 export const SET_FILTER_BY = "SET_FILTER_BY";
 export const REPLACE_FILTER_BY = "REPLACE_FILTER_BY";
@@ -45,17 +47,13 @@ export function stayReducer(state = initialState, action = {}) {
     case ADD_STAY:
       return {
         ...state,
-        stays: [...state.stays, action.stay],
         hostListings: [...state.hostListings, action.stay],
       };
     case UPDATE_STAY: {
       const stays = state.stays.map((stay) =>
         stay._id === action.stay._id ? action.stay : stay
       );
-      const hostListings = state.hostListings.map((listing) =>
-        listing._id === action.stay._id ? action.stay : listing
-      );
-      return { ...state, stays, hostListings };
+      return { ...state, stays };
     }
     case SET_LISTINGS:
       return { ...state, hostListings: action.hostListings };
@@ -64,6 +62,17 @@ export function stayReducer(state = initialState, action = {}) {
         ...state,
         hostListings: [...state.hostListings, ...action.hostListings],
       };
+    case ADD_LISTING:
+      return {
+        ...state,
+        hostListings: [...state.hostListings, action.listing],
+      };
+    case UPDATE_LISTING: {
+      const hostListings = state.hostListings.map((listing) =>
+        listing._id === action.listing._id ? action.listing : listing
+      );
+      return { ...state, hostListings };
+    }
     case SET_FILTER_BY:
       return {
         ...state,

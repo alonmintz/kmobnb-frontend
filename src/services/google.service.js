@@ -1,5 +1,5 @@
 import axios from "axios";
-const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
+const { GOOGLE_MAPS_API_KEY } = import.meta.env;
 
 const GEO_CODE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
 
@@ -18,7 +18,7 @@ async function isValidLocation(lat, lng) {
     const res = await axios.get(GEO_CODE_URL, {
       params: {
         latlng: `${lat},${lng}`,
-        key: VITE_GOOGLE_MAPS_API_KEY,
+        key: GOOGLE_MAPS_API_KEY,
         language: "en",
       },
     });
@@ -40,7 +40,7 @@ async function getAddressByCoords(lat, lng) {
     const res = await axios.get(GEO_CODE_URL, {
       params: {
         latlng: `${lat},${lng}`,
-        key: VITE_GOOGLE_MAPS_API_KEY,
+        key: GOOGLE_MAPS_API_KEY,
         language: "en",
       },
     });
@@ -74,7 +74,7 @@ async function getGeoInfoByAddress(addressToSearch) {
     const res = await axios.get(GEO_CODE_URL, {
       params: {
         address: addressToSearch,
-        key: VITE_GOOGLE_MAPS_API_KEY,
+        key: GOOGLE_MAPS_API_KEY,
         language: "en",
       },
     });
@@ -127,7 +127,7 @@ async function getAddressSuggestions(input) {
   const res = await axios.get(GEO_CODE_URL, {
     params: {
       address: input,
-      key: VITE_GOOGLE_MAPS_API_KEY,
+      key: GOOGLE_MAPS_API_KEY,
       language: "en",
     },
   });

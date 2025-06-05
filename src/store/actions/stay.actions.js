@@ -13,14 +13,16 @@ import {
   SET_DATES_RANGE,
   SET_LISTINGS,
   INCREMENT_LISTINGS,
+  ADD_LISTING,
+  UPDATE_LISTING,
 } from "../reducers/stay.reducer";
 
 export const stayActions = {
   loadStays,
   getStayById,
   removeStay,
-  addStay,
-  updateStay,
+  addListing,
+  updateListing,
   setFilterBy,
   resetFilterBy,
   setGuests,
@@ -75,17 +77,17 @@ async function removeStay(stayId) {
   }
 }
 
-async function addStay(stay) {
+async function addListing(listing) {
   try {
-    const savedStay = await stayService.save(stay);
+    const savedStay = await stayService.save(listing);
     const stayToStore = {
       ...savedStay,
       nearAvailableDates: _populateNearAvailableDates(),
     };
 
     store.dispatch({
-      type: ADD_STAY,
-      stay: stayToStore,
+      type: ADD_LISTING,
+      listing: stayToStore,
     });
     return stayToStore;
   } catch (err) {
@@ -94,12 +96,12 @@ async function addStay(stay) {
   }
 }
 
-async function updateStay(stay) {
+async function updateListing(listing) {
   try {
-    const savedStay = await stayService.save(stay);
+    const savedStay = await stayService.save(listing);
     store.dispatch({
-      type: UPDATE_STAY,
-      stay,
+      type: UPDATE_LISTING,
+      listing,
     });
     return savedStay;
   } catch (err) {
@@ -111,7 +113,6 @@ async function updateStay(stay) {
 async function setFilterBy(filterBy) {
   try {
     await store.dispatch({
-      // type: SET_FILTER_BY,
       type: REPLACE_FILTER_BY,
       filterBy,
     });
@@ -180,8 +181,8 @@ async function updateListingStatus(listing, status) {
       status,
     });
     store.dispatch({
-      type: UPDATE_STAY,
-      stay: savedListing,
+      type: UPDATE_LISTING,
+      listing: savedListing,
     });
     return savedListing;
   } catch (err) {
@@ -209,7 +210,7 @@ function _populateNearAvailableDates() {
 // async function unitTestActions() {
 //   await loadStays();
 //   await addStay(stayService.getEmptyStay());
-//   await updateStay({
+//   await updateListing({
 //     _id: "m1oC7",
 //     title: "Stay-Good",
 //   });
