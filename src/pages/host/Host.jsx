@@ -3,13 +3,17 @@ import { Outlet } from "react-router";
 import { NavLink } from "react-router-dom";
 
 export function Host() {
-  const user = useSelector(storeState => storeState.userModule.user)
+  const user = useSelector((storeState) => storeState.userModule.user);
+  const showHostNotification = useSelector(
+    (storeState) => storeState.userModule.showHostNotification
+  );
 
   return (
     <section className="host-page layout secondary full">
-
       <div className="anchor-header host-anchor-header">
-        {!user?.isHost ? "" :
+        {!user?.isHost ? (
+          ""
+        ) : (
           <div className="anchor-header-container">
             <h1>{user ? "Hello, host " + user.fullname : "Please log in"}</h1>
             <nav className="anchor-nav">
@@ -18,7 +22,13 @@ export function Host() {
                 <span className="anchor-hover-line"></span>
               </NavLink>
               <NavLink to="orders" className="anchor-link">
-                <span className="anchor-name">Orders</span>
+                <span className="anchor-name">
+                  {" "}
+                  {showHostNotification && (
+                    <div className="notification-circle"></div>
+                  )}
+                  Orders
+                </span>
                 <span className="anchor-hover-line"></span>
               </NavLink>
               {/* <NavLink to="dashboard" className="anchor-link">
@@ -27,7 +37,7 @@ export function Host() {
               </NavLink> */}
             </nav>
           </div>
-        }
+        )}
       </div>
       <Outlet />
     </section>

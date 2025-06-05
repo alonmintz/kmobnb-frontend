@@ -7,6 +7,9 @@ import { useNavigate, useLocation } from "react-router";
 export function NavMenu({ onClose, triggeringButtonRef }) {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const user = useSelector((storeState) => storeState.userModule.user);
+  const showTripsNotification = useSelector(
+    (storeState) => storeState.userModule.showTripsNotification
+  );
   const navMenuRef = useRef(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,8 +58,18 @@ export function NavMenu({ onClose, triggeringButtonRef }) {
       <ul className="buttons-container">
         {user ? (
           <>
-            <li onClick={() => onNavigateTo("/wishlist")}>Wishlist</li>
-            <li onClick={() => onNavigateTo("/trips")}>My Trips</li>
+            <li
+              className="wishlist-nav"
+              onClick={() => onNavigateTo("/wishlist")}
+            >
+              Wishlist
+            </li>
+            <li className="trips-nav" onClick={() => onNavigateTo("/trips")}>
+              {showTripsNotification && (
+                <div className="notification-circle"></div>
+              )}
+              My Trips
+            </li>
             <li className="menu-divider" />
             <li onClick={() => onLogout()}>Log out</li>
           </>

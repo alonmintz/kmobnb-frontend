@@ -1,32 +1,41 @@
 .nav-menu {
-    position: absolute;
-    top: 75px;
-    background-color: white;
-    border-radius: rem(12px);
-    z-index: 100;
-    box-shadow: rgba(0, 0, 0, 0.08) 1px 1px 11px 1px, rgba(0, 0, 0, 0.05) 0px 4px 12px;
+  position: absolute;
+  top: 75px;
+  background-color: white;
+  border-radius: rem(12px);
+  z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.08) 1px 1px 11px 1px,
+    rgba(0, 0, 0, 0.05) 0px 4px 12px;
 
-    .buttons-container {
-        padding: 10px 0px;
-    
-        >li {
-            box-sizing: border-box;
-            font-size: rem(14px);
-            padding: rem(12px) rem(20px);
-            cursor: pointer;
-    
-            &.menu-divider {
-                height: 1px;
-                background-color: #eee;
-                margin: 4px 0;
-                padding: 0;
-                cursor: default;
-                pointer-events: none;
-            }
-    
-            &:hover {
-                background-color: rgb(246, 246, 246);
-            }
+  .buttons-container {
+    padding: 10px 0px;
+
+    > li {
+      position: relative;
+      box-sizing: border-box;
+      font-size: rem(14px);
+      padding: rem(12px) rem(20px);
+      cursor: pointer;
+
+      &.menu-divider {
+        height: 1px;
+        background-color: #eee;
+        margin: 4px 0;
+        padding: 0;
+        cursor: default;
+        pointer-events: none;
+      }
+
+      &:hover {
+        background-color: rgb(246, 246, 246);
+      }
+
+      &.trips-nav {
+        .notification-circle {
+          top: 5px;
+          right: 5px;
         }
+      }
     }
+  }
 }

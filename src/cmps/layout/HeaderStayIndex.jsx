@@ -17,6 +17,9 @@ import { BnbYourButton } from "./BnbYourButton";
 //todo: add backdrop when search is opened in mid page
 export function HeaderStayIndex({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
+  const showTripsNotification = useSelector(
+    (storeState) => storeState.userModule.showTripsNotification
+  );
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeSearchControl, setActiveSearchControl] = useState("");
   const city = useSelector((storeState) => storeState.stayModule.filterBy.city);
@@ -234,6 +237,9 @@ export function HeaderStayIndex({ viewport }) {
             onClick={handleUserIconClick}
             ref={userIconRef}
           >
+            {showTripsNotification && (
+              <div className="notification-circle"></div>
+            )}
             <FontAwesomeIcon icon={faBars} />
             <img src={user?.imgUrl ?? guestUnknown} alt="user-icon" />
           </button>

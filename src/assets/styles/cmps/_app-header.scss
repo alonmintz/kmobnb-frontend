@@ -168,11 +168,17 @@
         font-size: 0.8em;
 
         .bnb-your-button {
+          position: relative;
           padding: 1.1em 1em;
           border-radius: 2em;
 
           &:hover {
             background-color: rgba(0, 0, 0, 0.1);
+          }
+
+          .notification-circle {
+            top: 5px;
+            right: 5px;
           }
         }
 
@@ -221,6 +227,11 @@
             width: 32px;
             aspect-ratio: 1;
             border-radius: 50%;
+          }
+
+          .notification-circle {
+            top: 0;
+            right: 5px;
           }
         }
       }
