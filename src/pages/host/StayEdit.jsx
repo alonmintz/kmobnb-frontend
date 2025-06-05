@@ -11,6 +11,7 @@ import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
 import { LocationPicker } from "../../cmps/stay/LocationPicker";
 import { ImagesDisplayEditor } from "../../cmps/stay/ImagesDisplayEditor";
 import { stayActions } from "../../store/actions/stay.actions";
+import { StayDetailsSkeleton } from "../../cmps/skeleton/StayDetailsSkeleton";
 
 const ROOM_TYPES_NAMES = [
   "Entire home/apartment",
@@ -141,7 +142,7 @@ export function StayEdit() {
       setIsLoading(false);
     }
   }
-  if (isLoading || !stayToEdit) return <div className="loader">loading</div>;
+  if (isLoading || !stayToEdit) return <StayDetailsSkeleton />;
 
   function handleInputChange({ target }) {
     const field = target.name;
