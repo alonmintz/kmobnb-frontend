@@ -4,12 +4,12 @@ import { userActions } from "../../store/actions/user.actions";
 
 export function LoginSignupModal({ onClose }) {
   const demoGuestCreds = {
-    username: "dan",
-    password: "dan1"
+    username: "eyal",
+    password: "eyalTheBigK"
   }
   const demoHostCreds = {
-    username: "patty",
-    password: "patty1"
+    username: "alon",
+    password: "alonTheBigM"
   }
   const [creds, setCreds] = useState({
     username: '',
