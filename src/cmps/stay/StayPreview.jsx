@@ -6,6 +6,7 @@ import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
 import { userActions } from "../../store/actions/user.actions";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
+import starImage from "../../assets/img/rating-star.svg";
 
 export function StayPreview({ stay }) {
   const currLng = 32.086722;
@@ -135,8 +136,7 @@ export function StayPreview({ stay }) {
         </div>
         <div className="rating">
           <span>
-            <img className="star-image" src="src/assets/img/rating-star.svg" />{" "}
-            {stay.starsRate}
+            <img className="star-image" src={starImage} /> {stay.starsRate}
           </span>
         </div>
       </div>
