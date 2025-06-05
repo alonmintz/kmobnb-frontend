@@ -1,5 +1,5 @@
 .order-index {
-  font-size: rem(14px);
+  font-size: rem(12px);
 
   .orders-table {
     width: 100%;
@@ -14,16 +14,66 @@
     }
 
     td {
-      cursor: pointer;
+      vertical-align: middle;
+
+      .action-buttons {
+        .btn-action {
+          border: none;
+          border-radius: 30%;
+          width: 32px;
+          height: 32px;
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+          align-items: center;
+          justify-content: center;
+
+          &.approve {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+
+            &:hover {
+              background-color: #2e7d32;
+              color: white;
+              transform: scale(1.1);
+              box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+            }
+          }
+
+          &.cancel {
+            background-color: #ffebee;
+            color: #c62828;
+
+            &:hover {
+              background-color: #c62828;
+              color: white;
+              transform: scale(1.1);
+              box-shadow: 0 2px 8px rgba(198, 40, 40, 0.3);
+            }
+          }
+
+          &:active {
+            transform: scale(0.95);
+          }
+
+          svg {
+            font-size: 14px;
+          }
+        }
+      }
     }
 
     th {
       font-weight: 400;
       color: #222;
       background-color: #f7f7f7;
-
       user-select: none;
 
+      select {
+        margin-top: 8px;
+        font-size: rem(12px);
+        padding: 2px;
+        border-radius: 0.5rem;
+      }
 
       &:hover.clickable {
         cursor: pointer;
@@ -32,17 +82,12 @@
         transition: all 0.2s ease;
       }
 
-      select {
-        margin-top: 8px;
-        font-size: rem(14px);
-        padding: 2px;
-        border-radius: 0.5rem;
-      }
     }
 
     tr {
-      
-      
+      min-height: 60px;
+      height: 60px;
+
       &.status-canceled {
         color: #717171;
       }
@@ -51,16 +96,27 @@
         color: #00a308;
       }
 
-      &.status-pending {
-        background-color: #fff8e6;
-      }
+      // &.status-pending {
+      //   background-color: #fff8e6;
+      // }
 
       &:hover {
         background-color: #f9f9f9;
       }
     }
 
-    // tr:hover {
-    // }
+    .center-text {
+      text-align: center;
+    }
+
+    .last-column {
+      text-align: center;
+      padding: 0;
+      min-width: 90px;
+    }
+
+    .text-bold {
+      font-weight: 600;
+    }
   }
 }
