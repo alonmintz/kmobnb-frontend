@@ -107,6 +107,7 @@ export function LocationPicker({ location, onChange, isExistingStay }) {
   async function handleMapClick({ lat, lng }) {
     try {
       const loc = await googleService.getAddressByCoords(lat, lng);
+
       onChange(loc);
     } catch (err) {
       console.error("Reverse geocoding failed", err);
@@ -137,6 +138,7 @@ export function LocationPicker({ location, onChange, isExistingStay }) {
       const lng = event.latLng.lng();
       try {
         const loc = await googleService.getAddressByCoords(lat, lng);
+
         onChange(loc);
       } catch (err) {
         console.error("Reverse geocoding failed", err);
