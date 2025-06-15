@@ -1,0 +1,98 @@
+.reviews-modal {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  max-height: 70vh;
+  height: 65vh;
+  width: 60vw;
+  padding-block-start: 2.5rem;
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-block-end: 1.7rem;
+  }
+  .ratings-container {
+    overflow-y: auto;
+    padding-inline-start: 1rem;
+    padding-inline-end: 1.5rem;
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      img {
+        height: 20px;
+        weight: 20px;
+      }
+      span {
+        align-self: center;
+      }
+    }
+    .ratings-display {
+      grid-auto-flow: row;
+      grid-template-rows: repeat(7, auto);
+      grid-template-columns: 1fr;
+      border-bottom: 0;
+
+      > * {
+        border-right: 0;
+        border-bottom: 1px solid lightgray;
+        &:last-child,
+        &:first-child {
+          border-bottom: none;
+        }
+      }
+      .overall-rating {
+        padding-inline-end: 0;
+        padding-block-end: 1.5rem;
+      }
+      .category-rating {
+        grid-auto-flow: column;
+        grid-template-columns: 24px 1fr;
+        gap: 1rem;
+        padding-inline: 0;
+        padding-block: 1rem;
+        h4 {
+          grid-column: 2;
+          grid-auto-flow: column;
+          justify-content: space-between;
+          align-self: center;
+          margin-bottom: 0;
+          font-weight: 400;
+        }
+        .category-icon {
+          align-self: center;
+          justify-self: start;
+        }
+      }
+    }
+  }
+  .reviews-container {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    overflow-y: auto;
+    padding-inline-end: 3rem;
+    & > .title {
+      position: sticky;
+      top: -1px;
+      margin-block-end: 0;
+      padding-block-end: 0.5rem;
+      border-bottom: 1px solid lightgray;
+      background-color: white;
+      z-index: 2;
+    }
+    .review-display {
+      .review-by {
+        padding-block: 0.7rem;
+      }
+      .review-txt {
+        font-size: 0.8rem;
+        font-weight: 400;
+      }
+    }
+  }
+}

@@ -13,11 +13,11 @@ import { useSelector } from "react-redux";
 import { LoginSignupModal } from "../loginSignup/LoginSignupModal";
 import { ReviewList } from "../../cmps/review/ReviewList";
 import { RatingsDisplay } from "../../cmps/review/RatingsDisplay";
-import { ReviewDisplay } from "../../cmps/review/ReviewDisplay";
 import { StayDetailsSkeleton } from "../../cmps/skeleton/StayDetailsSkeleton";
 import { userActions } from "../../store/actions/user.actions";
 import { userService } from "../../services/user";
 import { reviewService } from "../../services/review";
+import { ReviewsModal } from "../../cmps/review/ReviewsModal";
 
 export function StayDetails() {
   const user = useSelector((storeState) => storeState.userModule.user);
@@ -27,6 +27,7 @@ export function StayDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [modalContentType, setModalContentType] = useState("");
+  const [isReviewsModalOpen, setIsReviewsModalOpen] = useState(false);
   const [datesRange, setDatesRange] = useState([
     searchParams.get("startDate"),
     searchParams.get("endDate"),
@@ -36,7 +37,6 @@ export function StayDetails() {
   const [showAnchorNav, setShowAnchorNav] = useState(false);
   const [showMiniReserve, setShowMiniReserve] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-  const [allReviews, setAllReviews] = useState([]);
 
   const imgSectionRef = useRef();
   const datePickerSectionRef = useRef();
@@ -98,12 +98,6 @@ export function StayDetails() {
     setIsDetailsModalOpen(modalContentType ? true : false);
   }, [modalContentType]);
 
-  useEffect(() => {
-    if (stay) {
-      loadAllReviews();
-    }
-  }, [stay]);
-
   async function loadStay() {
     setIsLoading(true);
     try {
@@ -116,11 +110,6 @@ export function StayDetails() {
     } finally {
       setIsLoading(false);
     }
-  }
-
-  async function loadAllReviews() {
-    const reviews = await fetchAllReviews(stay._id);
-    setAllReviews(reviews);
   }
 
   function checkIsWishlisted() {
@@ -149,8 +138,8 @@ export function StayDetails() {
     return datesRange[0] && datesRange[1];
   }
 
-  function toggleIsDetailsModalOpen() {
-    setIsDetailsModalOpen((prev) => !prev);
+  function toggleIsReviewsModalOpen() {
+    setIsReviewsModalOpen((prev) => !prev);
   }
 
   function handleDatesSelect({ dates }) {
@@ -193,6 +182,7 @@ export function StayDetails() {
   if (isLoading || !stay) return <StayDetailsSkeleton />;
 
   const {
+    _id,
     name,
     imgUrls,
     price,
@@ -356,42 +346,8 @@ export function StayDetails() {
             </div>
           </div>
         );
-
-      case "reviews":
-        return (
-          <div className="reviews-modal content">
-            <div className="ratings-container">
-              <h2 className="title">
-                <img src={starIcon} />
-                <span>{reviewsData.avgStarsRate}</span>
-              </h2>
-              <RatingsDisplay
-                categoryRatings={reviewsData.categoryRatings}
-                starsRatings={reviewsData.starsRatings}
-              />
-            </div>
-            <div className="reviews-container">
-              <h2 className="title">{`${reviewsData.reviews.length} reviews`}</h2>
-              {reviewsData.reviews.length &&
-                allReviews.map((review) => (
-                  <ReviewDisplay key={review._id} review={review} />
-                ))}
-            </div>
-          </div>
-        );
-
       default:
         break;
-    }
-  }
-
-  async function fetchAllReviews(stayId) {
-    try {
-      const allReviews = await reviewService.getReviewsByStayId(stayId);
-      console.log({ allReviews });
-      return allReviews;
-    } catch (err) {
-      console.log("error fetching reviews");
     }
   }
 
@@ -536,7 +492,7 @@ export function StayDetails() {
               {reviewsData.avgStarsRate}
             </span>
             <span className="dot"></span>
-            <span>{`${reviewsData.reviews.length} reviews`}</span>
+            <span>{`${reviewsData.reviewsCount} reviews`}</span>
           </h2>
           <RatingsDisplay
             categoryRatings={reviewsData.categoryRatings}
@@ -547,17 +503,16 @@ export function StayDetails() {
             isPreview
             onShowMore={() => setModalContentType("reviews")}
           />
-          {reviewsData.reviews.length ? (
+          {reviewsData.reviews.length && (
             <button
               className="show-more-btn"
-              onClick={() => {
-                setModalContentType("reviews");
-              }}
+              onClick={toggleIsReviewsModalOpen}
             >
               Show all {reviewsData.reviewsCount} reviews
             </button>
-          ) : (
-            ""
+          )}
+          {isReviewsModalOpen && (
+            <ReviewsModal stayId={_id} onClose={toggleIsReviewsModalOpen} />
           )}
         </section>
         <section className="map-section" id="map-section">
