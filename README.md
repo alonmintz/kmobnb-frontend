@@ -32,9 +32,9 @@ kmobnb-frontend/
 ├── pages/ # Page-level views (Home, StayDetails, etc.)  
 ├── services/ # Axios and business logic services  
 ├── store/ # Redux setup and slices  
-├── hooks/ # Custom React hooks  
+├── customHooks/ # Custom React hooks  
 ├── App.jsx # Root component  
-├── main.jsx # Vite entry point  
+├── index.jsx # Vite entry point  
 └── index.html # Main HTML file  
 
 ---
@@ -64,7 +64,7 @@ npm run dev
 ```
 The app will be available at http://localhost:5173
 
-🔗 Backend API  
+## 🔗 Backend API  
 This app connects to the kmobnb-backend server. Make sure it’s running locally or in production and that VITE_API_URL points to it.  
   
 ## 🖼 Features  
