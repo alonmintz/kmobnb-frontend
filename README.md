@@ -28,7 +28,7 @@ This is the **frontend** for **KmoBnb**, a full-stack Airbnb-style booking platf
 
 kmobnb-frontend/  
 ├── assets/ # Images, icons, styles  
-├── components/ # Reusable components (buttons, modals, etc.)  
+├── cmps/ # Reusable components (buttons, modals, etc.) & sorted components  
 ├── pages/ # Page-level views (Home, StayDetails, etc.)  
 ├── services/ # Axios and business logic services  
 ├── store/ # Redux setup and slices  
