@@ -10,8 +10,6 @@ export const SOCKET_EVENT_ORDER_ADDED = "order-added";
 export const SOCKET_EVENT_REVIEW_ADDED = "review-added";
 
 const baseUrl = NODE_ENV === "development" ? "//localhost:3030" : "";
-console.log("NODE_ENV from socket.service:", NODE_ENV);
-console.log("socket.service baseUrl:", baseUrl);
 
 export const socketService = createSocketService();
 

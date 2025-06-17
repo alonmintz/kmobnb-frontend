@@ -17,13 +17,13 @@ export function Wishlist() {
     const wishlistFromDB = await userService.getUserWishlist();
     setStaysToShow(wishlistFromDB);
     userActions.setUserWishlist(wishlistFromDB);
-    setIsLoading(false)
+    setIsLoading(false);
   }
 
   const [hoveredStayId, setHoveredStayId] = useState("");
 
   function onMapPinClick(stayId) {
-    console.log({ stayId });
+    //opens a stay preview: TBD
   }
 
   return (
@@ -32,14 +32,15 @@ export function Wishlist() {
         <div className="title-container">
           <h2>My wishlist</h2>
         </div>
-        {isLoading ? <StayListSkeleton />
-          :
+        {isLoading ? (
+          <StayListSkeleton />
+        ) : (
           <StayList
             stays={staysToShow}
             isWishlist
             onHoverStay={setHoveredStayId}
           />
-        }
+        )}
       </section>
       <section className="map-container">
         <StayMultiLocationMap

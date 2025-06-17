@@ -97,7 +97,6 @@ async function _createAdmin() {
   };
 
   const newUser = await storageService.post(USERS_STORAGE_KEY, userCred);
-  console.log("newUser: ", newUser);
 }
 
 _populateDemoUserData()

@@ -17,7 +17,6 @@ async function uploadImg(file) {
   try {
     const res = await fetch(UPLOAD_URL, { method: "POST", body: formData });
     const imgData = await res.json();
-    console.log({ imgData });
 
     return imgData;
   } catch (err) {

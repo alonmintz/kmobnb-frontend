@@ -1,11 +1,7 @@
 import Axios from "axios";
 const { NODE_ENV } = import.meta.env;
-// const BASE_URL = process.env.NODE_ENV === 'production'
-//     ? '/api/'
-//     : '//localhost:3030/api/'
+
 const BASE_URL = NODE_ENV === "development" ? "//localhost:3030/api/" : "/api/";
-console.log("NODE_ENV from http.service:", NODE_ENV);
-console.log("http.service BASE_URL:", BASE_URL);
 
 const axios = Axios.create({ withCredentials: true });
 
