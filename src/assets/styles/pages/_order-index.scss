@@ -81,7 +81,6 @@
         border-radius: 0.5rem;
         transition: all 0.2s ease;
       }
-
     }
 
     tr {
@@ -95,10 +94,6 @@
       &.status-approved {
         color: #00a699;
       }
-
-      // &.status-pending {
-      //   background-color: #fff8e6;
-      // }
 
       &:hover {
         background-color: #f9f9f9;

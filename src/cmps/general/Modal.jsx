@@ -25,7 +25,7 @@ export function Modal({
 
     return () => {
       if (el) enableBodyScroll(el);
-      clearAllBodyScrollLocks(); // just in case
+      clearAllBodyScrollLocks();
     };
   }, [lockScroll]);
 

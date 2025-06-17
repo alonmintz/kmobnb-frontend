@@ -23,7 +23,6 @@
     .header-top {
       width: 100%;
       display: grid;
-      //TODO: responsive: under ...px change to auto 1fr 1fr
       grid-template-columns: repeat(3, 1fr);
       align-items: center;
       justify-content: space-between;
@@ -61,7 +60,6 @@
 
           .logo {
             width: 38px;
-            // height: 32px;
             aspect-ratio: 1;
             border-radius: 50%;
           }
@@ -119,7 +117,6 @@
             padding-inline: 1rem;
 
             span {
-              // height: 100%;
               font-size: rem(14px);
               line-height: 1.2em;
               font-weight: 500;
@@ -207,7 +204,6 @@
           justify-content: start;
           min-width: 86px;
           height: 48px;
-          // gap: 1em;
           padding-inline-start: 1.2em;
           background-color: white;
           color: #222;

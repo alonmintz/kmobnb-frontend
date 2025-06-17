@@ -1,16 +1,32 @@
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router";
 import { NavLink } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 export function Host() {
   const user = useSelector((storeState) => storeState.userModule.user);
   const showHostNotification = useSelector(
     (storeState) => storeState.userModule.showHostNotification
   );
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!headerRef.current) return;
+      if (window.scrollY === 0) {
+        headerRef.current.classList.remove("scrolled");
+      } else {
+        headerRef.current.classList.add("scrolled");
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section className="host-page layout secondary full">
-      <div className="anchor-header host-anchor-header">
+      <div className="anchor-header layout secondary full" ref={headerRef}>
         {!user?.isHost ? (
           ""
         ) : (

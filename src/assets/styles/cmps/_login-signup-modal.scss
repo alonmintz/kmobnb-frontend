@@ -14,7 +14,7 @@
     border-bottom: 1px solid #000;
     border-color: #ededed;
 
-    >h1 {
+    > h1 {
       text-align: center;
       margin: 0 auto;
       font-weight: 550;
@@ -25,7 +25,7 @@
   .login-modal-content {
     padding-block-start: 1.7rem;
 
-    >h2 {
+    > h2 {
       font-size: rem(22px);
       font-weight: 440;
       padding-bottom: 1.5rem;
@@ -99,7 +99,6 @@
       }
     }
 
-
     .modal-button {
       width: 100%;
       line-height: 1.25rem;
@@ -127,7 +126,6 @@
       margin: 1rem 0;
       position: relative;
       text-align: center;
-      // color: #aaa;
 
       &::before,
       &::after {

@@ -1,5 +1,5 @@
 import GoogleMapReact from "google-map-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
 const LocationPin = () => (

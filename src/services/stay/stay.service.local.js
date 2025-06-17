@@ -15,8 +15,6 @@ const STAYS_PER_LOAD = 20;
 
 _createStays();
 
-// window.cs = stayService;
-
 const emptyFilter = {
   status: "",
   city: "",

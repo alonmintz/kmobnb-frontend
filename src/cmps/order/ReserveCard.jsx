@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import { StayDatePicker } from "../stay/StayDatePicker";
 
-//TODO: move to order service:
 const DAILY_FEE = 4;
 
 export function ReserveCard({
