@@ -1,63 +1,62 @@
 .stay-preview {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: 'Airbnb';
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: "Airbnb";
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .heart-button {
+    position: absolute;
+    display: block;
+    right: rem(15px);
+    top: rem(15px);
+    fill: rgba(0, 0, 0, 0.5);
+    height: rem(24px);
+    width: rem(24px);
+    stroke: white;
+    stroke-width: 2;
+    overflow: visible;
+
+    transition: transform 0.2s ease;
+
+    &.clicked {
+      fill: rgb(255, 56, 92);
+    }
 
     &:hover {
-        cursor: pointer;
+      transform: scale(1.08);
     }
 
-    .heart-button {
-        position: absolute;
-        display: block;
-        right: rem(15px);
-        top: rem(15px);
-        fill: rgba(0, 0, 0, 0.5);
-        height: rem(24px);
-        width: rem(24px);
-        stroke: white;
-        stroke-width: 2;
-        overflow: visible;
+    &:active {
+      transform: scale(0.95);
+    }
+  }
 
-        transition: transform 0.2s ease;
+  > .text-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: repeat(3, 1.5em) 1.8em;
+    column-gap: 1rem;
+    grid-auto-flow: column;
+    font-size: rem(15px);
+    align-items: end;
 
-        &.clicked {
-            fill: rgb(255, 56, 92);
-        }
-
-        &:hover {
-            transform: scale(1.08);
-        }
-
-        &:active {
-            transform: scale(0.95);
-        }
+    .bold-text {
+      font-weight: 400;
     }
 
-    >.text-container {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-template-rows: repeat(3, 1.5em) 1.8em;
-        column-gap: 1rem;
-        grid-auto-flow: column;
-        font-size: rem(15px); // TODO: move somewhere more appropriate. mixin?
-        align-items: end;
-
-        .bold-text {
-            // TODO: move somewhere more appropriate. mixin?
-            font-weight: 400;
-        }
-
-        .normal-text {
-            color: grey;
-            font-weight: 300;
-        }
-
-        .star-image {
-            display: inline-block;
-            height: rem(12px);
-        }
+    .normal-text {
+      color: grey;
+      font-weight: 300;
     }
+
+    .star-image {
+      display: inline-block;
+      height: rem(12px);
+    }
+  }
 }

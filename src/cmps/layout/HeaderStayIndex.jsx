@@ -14,7 +14,6 @@ import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
 import { BnbYourButton } from "./BnbYourButton";
 
-//todo: add backdrop when search is opened in mid page
 export function HeaderStayIndex({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const showTripsNotification = useSelector(

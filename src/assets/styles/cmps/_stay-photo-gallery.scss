@@ -23,10 +23,6 @@
       height: rem(6px);
       background: white;
     }
-
-    // &.react-multi-carousel-dot--active button {
-    //   opacity: 1;
-    // }
   }
 
   .react-multiple-carousel__arrow {
@@ -38,7 +34,7 @@
     background: rgba(0, 0, 0, 1);
     min-width: 2.2rem;
     min-height: 2.2rem;
-    
+
     &::before {
       font-size: 0.8rem;
     }

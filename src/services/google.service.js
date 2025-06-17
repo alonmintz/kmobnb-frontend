@@ -24,8 +24,6 @@ async function isValidLocation(lat, lng) {
     });
 
     const results = res.data.results;
-
-    // Consider it valid if we got at least one result
     return results && results.length > 0;
   } catch (err) {
     console.error("Validation geocoding failed:", err);

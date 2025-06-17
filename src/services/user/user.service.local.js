@@ -1,9 +1,7 @@
 import { storageService } from "../async-storage.service";
 
 const LOGGEDIN_USER_STORAGE_KEY = "loggedinUser_local";
-const USERS_STORAGE_KEY = "STAY_USERS"
-
-//TODO: refactor to fit our needs
+const USERS_STORAGE_KEY = "STAY_USERS";
 
 export const userService = {
   login,
@@ -78,7 +76,7 @@ function saveLoggedinUser(user) {
     imgUrl: user.imgUrl,
     score: user.score,
     isAdmin: user.isAdmin,
-    isHost: user.isHost
+    isHost: user.isHost,
   };
   localStorage.setItem(LOGGEDIN_USER_STORAGE_KEY, JSON.stringify(user));
   return user;
@@ -99,28 +97,29 @@ async function _createAdmin() {
   const newUser = await storageService.post(USERS_STORAGE_KEY, userCred);
 }
 
-_populateDemoUserData()
+_populateDemoUserData();
 async function _populateDemoUserData() {
-  const existingUsers = await storageService.query(USERS_STORAGE_KEY)
+  const existingUsers = await storageService.query(USERS_STORAGE_KEY);
   if (!existingUsers.length) {
     const demoUsers = [
       {
-        "_id": "622f3403e36c59e6164faf93",
-        "username": "patty",
-        "fullname": "Patty And Beckett",
-        "imgUrl": "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
-        "isAdmin": false,
-        "isHost": true
+        _id: "622f3403e36c59e6164faf93",
+        username: "patty",
+        fullname: "Patty And Beckett",
+        imgUrl:
+          "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+        isAdmin: false,
+        isHost: true,
       },
       {
-        "_id": "622f3407e36c59e6164fbf76",
-        "username": "dan",
-        "fullname": "Dan",
-        "imgUrl": "https://robohash.org/6460525?set=set1",
-        "isAdmin": false,
-        "isHost": false
-      }
-    ]
-    await storageService.postWithoutMakeId(USERS_STORAGE_KEY, demoUsers)
+        _id: "622f3407e36c59e6164fbf76",
+        username: "dan",
+        fullname: "Dan",
+        imgUrl: "https://robohash.org/6460525?set=set1",
+        isAdmin: false,
+        isHost: false,
+      },
+    ];
+    await storageService.postWithoutMakeId(USERS_STORAGE_KEY, demoUsers);
   }
 }

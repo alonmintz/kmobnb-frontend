@@ -204,16 +204,3 @@ function _populateNearAvailableDates() {
     endDate,
   };
 }
-
-// unitTestActions()
-// eslint-disable-next-line no-unused-vars
-// async function unitTestActions() {
-//   await loadStays();
-//   await addStay(stayService.getEmptyStay());
-//   await updateListing({
-//     _id: "m1oC7",
-//     title: "Stay-Good",
-//   });
-//   await removeStay("m1oC7");
-//   // TODO unit test addStayMsg
-// }

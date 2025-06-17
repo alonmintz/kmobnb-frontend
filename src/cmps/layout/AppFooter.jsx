@@ -25,9 +25,6 @@ export function AppFooter() {
       <div className="spacer"></div>
       <footer className={`app-footer full ${show ? "show" : ""}`}>
         <p>&copy; Kmobnb 2025, Inc.</p>
-        {/* {import.meta.env.LOCAL ?
-					<span className="local-services">Local Services</span> :
-					<span className="remote-services">Remote Services</span>} */}
         <span>
           By <a href="https://github.com/alonmintz">@alonmintz</a> and{" "}
           <a href="https://github.com/keyal">@keyal</a>

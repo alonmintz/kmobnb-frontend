@@ -137,7 +137,6 @@ export function StayEdit() {
       setStayToEdit(stay);
     } catch (err) {
       alert("Error loading your request");
-      //todo: add navigation back to home including the search params
     } finally {
       setIsLoading(false);
     }

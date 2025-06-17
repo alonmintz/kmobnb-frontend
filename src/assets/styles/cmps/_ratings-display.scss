@@ -24,23 +24,17 @@
       grid-auto-flow: column;
       grid-template-columns: 15px 1fr;
       align-items: center;
-      //   margin-bottom: 6px;
 
       .rate-label {
-        // width: 1rem;
         grid-column: 1;
-        // text-align: right;
         margin-right: 0.5rem;
         font-size: 14px;
       }
 
       .bar-container {
-        // flex: 1;
-        // width: 20px;
         grid-column: 2;
         height: 0.4rem;
         background-color: #e5e5e5;
-        // background-color: red;
 
         border-radius: 3px;
         overflow: hidden;

@@ -15,7 +15,6 @@ import { addDays } from "date-fns";
 import { NavMenu } from "../layout/NavMenu";
 import { BnbYourButton } from "./BnbYourButton";
 
-//TODO: complete bnb your home link functionality and then undo the disable
 export function HeaderStayDetails({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const showTripsNotification = useSelector(
@@ -210,7 +209,7 @@ export function HeaderStayDetails({ viewport }) {
             onClick={handleUserIconClick}
             ref={userIconRef}
           >
-             {showTripsNotification && (
+            {showTripsNotification && (
               <div className="notification-circle"></div>
             )}
             <FontAwesomeIcon icon={faBars} />

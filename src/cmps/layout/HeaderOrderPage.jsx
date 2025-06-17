@@ -8,7 +8,6 @@ import guestUnknown from "../../assets/img/guest-unknown.svg";
 import { NavMenu } from "../layout/NavMenu";
 import { BnbYourButton } from "./BnbYourButton";
 
-//TODO: complete bnb your home link functionality and then undo the disable
 export function HeaderOrderPage({ viewport }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const showTripsNotification = useSelector(
@@ -35,7 +34,6 @@ export function HeaderOrderPage({ viewport }) {
           </div>
         </NavLink>
         <nav>
-          {/*this bnb your home is temporerally disabled*/}
           <BnbYourButton />
           <button
             className="user-info"
