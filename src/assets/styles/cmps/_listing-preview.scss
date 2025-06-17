@@ -1,0 +1,115 @@
+.listing-preview {
+  display: flex;
+  flex: 0 0 200px;
+  flex-direction: column;
+  font-family: "Airbnb";
+
+  .img-container {
+    position: relative;
+
+    &:hover {
+      img {
+        filter: brightness(0.7);
+      }
+
+      .hover-buttons {
+        opacity: 1;
+      }
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 1rem;
+      transition: filter 0.2s ease;
+    }
+
+    .hover-buttons {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      top: 10px;
+      right: 10px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+
+      .round-btn {
+        display: flex;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: none;
+        background-color: white;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        &.deactivate-btn:hover {
+          background-color: #ffd1d1;
+        }
+
+        &.reactivate-btn:hover {
+          background-color: lightgreen;
+        }
+
+        &.edit-btn:hover,
+        &.ratings-btn:hover {
+          background-color: #e8e8e8;
+        }
+
+        .icon {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .button {
+    margin-top: 6px;
+    padding: 0.75rem;
+    text-align: center;
+    border-radius: 1rem;
+    background-color: rgb(236, 235, 235);
+    font-size: rem(14px);
+    font-weight: 400;
+    color: black;
+    transition: background-color 0.1s ease;
+    text-decoration: none;
+
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+
+  .listing-name {
+    padding-block: 5px;
+    line-height: 1.2em;
+    min-height: 48px;
+    font-size: rem(16px);
+    font-weight: 400;
+    overflow: hidden;
+  }
+
+  .listing-location {
+    padding-bottom: 5px;
+    line-height: 1.5em;
+    font-size: rem(14px);
+    font-weight: 200;
+    color: gray;
+  }
+
+  &.inactive {
+    .img-container {
+      img {
+        filter: opacity(0.4) grayscale(0.8);
+      }
+    }
+  }
+}
