@@ -57,7 +57,6 @@ async function login(credentials) {
     const user = await userService.login(credentials);
     store.dispatch({ type: SET_USER, user });
     socketService.login(user._id);
-    console.log("logged in successfully as", user);
     return user;
   } catch (err) {
     console.log("Cannot login:", err);
@@ -135,8 +134,6 @@ async function setUserWishlist(wishlist) {
 }
 
 async function setUserNotification({ notificationType, isNotified }) {
-  console.log("setUserNotification");
-
   try {
     if (notificationType === TRIP_NOTIFICATION) {
       store.dispatch({ type: SET_SHOW_TRIPS_NOTIFICATION, isNotified });
