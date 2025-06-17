@@ -13,6 +13,7 @@
     font-weight: 600;
     margin-block-end: 1.7rem;
   }
+
   .ratings-container {
     overflow-y: auto;
     padding-inline-start: 1rem;
@@ -69,6 +70,7 @@
       }
     }
   }
+
   .reviews-container {
     position: relative;
     display: grid;
@@ -94,5 +96,116 @@
         font-weight: 400;
       }
     }
+  }
+}
+.reviews-modal.skeleton {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  max-height: 70vh;
+  height: 65vh;
+  width: 60vw;
+  padding-block-start: 2.5rem;
+
+  .ratings-container {
+    overflow-y: auto;
+    padding-inline-start: 1rem;
+    padding-inline-end: 1.5rem;
+
+    .title {
+      margin-bottom: 1.7rem;
+    }
+
+    .ratings-display {
+      .overall-rating {
+        margin-bottom: 1.5em;
+        .skeleton-bar {
+          margin-bottom: 0.5em;
+        }
+      }
+      .category-rating {
+        display: grid;
+        grid-template-columns: 24px 1fr 40px;
+        align-items: center;
+        gap: 1rem;
+        padding-block: 1rem;
+        border-bottom: 1px solid #eee;
+
+        .category-icon {
+          grid-column: 1;
+        }
+        h4 {
+          grid-column: 2;
+          margin: 0;
+        }
+        .skeleton-bar:last-child {
+          grid-column: 3;
+        }
+      }
+    }
+  }
+
+  .reviews-container {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    overflow-y: auto;
+    padding-inline-end: 3rem;
+
+    .title {
+      position: sticky;
+      top: -1px;
+      margin-block-end: 0;
+      padding-block-end: 0.5rem;
+      border-bottom: 1px solid lightgray;
+      background-color: white;
+      z-index: 2;
+    }
+
+    .review-display {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.5em;
+
+      .skeleton-circle {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 0;
+      }
+      .review-details {
+        flex: 1;
+        .skeleton-bar {
+          margin-bottom: 0.5em;
+        }
+      }
+    }
+  }
+
+  .skeleton-bar {
+    height: 1.2em;
+    background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+    border-radius: 4px;
+    margin-bottom: 0.7em;
+    animation: shimmer 5s infinite linear;
+  }
+  .skeleton-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+    animation: shimmer 10s infinite linear;
+    margin-bottom: 0.7em;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
   }
 }

@@ -4,6 +4,7 @@ import { reviewService } from "../../services/review";
 import starIcon from "../../assets/img/rating-star.svg";
 import { RatingsDisplay } from "./RatingsDisplay";
 import { ReviewDisplay } from "./ReviewDisplay";
+import { ReviewsModalSkeleton } from "../skeleton/ReviewsModalSkeleton";
 
 export function ReviewsModal({ stayId, onClose }) {
   const [reviewsData, setReviewsData] = useState(null);
@@ -25,7 +26,7 @@ export function ReviewsModal({ stayId, onClose }) {
   if (!reviewsData || isLoading)
     return (
       <Modal lockScroll isBackdrop onClose={onClose}>
-        <section className="reviews-modal">skeleton</section>
+        <ReviewsModalSkeleton />
       </Modal>
     );
 

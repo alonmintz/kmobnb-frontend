@@ -15,10 +15,7 @@
 // pages
 @import "pages/stay-index";
 @import "pages/stay-edit";
-// @import "pages/review-index";
 @import "pages/user-details";
-// @import "pages/task-details";
-// @import "pages/login-signup";
 @import "pages/stay-details";
 @import "pages/order-page";
 @import "pages/host";
@@ -28,8 +25,6 @@
 @import "pages/trips";
 
 // Components
-// @import "cmps/list";
-// @import "cmps/preview";
 @import "cmps/app-header";
 @import "cmps/app-footer";
 @import "cmps/user-msg";
@@ -60,3 +55,4 @@
 @import "cmps/stay-wishlist-preview";
 @import "cmps/stay-trip-preview";
 @import "cmps/notification-circle";
+@import "cmps/listing-preview";
