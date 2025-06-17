@@ -14,25 +14,28 @@
     }
   }
 
-  .host-anchor-header {
-    z-index: 1;
-  }
-
-  .anchor-link {
-    margin: 10px;
-
-    .anchor-name {
-      position: relative;
-      font-weight: 100;
-      .notification-circle {
-        top: -10px;
-        right: -5px;
-      }
+  .anchor-header {
+    border-bottom-color: transparent;
+    transition: border-bottom-color 0.3s;
+    &.scrolled {
+      border-bottom-color: lightgray;
     }
+    .anchor-link {
+      margin: 10px;
 
-    &.active {
       .anchor-name {
-        font-weight: 500;
+        position: relative;
+        font-weight: 100;
+        .notification-circle {
+          top: -10px;
+          right: -5px;
+        }
+      }
+
+      &.active {
+        .anchor-name {
+          font-weight: 500;
+        }
       }
     }
   }
