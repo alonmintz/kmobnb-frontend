@@ -1,6 +1,5 @@
 const { DEV, LOCAL } = import.meta.env;
 
-// import { INITIAL_GUESTS, stayService as local } from "./stay.service.local";
 import { stayService as local } from "./stay.service.local";
 import { stayService as remote } from "./stay.service.remote";
 import { imgService } from "../img.service";
@@ -154,9 +153,6 @@ function getEmptyLocation() {
   };
 }
 
-// console.log("local_env:", LOCAL);
-
-//TODO: modify to remote when we learn backend
 const service = LOCAL === "true" ? local : remote;
 export const stayService = {
   getEmptyStay,

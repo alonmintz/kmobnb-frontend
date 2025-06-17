@@ -5,12 +5,12 @@ import ORDERS_DATA from "./order_mockdata.json";
 
 const STORAGE_KEY = "STAY_ORDER_DB";
 
-_createOrders()
+_createOrders();
 
 // Order statuses
-export const PENDING = 'pending'
-export const APPROVED = 'approved'
-export const CANCELED = 'canceled'
+export const PENDING = "pending";
+export const APPROVED = "approved";
+export const CANCELED = "canceled";
 
 export const orderService = {
   save,
@@ -18,17 +18,17 @@ export const orderService = {
   getOrdersByStayId,
   getOrdersByHostId,
   getOrderById,
-  changeOrderStatus
+  changeOrderStatus,
 };
 
-window.orders = orderService
+window.orders = orderService;
 
 async function save(order) {
   const orderToSave = {
     ...order,
     orderTime: new Date().toISOString(),
-    status: PENDING
-  }
+    status: PENDING,
+  };
   try {
     return await storageService.post(STORAGE_KEY, orderToSave);
   } catch (err) {
@@ -56,17 +56,18 @@ async function getOrdersByStayId(stayId) {
 
 async function getOrdersByHostId(hostId) {
   try {
-    const listings = await stayService.getStays({ filterBy: { hostId } })
-    const listingIds = listings.map(listing => listing._id)
+    const listings = await stayService.getStays({ filterBy: { hostId } });
+    const listingIds = listings.map((listing) => listing._id);
     const orders = await storageService.query(STORAGE_KEY);
 
-    const hostOrders = []
-    listingIds.forEach(listingId => {
-      const listingOrders = orders.filter(order => order.stayId === listingId)
-      hostOrders.push(...listingOrders)
-    })
-    return hostOrders
-
+    const hostOrders = [];
+    listingIds.forEach((listingId) => {
+      const listingOrders = orders.filter(
+        (order) => order.stayId === listingId
+      );
+      hostOrders.push(...listingOrders);
+    });
+    return hostOrders;
   } catch (err) {
     throw new Error(err);
   }
@@ -74,23 +75,22 @@ async function getOrdersByHostId(hostId) {
 
 async function getOrderById(orderId) {
   try {
-    const orders = await storageService.query(STORAGE_KEY)
-    const order = orders.find(order => order._id === orderId)
-    return order
+    const orders = await storageService.query(STORAGE_KEY);
+    const order = orders.find((order) => order._id === orderId);
+    return order;
   } catch (err) {
-    throw new Error(err)
+    throw new Error(err);
   }
 }
 
 async function changeOrderStatus(orderId, status) {
   try {
-    const order = await getOrderById(orderId)
-    console.log('order from getOrderById:', order)
+    const order = await getOrderById(orderId);
     const orderToSave = {
       ...order,
-      status
-    }
-    console.log('orderToSave:', orderToSave)
+      status,
+    };
+
     return await storageService.put(STORAGE_KEY, orderToSave);
   } catch (err) {
     throw new Error(err);

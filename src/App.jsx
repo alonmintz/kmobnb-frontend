@@ -15,7 +15,7 @@ import { NotFound } from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import { OrderIndex } from "./pages/host/OrderIndex";
 import { HostOrderPage } from "./pages/host/HostOrderPage";
-import { Wishlist } from "./pages/user/WishList";
+import { Wishlist } from "./pages/user/Wishlist";
 
 export function App() {
   const location = useLocation();

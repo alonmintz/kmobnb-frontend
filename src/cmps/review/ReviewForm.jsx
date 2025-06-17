@@ -3,7 +3,7 @@ import { Modal } from "../general/Modal";
 import Rating from "@mui/material/Rating";
 import { useNavigate } from "react-router";
 import { LoginSignupModal } from "../../pages/loginSignup/LoginSignupModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { reviewService } from "../../services/review";
 import { svgService } from "../../services/svg.service";
 
@@ -29,11 +29,6 @@ export function ReviewForm({ stayId, onClose }) {
     reviewService.getEmptyReviewWithLoggedinUser()
   );
   const [isSubmiting, setIsSubmiting] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log({ reviewToEdit });
-  }, [reviewToEdit]);
 
   if (!user) return <LoginSignupModal onClose={onClose} />;
 
@@ -76,9 +71,7 @@ export function ReviewForm({ stayId, onClose }) {
     try {
       setIsSubmiting(true);
       const addedReview = await reviewService.save(reviewToSubmit);
-      console.log({ addedReview });
       if (addedReview._id) {
-        console.log("review saved");
         onClose();
       }
     } catch (err) {

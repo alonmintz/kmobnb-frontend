@@ -19,8 +19,6 @@ export function ImagesDisplayEditor({ images, onImagesChange }) {
   }
 
   function onRemoveImage(imageIdx) {
-    console.log("onRemoveImage");
-
     const updated = [...imagesToEdit];
     updated[imageIdx] = null;
     onImagesChange(updated);
@@ -101,7 +99,6 @@ export function ImagesDisplayEditor({ images, onImagesChange }) {
     function handleFileChange(ev) {
       const file = ev.target.files[0];
       if (file) {
-        console.log("Selected file:", file);
         onUpload(file, imageIdx);
       }
     }
