@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import { userService } from "./user";
-const { NODE_ENV } = import.meta.env;
+const { VITE_NODE_ENV } = import.meta.env;
 
 const SOCKET_EMIT_LOGIN = "set-user-socket";
 const SOCKET_EMIT_LOGOUT = "unset-user-socket";
@@ -9,7 +9,7 @@ export const SOCKET_EVENT_ORDER_STATUS_UPDATE = "order-status-update";
 export const SOCKET_EVENT_ORDER_ADDED = "order-added";
 export const SOCKET_EVENT_REVIEW_ADDED = "review-added";
 
-const baseUrl = NODE_ENV === "development" ? "//localhost:3030" : "";
+const baseUrl = VITE_NODE_ENV === "development" ? "//localhost:3030" : "";
 
 export const socketService = createSocketService();
 

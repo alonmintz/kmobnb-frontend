@@ -7,7 +7,7 @@ import customMapPin from "../../assets/img/map-pin.png";
 import { svgService } from "../../services/svg.service";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const { GOOGLE_MAPS_API_KEY } = import.meta.env;
+const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
 const zoom = 13;
 
@@ -193,7 +193,7 @@ export function LocationPicker({ location, onChange, isExistingStay }) {
 
       <div className="map">
         <GoogleMapReact
-          bootstrapURLKeys={{ key: GOOGLE_MAPS_API_KEY }}
+          bootstrapURLKeys={{ key: VITE_GOOGLE_MAPS_API_KEY }}
           center={coordinates}
           defaultZoom={zoom}
           onClick={handleMapClick}
