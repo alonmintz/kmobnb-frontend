@@ -35,69 +35,83 @@ kmobnb-frontend/
 ├── customHooks/ # Custom React hooks  
 ├── App.jsx # Root component  
 ├── index.jsx # Vite entry point  
-└── index.html # Main HTML file  
+└── index.html # Main HTML file
 
 ---
 
-## ⚙️ Setup & Run Locally  
+## ⚙️ Setup & Run Locally
 
-### 1. Clone the repo  
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/alonmintz/kmobnb-frontend.git
 cd kmobnb-frontend
 ```
-### 2. Install dependencies  
+
+### 2. Install dependencies
+
 ```bash
 npm install
 ```
+
 ### 3. Create .env file
+
 ```env
-VITE_API_URL=http://localhost:3030/api
+VITE_API_URL=https://localhost:3030/api
 VITE_GOOGLE_MAPS_API_KEY=<your_google_maps_api_key>
 ```
+
 Replace <your_google_maps_api_key> with a valid key from the Google Cloud Console.
 
 ### 4. Start the development server
+
 ```bash
 npm run dev
 ```
-The app will be available at http://localhost:5173
 
-## 🔗 Backend API  
-This app connects to the kmobnb-backend server. Make sure it’s running locally or in production and that VITE_API_URL points to it.  
-  
-## 🖼 Features  
-🔍 Search stays by location and date  
+The app will be available at https://localhost:5173
 
-📅 Airbnb-style date picker  
+## 🔗 Backend API
 
-🗺 Interactive map using Google Maps API  
+This app connects to the kmobnb-backend server. Make sure it’s running locally or in production and that VITE_API_URL points to it.
 
-💬 Leave reviews and ratings  
+## 🖼 Features
 
-🧾 Host dashboard to manage listings  
+🔍 Search stays by location and date
 
-📲 Responsive UI for mobile & desktop  
+📅 Airbnb-style date picker
 
-🔐 Login/signup with session management  
+🗺 Interactive map using Google Maps API
 
-⚡️ Instant UI updates with Redux state management  
+💬 Leave reviews and ratings
 
-## 🧪 Testing (Coming Soon)  
-Integration with Cypress or React Testing Library is planned  
+🧾 Host dashboard to manage listings
 
-## 📦 Deployment  
-To build the app for production:  
+📲 Responsive UI for mobile & desktop
+
+🔐 Login/signup with session management
+
+⚡️ Instant UI updates with Redux state management
+
+## 🧪 Testing (Coming Soon)
+
+Integration with Cypress or React Testing Library is planned
+
+## 📦 Deployment
+
+To build the app for production:
 
 ```bash
 npm run build
 ```
+
 You can then serve the dist/ folder using any static host (like Render, Netlify, or GitHub Pages).
 
-## 📌 Related Projects  
-Backend Repository: [kmobnb-backend](https://github.com/alonmintz/kmobnb-backend) 
+## 📌 Related Projects
 
-## 🧑‍💻 Authors  
-Alon Mintz: [Github](https://github.com/alonmintz)   
-Eyal Kravitz: [Github](https://github.com/keyal)  
+Backend Repository: [kmobnb-backend](https://github.com/alonmintz/kmobnb-backend)
+
+## 🧑‍💻 Authors
+
+Alon Mintz: [Github](https://github.com/alonmintz)  
+Eyal Kravitz: [Github](https://github.com/keyal)
