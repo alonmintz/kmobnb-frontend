@@ -89,7 +89,7 @@ function LocationPin({ lat, lng, stayId, hoveredStayId, onPinClick }) {
       <div className="home-icon">
         <svg
           viewBox="0 0 16 16"
-          xmlns="http://www.w3.org/2000/svg"
+          xmlns="https://www.w3.org/2000/svg"
           aria-hidden="true"
           role="presentation"
           focusable="false"
@@ -106,7 +106,7 @@ function LocationPin({ lat, lng, stayId, hoveredStayId, onPinClick }) {
       {showHeart && (
         <div className={`heart-icon`}>
           <svg
-            xmlns="http://www.w3.org/2000/svg"
+            xmlns="https://www.w3.org/2000/svg"
             viewBox="0 0 32 32"
             aria-hidden="true"
             role="presentation"

@@ -389,7 +389,7 @@ export function StayDetails() {
           <button className="save-btn" onClick={onHeartClick}>
             <div className={`heart-icon ${isWishlisted ? "clicked" : ""}`}>
               <svg
-                xmlns="http://www.w3.org/2000/svg"
+                xmlns="https://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
                 aria-hidden="true"
                 role="presentation"
@@ -537,7 +537,7 @@ const conclusionList = [
     desc: "This home is in a quiet area.",
     svg: (
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns="https://www.w3.org/2000/svg"
         viewBox="0 0 32 32"
         aria-hidden="true"
         role="presentation"
@@ -558,7 +558,7 @@ const conclusionList = [
     desc: "Check yourself in with the lockbox.",
     svg: (
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns="https://www.w3.org/2000/svg"
         viewBox="0 0 32 32"
         aria-hidden="true"
         role="presentation"
@@ -579,7 +579,7 @@ const conclusionList = [
     desc: "This is one of the few places in the area with free parking.",
     svg: (
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns="https://www.w3.org/2000/svg"
         viewBox="0 0 32 32"
         aria-hidden="true"
         role="presentation"
