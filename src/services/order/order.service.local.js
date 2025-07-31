@@ -5,7 +5,7 @@ import ORDERS_DATA from "./order_mockdata.json";
 
 const STORAGE_KEY = "STAY_ORDER_DB";
 
-_createOrders();
+// _createOrders();
 
 // Order statuses
 export const PENDING = "pending";

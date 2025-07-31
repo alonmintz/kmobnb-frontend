@@ -13,7 +13,7 @@ export const stayService = {
 const STORAGE_KEY = "STAY_DB";
 const STAYS_PER_LOAD = 20;
 
-_createStays();
+// _createStays();
 
 const emptyFilter = {
   status: "",

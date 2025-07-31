@@ -97,7 +97,7 @@ async function _createAdmin() {
   const newUser = await storageService.post(USERS_STORAGE_KEY, userCred);
 }
 
-_populateDemoUserData();
+// _populateDemoUserData();
 async function _populateDemoUserData() {
   const existingUsers = await storageService.query(USERS_STORAGE_KEY);
   if (!existingUsers.length) {
